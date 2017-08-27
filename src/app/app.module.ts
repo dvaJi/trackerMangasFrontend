@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { BrowseModule } from './browse/browse.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 
@@ -24,6 +25,7 @@ import { LoginModule } from './login/login.module';
     CoreModule,
     SharedModule,
     HomeModule,
+    BrowseModule,
     AboutModule,
     LoginModule,
     AppRoutingModule
