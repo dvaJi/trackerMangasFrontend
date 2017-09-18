@@ -30,7 +30,7 @@ export class I18nService {
     // Embed languages to avoid extra HTTP requests
     translateService.setTranslation('es-ES', esES );
     translateService.setTranslation('en-US', enUS );
-    //translateService.setTranslation('fr-FR', frFR);
+    // translateService.setTranslation('fr-FR', frFR);
   }
 
   /**
@@ -40,8 +40,6 @@ export class I18nService {
    * @param {Array.<String>} supportedLanguages The list of supported languages.
    */
   init(defaultLanguage: string, supportedLanguages: string[]) {
-    console.log(defaultLanguage);
-    console.log(supportedLanguages);
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
     this.language = null;

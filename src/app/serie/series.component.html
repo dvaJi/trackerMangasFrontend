@@ -1,0 +1,70 @@
+<!--<app-cover *ngIf="serie" [name]="serie.name" [imgSrc]="'assets/juanpis.jpg'"></app-cover>-->
+
+<!--<app-loader [isLoading]="isLoading"></app-loader>-->
+<div class="container" *ngIf="serie">
+  <header>
+    <h2>{{serie.name}}</h2>
+  </header>
+  <nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link active" href="#" translate>Info</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="#" translate>Capítulos</a>
+    <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" translate>Personajes</a>
+    <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" translate>Tomos</a>
+  </nav>
+  <section role="data" class="row series">
+    <div class="col-md-3">
+      <div class="cover"><img src="{{serie.cover}}" /></div>
+      <dl class="info series-info">
+        <dd translate>Revista(s)</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let magazine of serie.magazines"><a href="/magazine/{{magazine.id}}">{{magazine.name}}</a></li>
+          </ul>
+        </dt>
+        <dd>Géneros</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let genre of serie.genres">
+              <a href="/browse?genres={{genre.id}}">{{genre.name}}</a>
+            </li>
+          </ul>
+        </dt>
+      </dl>
+    </div>
+    <div class="col-md-9">
+      <h3>Sinopsis</h3>
+      <p>{{serie.description}}</p>
+      <h3 translate>Staff</h3>
+      <div class="series__staff row">
+        <div class="col-md-2" *ngFor="let staff of staff">
+          <img src="/api/content/staff/{{staff.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}">
+          <div class="staff text-center">
+            <a class="staff__name" href="/staff/{{staff.id}}/{{staff.stub}}">
+              <div>{{staff.name}}</div>
+            </a>
+            <a class="staff__rol">
+              <div>{{staff.rol}}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <h3>Capítulos recientes</h3>
+      <table class="table table-striped">
+        <tbody>
+          <tr *ngFor="let release of serie.releases">
+            <td>c.{{release.chapter}}</td>
+            <td>{{release.created | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-right">
+              <span *ngFor="let scan of release.groups; let isLast=last">
+                <a href="/scan/{{scan.group_id}}/{{scan.stub}}">{{scan.name}}</a>{{isLast ? '' : ' & '}}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="text-right">
+        <a class="button small" href="/series/info/113675/releases/" translate>See All Releases</a>
+      </p>
+    </div>
+  </section>
+</div>

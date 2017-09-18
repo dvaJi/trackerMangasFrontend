@@ -4,9 +4,9 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
-import { BrowseRoutingModule } from './browse-routing.module';
-import { BrowseComponent } from './browse.component';
-import { SerieService } from '../serie/serie.service';
+import { ReleasesRoutingModule } from './releases-routing.module';
+import { ReleasesComponent } from './releases.component';
+import { ReleaseService } from './release.service';
 
 @NgModule({
   imports: [
@@ -14,13 +14,13 @@ import { SerieService } from '../serie/serie.service';
     TranslateModule,
     CoreModule,
     SharedModule,
-    BrowseRoutingModule
+    ReleasesRoutingModule
   ],
   declarations: [
-    BrowseComponent
+    ReleasesComponent
   ],
   providers: [
-    SerieService
+    ReleaseService
   ]
 })
-export class BrowseModule { }
+export class ReleasesModule { }

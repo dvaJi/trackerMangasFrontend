@@ -1,8 +1,9 @@
 import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
+import { Serie } from '../shared/model/serie';
 
-import { SerieService } from './serie.service';
+import { SerieService } from '../serie/serie.service';
 
 @Component({
   selector: 'app-browse',
@@ -11,16 +12,16 @@ import { SerieService } from './serie.service';
 })
 export class BrowseComponent implements OnInit {
 
-  serie: string;
+  series: Serie;
   isLoading: boolean;
 
   constructor(private serieService: SerieService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.serieService.getRandomQuote({ category: 'dev' })
+    this.serieService.getSeries()
       .finally(() => { this.isLoading = false; })
-      .subscribe((quote: string) => { this.serie = quote; });
+      .subscribe((serie: Serie) => { this.series = serie; });
   }
 
 }

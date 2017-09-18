@@ -45,4 +45,8 @@ export class HeaderComponent implements OnInit {
     return credentials ? credentials.username : null;
   }
 
+  get isLoggedIn(): boolean {
+    return this.authenticationService.isAuthenticated();
+  }
+
 }

@@ -12,6 +12,8 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
 import { BrowseModule } from './browse/browse.module';
+import { SeriesModule } from './serie/series.module';
+import { ReleasesModule } from './releases/releases.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 
@@ -26,6 +28,8 @@ import { LoginModule } from './login/login.module';
     SharedModule,
     HomeModule,
     BrowseModule,
+    ReleasesModule,
+    SeriesModule,
     AboutModule,
     LoginModule,
     AppRoutingModule

@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Route } from '../core/route.service';
 import { extract } from '../core/i18n.service';
-import { BrowseComponent } from './browse.component';
+import { ReleasesComponent } from './releases.component';
 
 const routes: Routes = Route.withShell([
-  { path: 'browse', component: BrowseComponent, data: { title: extract('Browse') } }
+  { path: 'releases', component: ReleasesComponent, data: { title: extract('Releases') } }
 ]);
 
 @NgModule({
@@ -14,4 +14,4 @@ const routes: Routes = Route.withShell([
   exports: [RouterModule],
   providers: []
 })
-export class BrowseRoutingModule { }
+export class ReleasesRoutingModule { }
