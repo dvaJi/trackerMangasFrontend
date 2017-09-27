@@ -1,86 +1,110 @@
 <div class="container">
-  <header>
-    Add Serie
-  </header>
+  <h3 translate>Añadir serie</h3>
   <section role="data" class="row series">
     <div class="col-md-9">
       <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="nameInput" translate>Nombre</label>
-          <input type="text" class="form-control" id="nameInput" formControlName="name" placeholder="{{'Nombre de la serie' | translate}}">
+          <input minlength="1" type="text" class="form-control" id="nameInput" formControlName="name" placeholder="{{'Nombre de la serie' | translate}}" required>
         </div>
         <div class="form-group">
           <label for="nameInput" translate>Nombres Alternativos</label>
           <tag-input name="altNames" id="nameInput" formControlName="altNames" [secondaryPlaceholder]="'Presionar Enter después de escribir el nombre.'"></tag-input>
         </div>
-        <div class="form-group">
-          <label for="typeDropdown" translate>Tipo</label>
-          <select formControlName="type" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="typeDropdown">
-            <option value="type" *ngFor="let type of types">{{type}}</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="typeDropdown" translate>Tipo</label>
+            <select formControlName="type" class="custom-select d-block col-md-12" id="typeDropdown">
+              <option value="type" *ngFor="let type of types" required>{{type}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="yearInput" translate>Fecha publicación</label>
+            <ng2-datepicker class="newdatepicker-input d-block col-md-12" formControlName="publicationDate" [options]="datePickerOptions"
+              [(ngModel)]="publicationDate"></ng2-datepicker>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="completelySCDropdown" translate>Estado traducción</label>
+            <select formControlName="statusSC" class="custom-select d-block col-md-12" id="completelySCDropdown">
+              <option value="1" selected translate>Completado</option>
+              <option value="2" translate>En Curso</option>
+              <option value="3" translate>Abandonado</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
           <label for="descriptionInput" translate>Descripción</label>
           <textarea formControlName="description" class="form-control" id="descriptionInput" rows="3"></textarea>
         </div>
-        <div class="form-group">
-          <label for="guionInput" translate>Guión</label>
-          <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar...'" [onlyFromAutocomplete]="true" formControlName="author">
-            <tag-input-dropdown [showDropdownIfEmpty]="false"
-            [autocompleteItems]="staff"></tag-input-dropdown>
-          </tag-input>
-        </div>
-        <div class="form-group">
-          <label for="nameInput" translate>Arte</label>
-          <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar...'" [onlyFromAutocomplete]="true" formControlName="artist">
-            <tag-input-dropdown [showDropdownIfEmpty]="false"
-            [autocompleteItems]="staff"></tag-input-dropdown>
-          </tag-input>
-        </div>
-        <div class="form-group">
-            <label for="magazines" translate>Revista</label>
-            <tag-input [inputId]="mag" [secondaryPlaceholder]="'Buscar...'" (click)="getMagazines()" [onlyFromAutocomplete]="true" formControlName="magazine">
-              <tag-input-dropdown [showDropdownIfEmpty]="false"
-              [autocompleteItems]="magazines"></tag-input-dropdown>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="guionInput" translate>Guión</label>
+            <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar...'" [onlyFromAutocomplete]="true" formControlName="author">
+              <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="staff"></tag-input-dropdown>
             </tag-input>
           </div>
+          <div class="form-group col-md-6">
+            <label for="nameInput" translate>Arte</label>
+            <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar artistas...'" [onlyFromAutocomplete]="true" formControlName="artist">
+              <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="staff"></tag-input-dropdown>
+            </tag-input>
+          </div>
+        </div>
         <div class="form-group">
-          <label for="statusOCDropdown" translate>Estado en país origen</label>
-          <select formControlName="statusOC" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="statusOCDropdown">
+          <label for="magazines" translate>Revista</label>
+          <tag-input [secondaryPlaceholder]="'Buscar revistas...'" (click)="getMagazines()" [onlyFromAutocomplete]="true" formControlName="magazine">
+            <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="magazines"></tag-input-dropdown>
+          </tag-input>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="statusOCDropdown" translate>Estado en país origen</label>
+            <select formControlName="statusOC" class="custom-select d-block col-md-12" id="statusOCDropdown">
             <option value="1" selected translate>Completado</option>
             <option value="2" translate>En curso</option>
             <option value="3" translate>Cancelado</option>
             <option value="4" translate>Hiatus</option>
           </select>
-          <input type="text" class="col-md-10 form-control" placeholder="Completado con 10 Tomos y 2 extras, en hiatus en el capítulo 64, etc." id="statisOCNote">
+          </div>
+          <div class="form-group col-md-8">
+            <label for="statusOCNote" translate>&zwnj;</label>
+            <input formControlName="statusOCNote" type="text" class="col-md-10 form-control" placeholder="Completado con 10 Tomos y 2 extras, en hiatus en el capítulo 64, etc."
+              id="statusOCNote">
+          </div>
         </div>
         <div class="form-group">
-          <label for="completelySCDropdown" translate>Estado traducción</label>
-          <select formControlName="statusSC" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="completelySCDropdown">
-            <option value="1" selected translate>Completado</option>
-            <option value="2" translate>En Curso</option>
-            <option value="3" translate>Abandonado</option>
+          <label for="licensedPublisher" translate>Licenciado</label>
+          <select formControlName="licensedPublisher" class="custom-select d-block col-md-12" id="licensedPublisher">
+            <option value="null" selected>No</option>
+            <option value="magazine.value" *ngFor="let magazine of magazines">{{magazine.display}}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="yearInput" translate>Fecha publicación</label>
-          <ng2-datepicker formControlName="publicationDate" [options]="datePickerOptions" [(ngModel)]="publicationDate"></ng2-datepicker>
+          <label class="d-block" translate>Portada</label>
+          <label class="custom-file col-md-12">
+            <input type="file" id="cover" (change)="onFileChange($event)" class="custom-file-input" #fileInput>
+            <span class="custom-file-control"></span>
+          </label>
         </div>
         <div class="form-group">
-          <label for="licensedDropdown" translate>Licenciado</label>
-          <input type="text" class="mb-10 form-control" formControlName="licensedPublisher" id="licensedPublisher">
-          <select formControlName="licensedLanguage" class="custom-select mb-2 mr-sm-2 mb-sm-0" id="licensedDropdown">
-            <option value="es" selected translate>Español (Neutro)</option>
-            <option value="es-AR" translate>Español Argentina</option>
-            <option value="es-MX" translate>Español México</option>
-            <option value="es-ES" translate>Español España</option>
-          </select>
+          <label class="d-block" translate>Demografía</label>
+          <div class="form-check d-inline-block col-md-6" *ngFor="let demographic of demographics">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" formControlName="demographic" value="{{demographic.id}}">
+              {{demographic.name}}
+            </label>
+          </div>
         </div>
         <div class="form-group">
-          <label for="coverFile">Cover</label>
-          <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+          <label class="d-block" translate>Géneros</label>
+          <div class="form-check d-inline-block col-md-6" *ngFor="let genre of genres">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" (change)="genre.checked = !genre.checked" value="{{genre.id}}">
+              {{genre.name}}
+            </label>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary">Submit</button>
       </form>
     </div>
     <div class="col-md-3">
@@ -88,7 +112,7 @@
         <h4 class="alert-heading" translate>¡Importante!</h4>
         <p translate>Para obener información acerca de alguna serie puedes usar alguna de estas fuentes: MAL, MU.</p>
         <hr>
-        <p class="mb-0">Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
+        <p class="mb-0" translate>Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
       </div>
     </div>
   </section>

@@ -5,14 +5,11 @@
       <app-loader [isLoading]="isLoading"></app-loader>
       <table *ngIf="!isLoading" class="table table-striped">
         <thead>
-          <tr>
-            <th class="date" colspan="3">September 1, 2017</th>
-          </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let release of releases.releases">
+          <tr *ngFor="let release of releases">
             <td>
-              <a [routerLink]="['/serie', release.serie.id]">{{release.serie.name}}</a>
+              <a [routerLink]="['/serie', release.serie.id, release.serie.stub]">{{release.serie.name}}</a>
             </td>
             <td class="text-right">
               c.{{release.chapter}}

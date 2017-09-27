@@ -13,4 +13,5 @@ export class Serie {
     updated: Date;
     staff: string[];
     characters: string;
+    genres: number[];
 }

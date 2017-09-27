@@ -12,7 +12,6 @@ import { TagInputModule } from 'ngx-chips';
 import { DatePickerModule } from 'ng2-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -29,8 +28,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
   ],
   declarations: [
     SeriesComponent,
-    SerieFormComponent,
-    FileSelectDirective
+    SerieFormComponent
   ],
   providers: [
     SerieService

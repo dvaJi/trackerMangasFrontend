@@ -10,6 +10,7 @@ import { Staff } from '../../shared/model/staff';
 import { Magazine } from '../../shared/model/magazine';
 import { Genre } from '../../shared/model/genre';
 import { Serie } from '../../shared/model/serie';
+import { Demographic } from '../../shared/model/demographic';
 
 import { SerieService } from '../serie.service';
 
@@ -28,16 +29,20 @@ export class SerieFormComponent implements OnInit {
   staff: any;
   genres: Genre[];
   magazines: any;
+  demographics: Demographic[];
   types: string[];
   isLoading: boolean;
   publicationDate: DateModel;
   datePickerOptions: DatePickerOptions;
+  isLicensed: boolean;
 
   constructor(private serieService: SerieService) {
     this.datePickerOptions = new DatePickerOptions();
   }
 
   ngOnInit() {
+    this.getGenres();
+    this.getDemographics();
     this.myform = new FormGroup({
       name: new FormControl(),
       altNames: new FormControl(),
@@ -47,24 +52,41 @@ export class SerieFormComponent implements OnInit {
       artist: new FormControl(),
       magazine: new FormControl(),
       statusOC: new FormControl(),
+      statusOCNote: new FormControl(),
       statusSC: new FormControl(),
       publicationDate: new FormControl(),
       licensedPublisher: new FormControl(),
       licensedLanguage: new FormControl(),
-      cover: new FormControl()
+      demographic: new FormControl(),
+      cover: new FormControl(),
+      genres: new FormControl()
     });
     this.types = ['Manga', 'Manhwa', 'Manhua', 'Artbook', 'Doujinshi', 'Drama CD', 'Novela Ligera'];
   }
 
   onFileChange(event: any) {
-    if (event.target.files.length > 0) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.myform.get('cover').setValue(file);
+      const filesTypeAllowed: Array<string> = ['image/png', 'image/jpeg'];
+
+      if (!filesTypeAllowed.includes(file.type)) {
+        throw new Error('Archivo no permitido');
+      }
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.myform.get('cover').setValue({
+          filename: file.name,
+          filetype: file.type,
+          value: reader.result.split(',')[1]
+        });
+      };
     }
   }
 
   onSubmit() {
     const serie: Serie = this.myform.value;
+    serie.genres = this.genresSelected;
     this.serieService.setSerie(serie)
     .subscribe(credentials => {
       console.log(credentials);
@@ -81,7 +103,7 @@ export class SerieFormComponent implements OnInit {
         this.isLoading = false;
         this.staff = this.toChipsObject(this.staff);
       })
-      .subscribe((staff: any) => { this.staff = staff.staffs; });
+      .subscribe((staff: any) => { this.staff = staff; });
     }
   }
 
@@ -95,12 +117,22 @@ export class SerieFormComponent implements OnInit {
     }
   }
 
+  getDemographics() {
+    if (!this.demographics) {
+      this.serieService.getDemographics()
+      .finally(() => {
+        this.isLoading = false;
+      })
+      .subscribe((demographics: Demographic[]) => { this.demographics = demographics; });
+    }
+  }
+
   public getMagazines() {
     if (!this.magazines) {
       this.serieService.getMagazines()
       .finally(() => {
         this.isLoading = false;
-        this.magazines = this.toChipsObject(this.magazines.magazines);
+        this.magazines = this.toChipsObject(this.magazines);
       })
       .subscribe((magazines: any) => { this.magazines = magazines; });
     }
@@ -113,11 +145,17 @@ export class SerieFormComponent implements OnInit {
       const obj = {
         value: objeto.id,
         display: objeto.name
-      }
+      };
       nuevaLista.push(obj);
     });
 
     return nuevaLista;
+  }
+
+  get genresSelected() {
+    return this.genres
+      .filter(opt => opt.checked)
+      .map(opt => opt.id);
   }
 
 }

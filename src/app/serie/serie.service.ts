@@ -5,6 +5,7 @@ import { Serie } from '../shared/model/serie';
 import { Genre } from '../shared/model/genre';
 import { Staff } from '../shared/model/staff';
 import { Magazine } from '../shared/model/magazine';
+import { Demographic } from '../shared/model/demographic';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +17,8 @@ const routes = {
   series: () => `/serie/list`,
   genres: () => `/genre/list`,
   staffs: () => `/staffs/list`,
-  magazines: () => `/magazine/list`
+  magazines: () => `/magazine/list`,
+  demographic: () => `/demographic/list`
 };
 
 export interface SerieContext {
@@ -40,9 +42,12 @@ export class SerieService {
 
   setSerie(context: Serie): Observable<Serie> {
     const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
+      headers: new Headers({
+        'Authorization': this.auth.credentials.token,
+        'Content-Type': false,
+        'Accept': 'application/json'})
     });
-    return this.http.post(routes.serieSet(), JSON.stringify(context), options)
+    return this.http.post(routes.serieSet(), context, options)
       .map((res: any) => res.json())
       .flatMap((data: any) => {
         return Observable.of(data);
@@ -75,7 +80,7 @@ export class SerieService {
   /*
    * Obtener todos los géneros de las series.
    */
-  getStaff(): Observable<Staff[]> {
+  getStaff(): Observable<Response> {
     const options = new RequestOptions({
       headers: new Headers({'Authorization': this.auth.credentials.token})
     });
@@ -95,7 +100,20 @@ export class SerieService {
     return this.http.get(routes.magazines(), options)
       .map((res: Response) => res.json())
       .map(body => body)
-      .catch(() => Observable.of('Error, no hay Staff.'));
+      .catch(() => Observable.of('Error, no hay Revistas.'));
+  }
+
+  /*
+   * Obtener todos las demografias.
+   */
+  getDemographics(): Observable<Demographic[]> {
+    const options = new RequestOptions({
+      headers: new Headers({'Authorization': this.auth.credentials.token})
+    });
+    return this.http.get(routes.demographic(), options)
+      .map((res: Response) => res.json())
+      .map(body => body)
+      .catch(() => Observable.of('Error, no hay Demografías.'));
   }
 
 }

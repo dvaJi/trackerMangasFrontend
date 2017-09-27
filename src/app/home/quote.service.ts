@@ -6,7 +6,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 const routes = {
-  quote: (c: RandomQuoteContext) => `/noticias`
+  quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
 };
 
 export interface RandomQuoteContext {

@@ -9,7 +9,7 @@ import { SerieFormComponent } from './form/serie-form.component';
 const routes: Routes = Route.withShell([
   { path: 'serie', redirectTo: '/browse', pathMatch: 'full' },
   { path: 'serie/add', pathMatch: 'full', component: SerieFormComponent, data: { title: extract('Add Serie')}},
-  { path: 'serie/:id', component: SeriesComponent, data: { title: extract('Series') } }
+  { path: 'serie/:id/:stub', component: SeriesComponent, data: { title: extract('Series') } }
 ]);
 
 @NgModule({
