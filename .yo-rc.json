@@ -1,11 +1,12 @@
 {
   "generator-ngx-rocket": {
-    "version": "2.1.2",
+    "version": "2.2.0",
     "props": {
       "appName": "trackermangas",
       "target": [
         "web"
       ],
+      "pwa": true,
       "ui": "bootstrap",
       "auth": true,
       "projectName": "trackermangas",

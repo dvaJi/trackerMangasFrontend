@@ -1,7 +1,7 @@
 # trackermangas
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
-version 2.1.2
+version 2.2.0
 
 # Getting started
 
@@ -49,7 +49,7 @@ Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
 Task                            | Description
 --------------------------------|--------------------------------------------------------------------------------------
 `npm start`                     | Run development server on `http://localhost:4200/`
-`npm run build [-- --env=prod]` | Lint code and build web app for production in `dist/` folder
+`npm run build [-- --env=prod]` | Lint code and build web app for production (with [AOT](https://angular.io/guide/aot-compiler)) in `dist/` folder
 `npm test`                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
 `npm run test:ci`               | Lint code and run unit tests once for continuous integration
 `npm run e2e`                   | Run e2e tests using [Protractor](http://www.protractortest.org)

@@ -13,7 +13,7 @@
   </nav>
   <section role="data" class="row series">
     <div class="col-md-3">
-      <div class="cover"><img src="{{serie.cover}}" /></div>
+      <div class="cover"><img src="{{serie.cover.large.path_full}}" /></div>
       <dl class="info series-info">
         <dd translate>Revista(s)</dd>
         <dt>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <h3>Capítulos recientes</h3>
-      <table class="table table-striped">
+      <table *ngIf="serie.releases.length > 0" class="table table-striped">
         <tbody>
           <tr *ngFor="let release of serie.releases">
             <td>c.{{release.chapter}}</td>
@@ -62,8 +62,11 @@
           </tr>
         </tbody>
       </table>
-      <p class="text-right">
-        <a class="button small" href="/series/info/113675/releases/" translate>See All Releases</a>
+      <p class="text-center" *ngIf="serie.releases.length === 0">
+        No hay capítulos traducidos para esta serie :(.
+      </p>
+      <p class="text-right" *ngIf="serie.releases.length > 0">
+        <a class="button small" href="/series/info/113675/releases/" translate>Ver todos los capítulos</a>
       </p>
     </div>
   </section>

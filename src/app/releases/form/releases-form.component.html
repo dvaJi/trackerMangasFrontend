@@ -1,0 +1,46 @@
+<div class="container">
+  <h3 translate>Añadir release</h3>
+  <section role="data" class="row series">
+    <div class="col-md-9">
+      <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="nameInput" translate>Serie</label>
+          <tag-input (click)="getSeries()" [secondaryPlaceholder]="'Buscar serie...'" [onlyFromAutocomplete]="true" formControlName="serie">
+            <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="series"></tag-input-dropdown>
+          </tag-input>
+        </div>
+        <div class="form-group">
+          <label for="nameInput" translate>Scans</label>
+          <tag-input (click)="getScans()" [secondaryPlaceholder]="'Buscar scans...'" [onlyFromAutocomplete]="true" formControlName="scans">
+            <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="scans"></tag-input-dropdown>
+          </tag-input>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="volumeInput" translate>Tomo</label>
+            <input type="text" class="form-control" id="volumeInput" formControlName="volume" placeholder="{{'Tomo' | translate}}" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="chapterInput" translate>Capítulo</label>
+            <input minlength="1" type="text" class="form-control" id="chapterInput" formControlName="chapter" placeholder="{{'Capítulo' | translate}}" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="completelySCDropdown" translate>Fecha publicación</label>
+            <ng2-datepicker class="newdatepicker-input d-block col-md-12" formControlName="publicationDate" [options]="datePickerOptions"
+            [(ngModel)]="publicationDate"></ng2-datepicker>
+          </div>
+        </div>
+        
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading" translate>¡Importante!</h4>
+        <p translate>Para obener información acerca de alguna serie puedes usar alguna de estas fuentes: MAL, MU.</p>
+        <hr>
+        <p class="mb-0" translate>Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
+      </div>
+    </div>
+  </section>
+</div>
