@@ -14,6 +14,7 @@ import { HomeModule } from './home/home.module';
 import { BrowseModule } from './browse/browse.module';
 import { SeriesModule } from './serie/series.module';
 import { ReleasesModule } from './releases/releases.module';
+import { StaffModule } from './staff/staff.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 
@@ -29,6 +30,7 @@ import { LoginModule } from './login/login.module';
     HomeModule,
     BrowseModule,
     ReleasesModule,
+    StaffModule,
     SeriesModule,
     AboutModule,
     LoginModule,

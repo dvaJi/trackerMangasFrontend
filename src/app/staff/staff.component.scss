@@ -1,0 +1,34 @@
+.cover-nav {
+  background: #f0f0f0;
+}
+
+.serie_data {
+  text-align: left;
+  margin-top: 15px;
+  font-size: .75em;
+  font-family: "Open Sans",sans-serif;
+  color: #303338;
+  border-top: solid 1px #eee;
+  background: #fff;
+}
+
+.serie_data div {
+  padding: 13px;
+  border-bottom: solid 1px #eee;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 60px;
+  background: #f5f8f9;
+}
+
+.serie_data div > span:first-of-type {
+  color: #0591da;
+  font-weight: 600;
+  vertical-align: top;
+  width: 46%;
+}
+
+.serie_data div > span {
+  display: inline-block;
+  width: 52%;
+}

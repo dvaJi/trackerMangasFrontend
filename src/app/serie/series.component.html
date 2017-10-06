@@ -39,7 +39,7 @@
         <div class="col-md-2" *ngFor="let staff of staff">
           <img src="/api/content/staff/{{staff.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}">
           <div class="staff text-center">
-            <a class="staff__name" href="/staff/{{staff.id}}/{{staff.stub}}">
+            <a class="staff__name"  [routerLink]="['/staff', staff.id, staff.stub]">
               <div>{{staff.name}}</div>
             </a>
             <a class="staff__rol">
@@ -56,7 +56,7 @@
             <td>{{release.created | date: 'dd/MM/yyyy'}}</td>
             <td class="text-right">
               <span *ngFor="let scan of release.groups; let isLast=last">
-                <a href="/scan/{{scan.group_id}}/{{scan.stub}}">{{scan.name}}</a>{{isLast ? '' : ' & '}}
+                <a [routerLink]="['/scan', scan.group_id, scan.stub]">{{scan.name}}</a>{{isLast ? '' : ' & '}}
               </span>
             </td>
           </tr>
