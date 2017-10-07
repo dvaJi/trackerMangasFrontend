@@ -1,0 +1,25 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+before_script:
+  - npm install -g @angular/cli
+  - npm install
+test:
+  stage: test
+  script:
+    - npm run test:ci
+  except:
+    - master
+
+# the 'pages' job will deploy and build your site to the 'testci' path
+pages:
+  stage: deploy
+  script:
+    - npm run build [-- --env=prod]
+  artifacts:
+    paths:
+      - public
+  only:
+    - testci # this job will affect only the 'testci' branch
