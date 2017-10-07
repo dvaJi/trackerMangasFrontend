@@ -1,0 +1,69 @@
+<div class="container">
+  <h3 translate>Añadir Revista</h3>
+  <section role="data" class="row series">
+    <div class="col-md-9">
+      <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nameInput" translate>Nombre</label>
+            <input minlength="1" type="text" class="form-control" id="nameInput" formControlName="name" placeholder="{{'Nombre de la revista' | translate}}" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="nameAltInput" translate>Nombre Nativo</label>
+            <input minlength="1" type="text" class="form-control" id="nameAltInput" formControlName="nameAltInput" placeholder="{{'Nombre nativo de la revista' | translate}}" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="releaseSchedule" translate>Frecuencia</label>
+            <select formControlName="releaseSchedule" class="custom-select d-block col-md-12" id="releaseSchedule">
+              <option *ngFor="let schedule of schedules" value="{{schedule}}" translate>{{schedule}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="publisher" translate>Editorial</label>
+            <select formControlName="publisher" class="custom-select d-block col-md-12" id="publisher">
+              <option *ngFor="let publisher of publishers" value="{{publisher.id}}" translate>{{publisher.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="circulation" translate>Circulación</label>
+            <ng2-datepicker class="newdatepicker-input d-block col-md-12" formControlName="circulation" [options]="datePickerOptions"
+              [(ngModel)]="circulation"></ng2-datepicker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="descriptionInput" translate>Descripción</label>
+          <textarea formControlName="description" class="form-control" id="descriptionInput" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="website" translate>Sitio web</label>
+            <input type="text" class="form-control" id="website" formControlName="website" placeholder="{{'Sitio web' | translate}}" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="twitter" translate>Twitter</label>
+            <input formControlName="twitter" type="text" class="col-md-12 form-control" placeholder="Nombre de usuario"
+              id="twitter">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="d-block" translate>Imagen</label>
+          <label class="custom-file col-md-12">
+            <input type="file" id="cover" (change)="onFileChange($event)" class="custom-file-input" #fileInput>
+            <span class="custom-file-control"></span>
+          </label>
+        </div>
+        <button type="submit" [disabled]="isLoading" class="btn btn-primary" translate>Enviar</button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading" translate>¡Importante!</h4>
+        <p translate>Para obener información acerca de alguna serie puedes usar alguna de estas fuentes: MAL, MU.</p>
+        <hr>
+        <p class="mb-0" translate>Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
+      </div>
+    </div>
+  </section>
+</div>

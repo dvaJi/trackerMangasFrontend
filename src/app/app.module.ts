@@ -15,6 +15,7 @@ import { BrowseModule } from './browse/browse.module';
 import { SeriesModule } from './serie/series.module';
 import { ReleasesModule } from './releases/releases.module';
 import { StaffModule } from './staff/staff.module';
+import { MagazineModule } from './magazine/magazine.module';
 import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 
@@ -31,6 +32,7 @@ import { LoginModule } from './login/login.module';
     BrowseModule,
     ReleasesModule,
     StaffModule,
+    MagazineModule,
     SeriesModule,
     AboutModule,
     LoginModule,

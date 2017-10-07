@@ -18,7 +18,7 @@
         <dd translate>Revista(s)</dd>
         <dt>
           <ul>
-            <li *ngFor="let magazine of serie.magazines"><a href="/magazine/{{magazine.id}}">{{magazine.name}}</a></li>
+            <li *ngFor="let magazine of serie.magazines"><a [routerLink]="['/magazine', magazine.id, magazine.stub]">{{magazine.name}}</a></li>
           </ul>
         </dt>
         <dd>Géneros</dd>
