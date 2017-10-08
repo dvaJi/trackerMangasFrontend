@@ -1,15 +1,14 @@
-image: node:latest
+image: node:8.6.0
 
 cache:
   paths:
     - node_modules/
 before_script:
-  - npm install -g @angular/cli
   - npm install
 test:
   stage: test
   script:
-    - npm run test:ci
+    - ./node_modules/@angular/cli/bin/ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc && ./node_modules/@angular/cli/bin/ng test --single-run --code-coverage
   except:
     - master
 
