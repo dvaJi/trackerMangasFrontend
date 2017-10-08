@@ -73,6 +73,11 @@ export class AuthenticationService {
     return this._credentials;
   }
 
+  set guessCredentials(data: any) {
+    const guess: Credentials = {username: 'Guess', token: 'asaa'};
+    this.setCredentials(guess, false);
+  }
+
   /**
    * Sets the user credentials.
    * The credentials may be persisted across sessions by setting the `remember` parameter to true.

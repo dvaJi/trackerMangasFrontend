@@ -13,6 +13,12 @@ export class AuthenticationGuard implements CanActivate {
               private authenticationService: AuthenticationService) { }
 
   canActivate(): boolean {
+    if (this.authenticationService.isAuthenticated()) {
+      return true;
+    } else {
+      this.authenticationService.guessCredentials = 'asd';
+      return true;
+    }
     /*if (this.authenticationService.isAuthenticated()) {
       return true;
     }
@@ -20,7 +26,6 @@ export class AuthenticationGuard implements CanActivate {
     log.debug('Not authenticated, redirecting...');
     this.router.navigate(['/login'], { replaceUrl: true });
     return false;*/
-    return true;
   }
 
 }
