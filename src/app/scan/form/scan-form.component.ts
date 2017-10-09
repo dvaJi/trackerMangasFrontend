@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+import { DatepickerOptions } from 'ng2-datepicker';
 import { Scan } from '../../shared/model/scan';
 
 import { ScanService } from '../scan.service';
@@ -26,13 +26,17 @@ export class ScanFormComponent implements OnInit {
   types: string[];
   schedules: Array<string>;
   isLoading: boolean;
-  creationDate: DateModel;
-  datePickerOptions: DatePickerOptions;
+  creationDate: Date = new Date();
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1960,
+    maxYear: 2018,
+    displayFormat: 'D MMM[,] YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    firstCalendarDay: 1
+  };
   isLicensed: boolean;
 
-  constructor(private scanService: ScanService) {
-    this.datePickerOptions = new DatePickerOptions();
-  }
+  constructor(private scanService: ScanService) { }
 
   ngOnInit() {
     this.myform = new FormGroup({
@@ -68,7 +72,6 @@ export class ScanFormComponent implements OnInit {
 
   onSubmit() {
     const scan: Scan = this.myform.value;
-    console.log(scan);
     this.scanService.setScan(scan)
     .subscribe(credentials => {
       console.log(credentials);

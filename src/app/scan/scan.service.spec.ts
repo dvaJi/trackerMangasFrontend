@@ -1,4 +1,5 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
@@ -11,6 +12,9 @@ describe('ScanService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       providers: [
         ScanService,
         MockBackend,
@@ -22,7 +26,8 @@ describe('ScanService', () => {
           },
           deps: [MockBackend, BaseRequestOptions]
         }
-      ]
+      ],
+      declarations: []
     });
   });
 
@@ -47,7 +52,7 @@ describe('ScanService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const scans = scanService.getScan();
+      const scans = scanService.getScans();
       tick();
 
       // Assert

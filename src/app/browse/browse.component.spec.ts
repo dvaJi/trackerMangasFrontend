@@ -4,7 +4,8 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../shared/shared.module';
 import { BrowseComponent } from './browse.component';
-import { SerieService } from './serie.service';
+import { SerieService } from '../serie/serie.service';
+import { AuthenticationService } from './../core/authentication/authentication.service';
 
 describe('BrowseComponent', () => {
   let component: BrowseComponent;
@@ -18,6 +19,7 @@ describe('BrowseComponent', () => {
         declarations: [BrowseComponent],
         providers: [
           SerieService,
+          AuthenticationService,
           MockBackend,
           BaseRequestOptions,
           {

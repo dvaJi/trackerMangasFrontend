@@ -35,14 +35,14 @@
       <h3>Sinopsis</h3>
       <p>{{serie.description}}</p>
       <h3 translate>Staff</h3>
-      <div class="series__staff row">
+      <div class="series-staff row">
         <div class="col-md-2" *ngFor="let staff of staff">
-          <img src="/api/content/staff/{{staff.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}">
+          <img src="/api/content/staff/{{staff.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}"/>
           <div class="staff text-center">
-            <a class="staff__name"  [routerLink]="['/staff', staff.id, staff.stub]">
+            <a class="staff-name"  [routerLink]="['/staff', staff.id, staff.stub]">
               <div>{{staff.name}}</div>
             </a>
-            <a class="staff__rol">
+            <a class="staff-rol">
               <div>{{staff.rol}}</div>
             </a>
           </div>

@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
 import { TagInputModule } from 'ngx-chips';
-import { DatePickerModule } from 'ng2-datepicker';
+import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { ReleasesRoutingModule } from './releases-routing.module';
 import { ReleasesComponent } from './releases.component';
@@ -22,7 +22,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     ReleasesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DatePickerModule
+    NgDatepickerModule
   ],
   declarations: [
     ReleasesComponent,

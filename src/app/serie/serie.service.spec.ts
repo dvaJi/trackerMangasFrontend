@@ -3,6 +3,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
 import { SerieService } from './serie.service';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('SerieService', () => {
   let serieService: SerieService;
@@ -12,6 +13,7 @@ describe('SerieService', () => {
     TestBed.configureTestingModule({
       providers: [
         SerieService,
+        AuthenticationService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -49,11 +51,11 @@ describe('SerieService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
 
       // Act
-      const randomQuoteSubscription = serieService.getRandomQuote({ category: 'toto' });
+      const randomQuoteSubscription = serieService.getSeries();
       tick();
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
+      randomQuoteSubscription.subscribe((quote: any) => {
         expect(quote).toEqual(mockQuote);
       });
     }));
@@ -64,11 +66,11 @@ describe('SerieService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const randomQuoteSubscription = serieService.getRandomQuote({ category: 'toto' });
+      const randomQuoteSubscription = serieService.getSeries();
       tick();
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
+      randomQuoteSubscription.subscribe((quote: any) => {
         expect(typeof quote).toEqual('string');
         expect(quote).toContain('Error');
       });

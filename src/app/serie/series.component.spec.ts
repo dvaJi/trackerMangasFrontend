@@ -5,6 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { SharedModule } from '../shared/shared.module';
 import { SeriesComponent } from './series.component';
 import { SerieService } from './serie.service';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('SeriesComponent', () => {
   let component: SeriesComponent;
@@ -18,6 +19,7 @@ describe('SeriesComponent', () => {
         declarations: [SeriesComponent],
         providers: [
           SerieService,
+          AuthenticationService,
           MockBackend,
           BaseRequestOptions,
           {

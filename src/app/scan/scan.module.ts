@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
 import { TagInputModule } from 'ngx-chips';
-import { DatePickerModule } from 'ng2-datepicker';
+import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { ScanRoutingModule } from './scan-routing.module';
 import { ScanComponent } from './scan.component';
@@ -22,7 +22,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     ScanRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    DatePickerModule
+    NgDatepickerModule
   ],
   declarations: [
     ScanComponent,

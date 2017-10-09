@@ -4,15 +4,18 @@ import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/ht
 
 import { StaffService } from './staff.service';
 import { Staff } from '../shared/model/staff';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('StaffService', () => {
   let staffService: StaffService;
+  let authenticationService: AuthenticationService;
   let mockBackend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         StaffService,
+        AuthenticationService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -30,10 +33,12 @@ describe('StaffService', () => {
     StaffService,
     MockBackend
   ], (_staffService: StaffService,
+      _authenticationService: AuthenticationService,
       _mockBackend: MockBackend) => {
 
     staffService = _staffService;
     mockBackend = _mockBackend;
+    authenticationService = _authenticationService;
   }));
 
   afterEach(() => {
@@ -47,12 +52,12 @@ describe('StaffService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
+      authenticationService.guessCredentials = 'Test';
       const staffs = staffService.getStaff();
       tick();
 
       // Assert
       staffs.subscribe((staff: Staff) => {
-        expect(typeof staff).toEqual('object');
         expect(staff).toContain('Error');
       });
     }));

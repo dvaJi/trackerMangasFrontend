@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+import { DatepickerOptions } from 'ng2-datepicker';
 import { Staff } from '../../shared/model/staff';
 
 import { StaffService } from '../staff.service';
@@ -25,13 +25,17 @@ export class StaffFormComponent implements OnInit {
   scans: any;
   types: string[];
   isLoading: boolean;
-  birthDate: DateModel;
-  datePickerOptions: DatePickerOptions;
+  birthDate: Date = new Date();
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1960,
+    maxYear: 2018,
+    displayFormat: 'D MMM [,] YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    firstCalendarDay: 1
+  };
   isLicensed: boolean;
 
-  constructor(private staffService: StaffService) {
-    this.datePickerOptions = new DatePickerOptions();
-  }
+  constructor(private staffService: StaffService) { }
 
   ngOnInit() {
     this.myform = new FormGroup({

@@ -1,10 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../shared/shared.module';
 import { StaffComponent } from './staff.component';
 import { StaffService } from './staff.service';
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('StaffComponent', () => {
   let component: StaffComponent;
@@ -13,11 +15,13 @@ describe('StaffComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-          SharedModule
+          SharedModule,
+          RouterTestingModule
         ],
         declarations: [StaffComponent],
         providers: [
           StaffService,
+          AuthenticationService,
           MockBackend,
           BaseRequestOptions,
           {
