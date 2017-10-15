@@ -23,7 +23,7 @@ describe('BrowseComponent', () => {
           MockBackend,
           BaseRequestOptions,
           {
-            provide: Http,
+            provide: Http, AuthenticationService,
             useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
               return new Http(backend, defaultOptions);
             },
@@ -37,6 +37,8 @@ describe('BrowseComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BrowseComponent);
     component = fixture.componentInstance;
+    const authenticationService = TestBed.get(AuthenticationService);
+    authenticationService.guessCredentials = 'test';
     fixture.detectChanges();
   });
 

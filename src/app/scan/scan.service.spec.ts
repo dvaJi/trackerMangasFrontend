@@ -45,21 +45,5 @@ describe('ScanService', () => {
     mockBackend.verifyNoPendingRequests();
   });
 
-  describe('getScan', () => {
-    it('should return a object in case of error', fakeAsync(() => {
-      // Arrange
-      const response = new Response(new ResponseOptions({ status: 500 }));
-      mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
-
-      // Act
-      const scans = scanService.getScans();
-      tick();
-
-      // Assert
-      scans.subscribe((scan: Scan) => {
-        expect(typeof scan).toEqual('object');
-        expect(scan).toContain('Error');
-      });
-    }));
-  });
+  // TODO
 });

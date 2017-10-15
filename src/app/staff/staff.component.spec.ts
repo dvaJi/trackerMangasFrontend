@@ -25,7 +25,7 @@ describe('StaffComponent', () => {
           MockBackend,
           BaseRequestOptions,
           {
-            provide: Http,
+            provide: Http, AuthenticationService,
             useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
               return new Http(backend, defaultOptions);
             },
@@ -39,6 +39,8 @@ describe('StaffComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StaffComponent);
     component = fixture.componentInstance;
+    const authenticationService = TestBed.get(AuthenticationService);
+    authenticationService.guessCredentials = 'test';
     fixture.detectChanges();
   });
 

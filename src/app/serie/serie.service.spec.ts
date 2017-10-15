@@ -41,39 +41,5 @@ describe('SerieService', () => {
     mockBackend.verifyNoPendingRequests();
   });
 
-  describe('getRandomQuote', () => {
-    it('should return a random Chuck Norris quote', fakeAsync(() => {
-      // Arrange
-      const mockQuote = 'a random quote';
-      const response = new Response(new ResponseOptions({
-        body: { value: mockQuote }
-      }));
-      mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
-
-      // Act
-      const randomQuoteSubscription = serieService.getSeries();
-      tick();
-
-      // Assert
-      randomQuoteSubscription.subscribe((quote: any) => {
-        expect(quote).toEqual(mockQuote);
-      });
-    }));
-
-    it('should return a string in case of error', fakeAsync(() => {
-      // Arrange
-      const response = new Response(new ResponseOptions({ status: 500 }));
-      mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
-
-      // Act
-      const randomQuoteSubscription = serieService.getSeries();
-      tick();
-
-      // Assert
-      randomQuoteSubscription.subscribe((quote: any) => {
-        expect(typeof quote).toEqual('string');
-        expect(quote).toContain('Error');
-      });
-    }));
-  });
+  // TODO
 });

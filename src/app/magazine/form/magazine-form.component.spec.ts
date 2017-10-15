@@ -1,3 +1,8 @@
+import { AuthenticationService } from './../../core/authentication/authentication.service';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { TagInputModule } from 'ngx-chips';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
@@ -13,15 +18,23 @@ describe('MagazineFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-          SharedModule
+          SharedModule,
+          ReactiveFormsModule,
+          FormsModule,
+          TranslateModule.forRoot({
+            loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+          }),
+          TagInputModule,
+          NgDatepickerModule
         ],
         declarations: [MagazineFormComponent],
         providers: [
           MagazineService,
+          AuthenticationService,
           MockBackend,
           BaseRequestOptions,
           {
-            provide: Http,
+            provide: Http, AuthenticationService, TranslateService,
             useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
               return new Http(backend, defaultOptions);
             },
@@ -35,6 +48,8 @@ describe('MagazineFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MagazineFormComponent);
     component = fixture.componentInstance;
+    const authenticationService = TestBed.get(AuthenticationService);
+    authenticationService.guessCredentials = 'test';
     fixture.detectChanges();
   });
 
