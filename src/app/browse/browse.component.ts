@@ -19,9 +19,9 @@ export class BrowseComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.serieService.getSeries()
+    /* this.serieService.getSeries()
       .finally(() => { this.isLoading = false; })
-      .subscribe((serie: Serie) => { this.series = serie; });
+      .subscribe((serie: Serie) => { this.series = serie; });*/
   }
 
 }

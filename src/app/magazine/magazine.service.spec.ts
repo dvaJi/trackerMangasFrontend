@@ -2,6 +2,7 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
+import { AuthenticationService } from '../core/authentication/authentication.service';
 import { MagazineService } from './magazine.service';
 import { Magazine } from '../shared/model/magazine';
 
@@ -13,6 +14,7 @@ describe('MagazineService', () => {
     TestBed.configureTestingModule({
       providers: [
         MagazineService,
+        AuthenticationService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -52,7 +54,7 @@ describe('MagazineService', () => {
 
       // Assert
       magazines.subscribe((magazine: Magazine) => {
-        expect(typeof magazine).toEqual('object');
+        expect(typeof magazine).toEqual('string');
         expect(magazine).toContain('Error');
       });
     }));

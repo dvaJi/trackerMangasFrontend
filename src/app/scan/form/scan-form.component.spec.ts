@@ -1,5 +1,4 @@
 import { AuthenticationService } from './../../core/authentication/authentication.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
@@ -9,18 +8,17 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
-import { SeriesComponent } from '../series.component';
-import { SerieService } from '../serie.service';
+import { ScanFormComponent } from './scan-form.component';
+import { ScanService } from '../scan.service';
 
-describe('SeriesFormComponent', () => {
-  let component: SeriesComponent;
-  let fixture: ComponentFixture<SeriesComponent>;
+describe('ScanFormComponent', () => {
+  let component: ScanFormComponent;
+  let fixture: ComponentFixture<ScanFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
           SharedModule,
-          RouterTestingModule,
           ReactiveFormsModule,
           FormsModule,
           TranslateModule.forRoot({
@@ -29,9 +27,9 @@ describe('SeriesFormComponent', () => {
           TagInputModule,
           NgDatepickerModule
         ],
-        declarations: [SeriesComponent],
+        declarations: [ScanFormComponent],
         providers: [
-          SerieService,
+          ScanService,
           AuthenticationService,
           MockBackend,
           BaseRequestOptions,
@@ -48,7 +46,7 @@ describe('SeriesFormComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SeriesComponent);
+    fixture = TestBed.createComponent(ScanFormComponent);
     component = fixture.componentInstance;
     const authenticationService = TestBed.get(AuthenticationService);
     authenticationService.guessCredentials = 'test';

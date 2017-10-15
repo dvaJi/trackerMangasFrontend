@@ -4,23 +4,23 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../shared/shared.module';
-import { SeriesComponent } from './series.component';
-import { SerieService } from './serie.service';
+import { ScanComponent } from './scan.component';
+import { ScanService } from './scan.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
-describe('SeriesComponent', () => {
-  let component: SeriesComponent;
-  let fixture: ComponentFixture<SeriesComponent>;
+describe('ScanComponent', () => {
+  let component: ScanComponent;
+  let fixture: ComponentFixture<ScanComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
           SharedModule,
-          RouterTestingModule,
+          RouterTestingModule
         ],
-        declarations: [SeriesComponent],
+        declarations: [ScanComponent],
         providers: [
-          SerieService,
+          ScanService,
           AuthenticationService,
           MockBackend,
           BaseRequestOptions,
@@ -37,7 +37,7 @@ describe('SeriesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SeriesComponent);
+    fixture = TestBed.createComponent(ScanComponent);
     component = fixture.componentInstance;
     const authenticationService = TestBed.get(AuthenticationService);
     authenticationService.guessCredentials = 'test';

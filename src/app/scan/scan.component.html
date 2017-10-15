@@ -1,23 +1,15 @@
 <div class="container">
   <section role="data" class="row series">
     <div class="col-md-9">
-      <h3>Capítulos recientes</h3>
+      <h3>Revistas</h3>
       <app-loader [isLoading]="isLoading"></app-loader>
       <table *ngIf="!isLoading" class="table table-striped">
         <thead>
         </thead>
         <tbody>
-          <tr *ngFor="let release of releases">
+          <tr *ngFor="let scan of scans">
             <td>
-              <a [routerLink]="['/serie', release.serie.id, release.serie.stub]">{{release.serie.name}}</a>
-            </td>
-            <td class="text-right">
-              c.{{release.chapter}}
-            </td>
-            <td class="text-right">
-              <span *ngFor="let scan of release.groups; let isLast=last">
-                <a href="/scan/{{scan.group_id}}/{{scan.stub}}">{{scan.name}}</a>{{isLast ? '' : ' & '}}
-              </span>
+              <a [routerLink]="['/scan', scan.id, scan.stub]">{{scan.name}}</a>
             </td>
           </tr>
         </tbody>

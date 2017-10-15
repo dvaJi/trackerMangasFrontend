@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+import { DatepickerOptions } from 'ng2-datepicker';
 import { Staff } from '../../shared/model/staff';
 import { Magazine } from '../../shared/model/magazine';
 import { Genre } from '../../shared/model/genre';
@@ -32,13 +32,17 @@ export class SerieFormComponent implements OnInit {
   demographics: Demographic[];
   types: string[];
   isLoading: boolean;
-  publicationDate: DateModel;
-  datePickerOptions: DatePickerOptions;
+  publicationDate: Date = new Date();
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1960,
+    maxYear: 2018,
+    displayFormat: 'D MMM [,] YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    firstCalendarDay: 1
+  };
   isLicensed: boolean;
 
-  constructor(private serieService: SerieService) {
-    this.datePickerOptions = new DatePickerOptions();
-  }
+  constructor(private serieService: SerieService) { }
 
   ngOnInit() {
     this.getGenres();

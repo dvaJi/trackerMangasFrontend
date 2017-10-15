@@ -6,10 +6,10 @@ import { CoreModule } from '../core/core.module';
 import { TagInputModule } from 'ngx-chips';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
-import { ReleasesRoutingModule } from './releases-routing.module';
-import { ReleasesComponent } from './releases.component';
-import { ReleasesFormComponent } from './form/releases-form.component';
-import { ReleaseService } from './release.service';
+import { ScanRoutingModule } from './scan-routing.module';
+import { ScanComponent } from './scan.component';
+import { ScanFormComponent } from './form/scan-form.component';
+import { ScanService } from './scan.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @NgModule({
@@ -19,17 +19,17 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     CoreModule,
     SharedModule,
     TagInputModule,
-    ReleasesRoutingModule,
+    ScanRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgDatepickerModule
   ],
   declarations: [
-    ReleasesComponent,
-    ReleasesFormComponent
+    ScanComponent,
+    ScanFormComponent
   ],
   providers: [
-    ReleaseService
+    ScanService
   ]
 })
-export class ReleasesModule { }
+export class ScanModule { }

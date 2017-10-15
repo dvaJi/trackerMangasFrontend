@@ -6,19 +6,19 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
 import { DatepickerOptions } from 'ng2-datepicker';
-import { Magazine } from '../../shared/model/magazine';
+import { Scan } from '../../shared/model/scan';
 
-import { MagazineService } from '../magazine.service';
+import { ScanService } from '../scan.service';
 
-const log = new Logger('Magazine Add');
+const log = new Logger('Scan Add');
 
 @Component({
-  selector: 'app-magazine-form',
-  templateUrl: './magazine-form.component.html',
-  styleUrls: ['./magazine-form.component.scss']
+  selector: 'app-scan-form',
+  templateUrl: './scan-form.component.html',
+  styleUrls: ['./scan-form.component.scss']
 })
 
-export class MagazineFormComponent implements OnInit {
+export class ScanFormComponent implements OnInit {
   myform: FormGroup;
 
   publishers: any;
@@ -26,30 +26,26 @@ export class MagazineFormComponent implements OnInit {
   types: string[];
   schedules: Array<string>;
   isLoading: boolean;
-  circulation: Date = new Date();
+  creationDate: Date = new Date();
   datePickerOptions: DatepickerOptions = {
     minYear: 1960,
     maxYear: 2018,
-    displayFormat: 'D MMM [,] YYYY',
+    displayFormat: 'D MMM[,] YYYY',
     barTitleFormat: 'MMMM YYYY',
     firstCalendarDay: 1
   };
   isLicensed: boolean;
 
-  constructor(private magazineService: MagazineService) { }
+  constructor(private scanService: ScanService) { }
 
   ngOnInit() {
-    this.getPublishers();
-    this.schedules = ['Semanal', 'Quincenal', 'Mensual', 'Bi-mensual'];
     this.myform = new FormGroup({
       name: new FormControl(),
-      nameAltInput: new FormControl(),
-      publisher: new FormControl(),
-      circulation: new FormControl(),
-      releaseSchedule: new FormControl(),
       description: new FormControl(),
+      creationDate: new FormControl(),
       website: new FormControl(),
       twitter: new FormControl(),
+      facebook: new FormControl(),
       cover: new FormControl()
     });
   }
@@ -75,23 +71,13 @@ export class MagazineFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const magazine: Magazine = this.myform.value;
-    console.log(magazine);
-    this.magazineService.setMagazine(magazine)
+    const scan: Scan = this.myform.value;
+    this.scanService.setScan(scan)
     .subscribe(credentials => {
       console.log(credentials);
     }, error => {
-      log.debug(`Error al añadir magazine: ${error}`);
+      log.debug(`Error al añadir scan: ${error}`);
     });
-  }
-
-  getPublishers() {
-    this.isLoading = true;
-    this.magazineService.getPublisher().
-      finally(() => {
-        this.isLoading = false;
-      }).
-      subscribe((publishers: any) => { this.publishers = publishers; });
   }
 
 }

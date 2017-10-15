@@ -17,20 +17,20 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="volumeInput" translate>Tomo</label>
-            <input type="text" class="form-control" id="volumeInput" formControlName="volume" placeholder="{{'Tomo' | translate}}" required>
+            <label for="volume-input" translate>Tomo</label>
+            <input type="text" class="form-control" id="volume-input" formControlName="volume" placeholder="{{'Tomo' | translate}}" required />
           </div>
           <div class="form-group col-md-4">
-            <label for="chapterInput" translate>Capítulo</label>
-            <input minlength="1" type="text" class="form-control" id="chapterInput" formControlName="chapter" placeholder="{{'Capítulo' | translate}}" required>
+            <label for="chapter-input" translate>Capítulo</label>
+            <input minlength="1" type="text" class="form-control" id="chapter-input" formControlName="chapter" placeholder="{{'Capítulo' | translate}}" required />
           </div>
           <div class="form-group col-md-4">
             <label for="completelySCDropdown" translate>Fecha publicación</label>
-            <ng2-datepicker class="newdatepicker-input d-block col-md-12" formControlName="publicationDate" [options]="datePickerOptions"
-            [(ngModel)]="publicationDate"></ng2-datepicker>
+            <ng-datepicker class="newdatepicker-input d-block col-md-12" formControlName="publicationDate" [options]="datePickerOptions"
+            [(ngModel)]="publicationDate"></ng-datepicker>
           </div>
         </div>
-        
+
         <button type="submit" [disabled]="isLoading" class="btn btn-primary">Submit</button>
       </form>
     </div>
@@ -38,7 +38,7 @@
       <div class="alert alert-success" role="alert">
         <h4 class="alert-heading" translate>¡Importante!</h4>
         <p translate>Para obener información acerca de alguna serie puedes usar alguna de estas fuentes: MAL, MU.</p>
-        <hr>
+        <hr/>
         <p class="mb-0" translate>Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
       </div>
     </div>

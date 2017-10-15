@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
+import { TagInputModule } from 'ngx-chips';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SeriesRoutingModule } from './series-routing.module';
 import { SeriesComponent } from './series.component';
 import { SerieFormComponent } from './form/serie-form.component';
 import { SerieService } from './serie.service';
-import { TagInputModule } from 'ngx-chips';
-import { DatePickerModule } from 'ng2-datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    DatePickerModule
+    NgDatepickerModule
   ],
   declarations: [
     SeriesComponent,

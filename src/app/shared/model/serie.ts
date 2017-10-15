@@ -1,3 +1,6 @@
+import { Cover, Magazine } from './';
+import { Release } from '../../releases/release';
+
 export class Serie {
     id: number;
     name: string;
@@ -7,11 +10,13 @@ export class Serie {
     completely_sc: number;
     anime_status: string;
     year: number;
-    cover: string;
+    cover: Cover;
     licensed: number;
     created: Date;
     updated: Date;
     staff: string[];
     characters: string;
     genres: number[];
+    releases: Release;
+    magazines: Magazine;
 }

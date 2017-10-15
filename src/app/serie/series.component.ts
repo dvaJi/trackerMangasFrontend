@@ -2,7 +2,7 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Serie } from '../shared/model/serie';
+import { Serie } from '../shared/model';
 
 import { SerieService } from './serie.service';
 
