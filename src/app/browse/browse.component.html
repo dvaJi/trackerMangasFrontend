@@ -1,66 +1,171 @@
-<app-loader [isLoading]="isLoading"></app-loader>
-<div class="container" *ngIf="series">
+<div class="container">
   <div class="row">
 
     <div class="explore-page col-sm-9 no-padding-left">
-      <h3>Explore Manga</h3>
-      <div id="ember578" class="explore-search ember-view">
+      <h3>Buscar Serie</h3>
+      <div class="explore-search">
         <div class="explore-search-wrapper">
-          <span class="icon"><svg class="svg-icon-use" width="25" height="25" viewBox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span>
-          <input placeholder="What are you searching for?" type="search" id="ember584" class="explore-search-input ember-view" />
-        </div>
+          <div class="col-auto">
+            <label class="sr-only" for="search">Buscar</label>
+            <div class="input-group mb-2 mb-sm-0">
+              <div class="input-group-addon">
+                <svg class="svg-icon-use" width="25" height="25" viewBox="0 0 25 25">
+                  <path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path>
+                </svg>
+              </div>
+              <input type="text" class="form-control" id="search" placeholder="Buscar..."/>
+            </div>
+          </div>
 
-        <div id="ember585" class="ember-view">
-          <!---->
         </div>
 
         <div class="explore-search-info">
-          Or, browse with the <a href="/manga">advanced search</a>
+          O has una 
+          <a href="/serie">búsqueda avanzada</a>
         </div>
       </div>
 
-      <div id="ember590" class="explore-section ember-view">
-        <h6>
-          Trending This Week
-        </h6>
-      </div>
-      <div id="ember611" class="explore-section ember-view">
-        <h6>
-          Top Publishing Manga
-        </h6>
+      <!--<app-loader [isLoading]="isLoading"></app-loader>-->
+
+      <div class="explore-section">
+        <h6 translate>Populares de la semana</h6>
+        <div class="media-browse">
+          <div class="media-grid container">
+            <div class="row">
+              <div class="cover-card" *ngFor="let serie of trendingThisWeek">
+                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+                </a>
+                <div class="cover-data">
+                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+                  <span>
+                    <div title="Type">{{serie.type}}</div>
+                    <div title="Popularity">{{serie.popularity}}</div>
+                    <div title="Average Score">{{serie.rated}}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="explore-section-more">
+          <a href="/explore/manga/trending" translate>Ver más</a>
+        </div>
       </div>
 
-      <div id="ember658" class="explore-section ember-view">
-        <h6>
-          Top Upcoming Manga
-        </h6>
+      <div class="explore-section">
+        <h6 translate>Mejor votados</h6>
+        <div class="media-browse">
+          <div class="media-grid container">
+            <div class="row">
+              <div class="cover-card" *ngFor="let serie of highRatedSeries">
+                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+                </a>
+                <div class="cover-data">
+                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+                  <span>
+                    <div title="Type">{{serie.type}}</div>
+                    <div title="Popularity">{{serie.popularity}}</div>
+                    <div title="Average Score">{{serie.rated}}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="explore-section-more">
+          <a href="/explore/manga/trending" translate>Ver más</a>
+        </div>
       </div>
 
-      <div id="ember665" class="explore-section ember-view">
-        <h6>
-          Highest Rated Manga
-        </h6>
+      <div class="explore-section">
+        <h6 translate>Más Populares</h6>
+        <div class="media-browse">
+          <div class="media-grid container">
+            <div class="row">
+              <div class="cover-card" *ngFor="let serie of mostPopularSeries">
+                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+                </a>
+                <div class="cover-data">
+                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+                  <span>
+                    <div title="Type">{{serie.type}}</div>
+                    <div title="Popularity">{{serie.popularity}}</div>
+                    <div title="Average Score">{{serie.rated}}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="explore-section-more">
+          <a href="/explore/manga/trending" translate>Ver más</a>
+        </div>
       </div>
 
-      <div id="ember672" class="explore-section ember-view">
-        <h6>
-          Most Popular Manga
-        </h6>
+      <div class="explore-section">
+        <h6 translate>Agregados Recientemente</h6>
+        <div class="media-browse">
+          <div class="media-grid container">
+            <div class="row">
+              <div class="cover-card" *ngFor="let serie of recentlyAdded">
+                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+                </a>
+                <div class="cover-data">
+                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+                  <span>
+                    <div title="Type">{{serie.type}}</div>
+                    <div title="Popularity">{{serie.popularity}}</div>
+                    <div title="Average Score">{{serie.rated}}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="explore-section-more">
+          <a href="/explore/manga/trending" translate>Ver más</a>
+        </div>
       </div>
+
+      <div class="explore-section">
+        <h6 translate>Nuevos del Mes</h6>
+        <div class="media-browse">
+          <div class="media-grid container">
+            <div class="row">
+              <div class="cover-card" *ngFor="let serie of trendingThisMonth">
+                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+                </a>
+                <div class="cover-data">
+                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+                  <span>
+                    <div title="Type">{{serie.type}}</div>
+                    <div title="Popularity">{{serie.popularity}}</div>
+                    <div title="Average Score">{{serie.rated}}</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="explore-section-more">
+          <a href="/explore/manga/trending" translate>Ver más</a>
+        </div>
+      </div>
+
     </div>
 
     <div class="explore-sidebar col-sm-3">
       <div class="card is-sticky">
         <div class="favorite-categories">
-          <h5 class="text-uppercase">My Favorite Categories</h5>
+          <h5 class="text-uppercase" translate>Mis categorías favoritas</h5>
           <ul class="list-unstyled categories-list">
             Favoriting categories will improve your recommendations.
           </ul>
         </div>
 
         <div class="categories">
-          <h5 class="text-uppercase">Categories</h5>
-          <div id="ember806" class="ember-view">
+          <h5 class="text-uppercase" translate>Categorías</h5>
+          <div>
             <ul class="list-unstyled categories-list">
               <li>
                 <a href="/explore/manga/category/comedy">Comedy</a>
@@ -69,134 +174,17 @@
                 <a href="/explore/manga/category/fantasy">Fantasy</a>
               </li>
               <li>
-                <a href="/explore/manga/category/romance">Romance</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/action">Action</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/school-life">School Life</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/tragedy">Tragedy</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/shoujo-ai">Shoujo Ai</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/science-fiction">Science Fiction</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/daily-life">Daily Life</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/adventure">Adventure</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/sports">Sports</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/japan">Japan</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/earth">Earth</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/thriller">Thriller</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/present">Present</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/historical">Historical</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/asia">Asia</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/harem">Harem</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/magic">Magic</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/horror">Horror</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/mecha">Mecha</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/shounen-ai">Shounen Ai</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/music">Music</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/super-power">Super Power</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/psychological">Psychological</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/plot-continuity">Plot Continuity</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/motorsport">Motorsport</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/demon">Demon</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/military">Military</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/violence">Violence</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/parody">Parody</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/future">Future</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/fantasy-world">Fantasy World</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/past">Past</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/contemporary-fantasy">Contemporary Fantasy</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/space">Space</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/virtual-reality">Virtual Reality</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/vampire">Vampire</a>
-              </li>
-              <li>
-                <a href="/explore/manga/category/high-school">High School</a>
-              </li>
-              <li>
                 <a href="/explore/manga/category/friendship">Friendship</a>
               </li>
             </ul>
 
             <div class="categories-more">
-              <a href="#" data-ember-action="" data-ember-action-847="847">More categories...</a>
+              <a href="#">More categories...</a>
             </div>
-
-            <!---->
           </div>
         </div>
       </div>
     </div>
-
-
-
-
 
   </div>
 </div>

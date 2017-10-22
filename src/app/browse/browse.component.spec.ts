@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
@@ -14,7 +15,8 @@ describe('BrowseComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
-          SharedModule
+          SharedModule,
+          RouterTestingModule
         ],
         declarations: [BrowseComponent],
         providers: [

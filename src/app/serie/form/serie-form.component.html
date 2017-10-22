@@ -15,7 +15,7 @@
           <div class="form-group col-md-4">
             <label for="type-dropdown" translate>Tipo</label>
             <select id="type-dropdown" formControlName="type" class="custom-select d-block col-md-12">
-              <option value="type" *ngFor="let type of types" required>{{type}}</option>
+              <option value="{{type}}" *ngFor="let type of types" required>{{type}}</option>
             </select>
           </div>
           <div class="form-group col-md-4">
