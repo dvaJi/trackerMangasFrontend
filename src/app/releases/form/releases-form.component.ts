@@ -63,7 +63,7 @@ export class ReleasesFormComponent implements OnInit {
   public getSeries() {
     if ((!this.series) && !this.isLoading) {
       this.isLoading = true;
-      this.serieService.getSeries()
+      this.serieService.getSeries({type: 'Manga', order: 'created'})
       .finally(() => {
         this.isLoading = false;
         this.series = this.seriesNamesToChipsObject(this.series);
