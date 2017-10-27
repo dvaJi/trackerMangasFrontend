@@ -56,9 +56,8 @@ export class SerieService {
   }
 
   getSeries(query: any): Observable<Array<Serie>> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
+    const headers = new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` });
+    const options = new RequestOptions({ withCredentials: true, headers });
     return this.http.get(routes.series(query), options)
       .map((res: Response) => res.json())
       .map(body => body)

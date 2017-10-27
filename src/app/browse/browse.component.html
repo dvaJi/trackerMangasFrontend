@@ -27,7 +27,7 @@
 
       <!--<app-loader [isLoading]="isLoading"></app-loader>-->
 
-      <div class="explore-section">
+      <div class="explore-section" *ngIf="trendingThisWeek">
         <h6 translate>Populares de la semana</h6>
         <div class="media-browse">
           <div class="media-grid container">
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <div class="explore-section">
+      <div class="explore-section" *ngIf="highRatedSeries">
         <h6 translate>Mejor votados</h6>
         <div class="media-browse">
           <div class="media-grid container">
@@ -77,7 +77,7 @@
         </div>
       </div>
 
-      <div class="explore-section">
+      <div class="explore-section" *ngIf="mostPopularSeries">
         <h6 translate>Más Populares</h6>
         <div class="media-browse">
           <div class="media-grid container">
@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="explore-section">
+      <div class="explore-section" *ngIf="recentlyAdded">
         <h6 translate>Agregados Recientemente</h6>
         <div class="media-browse">
           <div class="media-grid container">
@@ -127,7 +127,7 @@
         </div>
       </div>
 
-      <div class="explore-section">
+      <div class="explore-section" *ngIf="trendingThisMonth">
         <h6 translate>Nuevos del Mes</h6>
         <div class="media-browse">
           <div class="media-grid container">
