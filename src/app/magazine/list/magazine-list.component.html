@@ -1,5 +1,5 @@
 <div class="container">
-  <section role="data" class="row series">
+  <section role="data" class="row magazines">
     <div class="col-md-9">
       <h3>Revistas</h3>
       <app-loader [isLoading]="isLoading"></app-loader>
@@ -9,7 +9,7 @@
         <tbody>
           <tr *ngFor="let magazine of magazines">
             <td>
-              <a [routerLink]="['/staff', magazine.id, magazine.stub]">{{magazine.name}}</a>
+              <a [routerLink]="['/magazine', magazine.id, magazine.stub]">{{magazine.name}}</a>
             </td>
           </tr>
         </tbody>

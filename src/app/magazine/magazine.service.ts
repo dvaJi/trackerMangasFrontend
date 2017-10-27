@@ -9,7 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
-  magazine: () => `/magazine`,
+  magazines: () => `/magazine`,
+  magazine: (id: number) => `/magazine?id=${id}`,
   publishers: () => `/magazine/publisher`
 };
 
@@ -18,11 +19,21 @@ export class MagazineService {
 
   constructor(private http: Http, private auth: AuthenticationService) { }
 
-  getMagazine(): Observable<Magazine> {
+  getMagazines(): Observable<Magazine> {
     const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
-    return this.http.get(routes.magazine(), options)
+    return this.http.get(routes.magazines(), options)
+      .map((res: Response) => res.json())
+      .map(body => body)
+      .catch(() => Observable.of('Error, no hay Magazine.'));
+  }
+
+  getMagazine(id: number): Observable<Magazine> {
+    const options = new RequestOptions({
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+    });
+    return this.http.get(routes.magazine(id), options)
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Magazine.'));
@@ -31,11 +42,11 @@ export class MagazineService {
   setMagazine(context: Magazine): Observable<Magazine> {
     const options = new RequestOptions({
       headers: new Headers({
-        'Authorization': this.auth.credentials.token,
+        'Authorization': `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
         'Accept': 'application/json'})
     });
-    return this.http.post(routes.magazine(), context, options)
+    return this.http.post(routes.magazines(), context, options)
       .map((res: any) => res.json())
       .flatMap((data: any) => {
         return Observable.of(data);
@@ -44,7 +55,7 @@ export class MagazineService {
 
   getPublisher(): Observable<Magazine> {
     const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.publishers(), options)
       .map((res: Response) => res.json())
