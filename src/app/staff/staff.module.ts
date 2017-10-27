@@ -7,7 +7,8 @@ import { TagInputModule } from 'ngx-chips';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { StaffRoutingModule } from './staff-routing.module';
-import { StaffComponent } from './staff.component';
+import { StaffComponent } from './list/staff.component';
+import { StaffDetailComponent } from './detail/staff-detail.component';
 import { StaffFormComponent } from './form/staff-form.component';
 import { StaffService } from './staff.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -26,6 +27,7 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
   ],
   declarations: [
     StaffComponent,
+    StaffDetailComponent,
     StaffFormComponent
   ],
   providers: [

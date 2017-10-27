@@ -1,0 +1,87 @@
+<!--<app-cover *ngIf="scan" [name]="scan.name" [imgSrc]="scan.cover.background"></app-cover>-->
+
+<!--<app-loader [isLoading]="isLoading"></app-loader>-->
+<div class="container" *ngIf="scan">
+  <header>
+    <h2>{{scan.name}}</h2>
+  </header>
+  <!--<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link active" href="#" translate>Info</a>
+  </nav>-->
+  <section role="data" class="row scan">
+    <div class="col-md-3">
+      <div class="cover">
+        <img src="{{scan.cover.medium.path_full}}" />
+      </div>
+      <!--<dl class="info series-info">
+        <dd translate>Géneros</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let genre of scan.genres">
+              <a routerLink="/genre/{{genre.id}}/{{genre.stub}}">{{genre.name}}</a>
+            </li>
+          </ul>
+        </dt>
+        <dd translate>Categorías</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let category of scan.categories">
+              <a>{{category.name}}</a>
+            </li>
+          </ul>
+        </dt>
+      </dl>-->
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Descripción</h5>
+          <div>
+            {{scan.description}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h5>Redes Sociales</h5>
+          <div>
+            <ul>
+              <li>Sitio Web: {{scan.website}}</li>
+              <li>Twitter: {{scan.twitter}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!--<h3 translate>Relaciones</h3>
+      <div class="scan-scan row">
+        <div class="col-md-2" *ngFor="let scan of scan">
+          <img src="/api/content/scan/{{scan.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}"/>
+          <div class="scan text-center">
+            <a class="scan-name" [routerLink]="['/scan', scan.id, scan.stub]">
+              <div>{{scan.name}}</div>
+            </a>
+            <a class="scan-rol">
+              <div>{{scan.rol}}</div>
+            </a>
+          </div>
+        </div>
+      </div>-->
+      <div *ngIf="scan.releases">
+        <h3>Últimas actualizaciones</h3>
+        <table class="table table-striped">
+          <tbody>
+            <tr *ngFor="let release of scan.releases">
+              <td>
+                <a [routerLink]="['/serie', release.serie.id, release.serie.stub]">{{release.serie.name}}</a>
+              </td>
+              <td>C.{{release.chapter}}</td>
+              <td>{{release.created | date: 'dd-MM-yyyy'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--<p class="text-center" *ngIf="scan.series.length === 0">
+        No se han agregado series aún.
+      </p>-->
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,88 @@
+<!--<app-cover *ngIf="staff" [name]="staff.name" [imgSrc]="staff.cover.background"></app-cover>-->
+
+<!--<app-loader [isLoading]="isLoading"></app-loader>-->
+<div class="container" *ngIf="staff">
+  <header>
+    <h2>{{staff.name}}</h2>
+  </header>
+  <!--<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link active" href="#" translate>Info</a>
+  </nav>-->
+  <section role="data" class="row staff">
+    <div class="col-md-3">
+      <div class="cover">
+        <img src="{{staff.cover.medium.path_full}}" />
+      </div>
+      <!--<dl class="info series-info">
+        <dd translate>Géneros</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let genre of staff.genres">
+              <a routerLink="/genre/{{genre.id}}/{{genre.stub}}">{{genre.name}}</a>
+            </li>
+          </ul>
+        </dt>
+        <dd translate>Categorías</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let category of staff.categories">
+              <a>{{category.name}}</a>
+            </li>
+          </ul>
+        </dt>
+      </dl>-->
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Nombres Alternativos</h5>
+          <div>
+            <ul>
+              <li *ngFor="let name of staff.names">{{name.name}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h5>Redes Sociales</h5>
+          <div>
+            <ul>
+              <li>Sitio Web: {{staff.website}}</li>
+              <li>Twitter: {{staff.twitter}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!--<h3 translate>Relaciones</h3>
+      <div class="staff-staff row">
+        <div class="col-md-2" *ngFor="let staff of staff">
+          <img src="/api/content/staff/{{staff.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}"/>
+          <div class="staff text-center">
+            <a class="staff-name" [routerLink]="['/staff', staff.id, staff.stub]">
+              <div>{{staff.name}}</div>
+            </a>
+            <a class="staff-rol">
+              <div>{{staff.rol}}</div>
+            </a>
+          </div>
+        </div>
+      </div>-->
+      <div *ngIf="staff.series">
+        <h3>Series en las que ha trabajado</h3>
+        <table class="table table-striped">
+          <tbody>
+            <tr *ngFor="let serie of staff.series">
+              <td>
+                <a [routerLink]="['/serie', serie.serieId, serie.stub]">{{serie.name}}</a>
+              </td>
+              <td>{{serie.publicationDate | date: 'yyyy'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--<p class="text-center" *ngIf="staff.series.length === 0">
+        No se han agregado series aún.
+      </p>-->
+      </div>
+    </div>
+  </section>
+</div>

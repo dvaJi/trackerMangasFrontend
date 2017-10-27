@@ -7,7 +7,8 @@ import { TagInputModule } from 'ngx-chips';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { MagazineRoutingModule } from './magazine-routing.module';
-import { MagazineComponent } from './magazine.component';
+import { MagazineListComponent } from './list/magazine-list.component';
+import { MagazineDetailComponent } from './detail/magazine-detail.component';
 import { MagazineFormComponent } from './form/magazine-form.component';
 import { MagazineService } from './magazine.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -25,7 +26,8 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     NgDatepickerModule
   ],
   declarations: [
-    MagazineComponent,
+    MagazineListComponent,
+    MagazineDetailComponent,
     MagazineFormComponent
   ],
   providers: [

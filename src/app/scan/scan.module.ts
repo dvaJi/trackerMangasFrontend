@@ -7,7 +7,8 @@ import { TagInputModule } from 'ngx-chips';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { ScanRoutingModule } from './scan-routing.module';
-import { ScanComponent } from './scan.component';
+import { ScanListComponent } from './list/scan-list.component';
+import { ScanDetailComponent } from './detail/scan-detail.component';
 import { ScanFormComponent } from './form/scan-form.component';
 import { ScanService } from './scan.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -25,7 +26,8 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
     NgDatepickerModule
   ],
   declarations: [
-    ScanComponent,
+    ScanListComponent,
+    ScanDetailComponent,
     ScanFormComponent
   ],
   providers: [

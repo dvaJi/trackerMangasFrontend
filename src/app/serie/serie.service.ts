@@ -32,7 +32,7 @@ export class SerieService {
 
   getSerie(context: SerieContext): Observable<Serie> {
     const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.serie(context), options)
       .map((res: Response) => res.json())
@@ -56,9 +56,8 @@ export class SerieService {
   }
 
   getSeries(query: any): Observable<Array<Serie>> {
-    const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
-    });
+    const headers = new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` });
+    const options = new RequestOptions({ withCredentials: true, headers });
     return this.http.get(routes.series(query), options)
       .map((res: Response) => res.json())
       .map(body => body)
@@ -70,7 +69,7 @@ export class SerieService {
    */
   getGenres(): Observable<Genre[]> {
     const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.genres(), options)
       .map((res: Response) => res.json())
@@ -83,7 +82,7 @@ export class SerieService {
    */
   getStaff(): Observable<Response> {
     const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.staffs(), options)
       .map((res: Response) => res.json())
@@ -96,7 +95,7 @@ export class SerieService {
    */
   getMagazines(): Observable<Magazine[]> {
     const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.magazines(), options)
       .map((res: Response) => res.json())
@@ -109,7 +108,7 @@ export class SerieService {
    */
   getDemographics(): Observable<Demographic[]> {
     const options = new RequestOptions({
-      headers: new Headers({ 'Authorization': this.auth.credentials.token })
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
     return this.http.get(routes.demographic(), options)
       .map((res: Response) => res.json())

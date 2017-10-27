@@ -3,24 +3,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../shared/shared.module';
-import { StaffComponent } from './staff.component';
-import { StaffService } from './staff.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { SharedModule } from '../../shared/shared.module';
+import { SeriesComponent } from './series.component';
+import { SerieService } from './../serie.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
 
-describe('StaffComponent', () => {
-  let component: StaffComponent;
-  let fixture: ComponentFixture<StaffComponent>;
+describe('SeriesComponent', () => {
+  let component: SeriesComponent;
+  let fixture: ComponentFixture<SeriesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
         imports: [
           SharedModule,
-          RouterTestingModule
+          RouterTestingModule,
         ],
-        declarations: [StaffComponent],
+        declarations: [SeriesComponent],
         providers: [
-          StaffService,
+          SerieService,
           AuthenticationService,
           MockBackend,
           BaseRequestOptions,
@@ -37,7 +37,7 @@ describe('StaffComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StaffComponent);
+    fixture = TestBed.createComponent(SeriesComponent);
     component = fixture.componentInstance;
     const authenticationService = TestBed.get(AuthenticationService);
     authenticationService.guessCredentials = 'test';

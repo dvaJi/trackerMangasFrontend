@@ -1,15 +1,15 @@
 <div class="container">
   <section role="data" class="row series">
     <div class="col-md-9">
-      <h3>Revistas</h3>
+      <h3>Capítulos recientes</h3>
       <app-loader [isLoading]="isLoading"></app-loader>
       <table *ngIf="!isLoading" class="table table-striped">
         <thead>
         </thead>
         <tbody>
-          <tr *ngFor="let magazine of magazines">
+          <tr *ngFor="let serie of series">
             <td>
-              <a [routerLink]="['/staff', magazine.id, magazine.stub]">{{magazine.name}}</a>
+              <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
             </td>
           </tr>
         </tbody>

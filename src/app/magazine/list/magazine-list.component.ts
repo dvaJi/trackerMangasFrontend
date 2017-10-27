@@ -2,15 +2,15 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { Magazine } from '../shared/model/magazine';
-import { MagazineService } from './magazine.service';
+import { Magazine } from './../../shared/model/magazine';
+import { MagazineService } from './../magazine.service';
 
 @Component({
-  selector: 'app-magazine',
-  templateUrl: './magazine.component.html',
-  styleUrls: ['./magazine.component.scss']
+  selector: 'app-magazine-list',
+  templateUrl: './magazine-list.component.html',
+  styleUrls: ['./magazine-list.component.scss']
 })
-export class MagazineComponent implements OnInit {
+export class MagazineListComponent implements OnInit {
 
   magazines: Magazine;
   isLoading: boolean;
@@ -19,7 +19,7 @@ export class MagazineComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.magazineService.getMagazine()
+    this.magazineService.getMagazines()
       .finally(() => { this.isLoading = false; })
       .subscribe((magazines: Magazine) => { this.magazines = magazines; });
   }

@@ -9,7 +9,7 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
-import { SeriesComponent } from '../series.component';
+import { SeriesComponent } from '../list/series.component';
 import { SerieService } from '../serie.service';
 
 describe('SeriesFormComponent', () => {

@@ -49,7 +49,7 @@ describe('MagazineService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const magazines = magazineService.getMagazine();
+      const magazines = magazineService.getMagazines();
       tick();
 
       // Assert

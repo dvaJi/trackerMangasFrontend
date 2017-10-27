@@ -85,7 +85,7 @@ export class StaffFormComponent implements OnInit {
   public getStaff() {
     if ((!this.series) && !this.isLoading) {
       this.isLoading = true;
-      this.staffService.getStaff()
+      this.staffService.getStaffs()
       .finally(() => {
         this.isLoading = false;
         this.series = this.seriesNamesToChipsObject(this.series);

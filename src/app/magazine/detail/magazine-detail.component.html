@@ -1,0 +1,86 @@
+<!--<app-cover *ngIf="magazine" [name]="magazine.name" [imgSrc]="magazine.cover.background"></app-cover>-->
+
+<!--<app-loader [isLoading]="isLoading"></app-loader>-->
+<div class="container" *ngIf="magazine">
+  <header>
+    <h2>{{magazine.name}}</h2>
+  </header>
+  <!--<nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="flex-sm-fill text-sm-center nav-link active" href="#" translate>Info</a>
+  </nav>-->
+  <section role="data" class="row magazine">
+    <div class="col-md-3">
+      <div class="cover">
+        <img src="{{magazine.cover.medium.path_full}}" />
+      </div>
+      <!--<dl class="info series-info">
+        <dd translate>Géneros</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let genre of magazine.genres">
+              <a routerLink="/genre/{{genre.id}}/{{genre.stub}}">{{genre.name}}</a>
+            </li>
+          </ul>
+        </dt>
+        <dd translate>Categorías</dd>
+        <dt>
+          <ul>
+            <li *ngFor="let category of magazine.categories">
+              <a>{{category.name}}</a>
+            </li>
+          </ul>
+        </dt>
+      </dl>-->
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Descripción</h5>
+          <div>
+            {{magazine.description}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h5>Redes Sociales</h5>
+          <div>
+            <ul>
+              <li>Sitio Web: {{magazine.website}}</li>
+              <li>Twitter: {{magazine.twitter}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!--<h3 translate>Relaciones</h3>
+      <div class="magazine-magazine row">
+        <div class="col-md-2" *ngFor="let magazine of magazine">
+          <img src="/api/content/magazine/{{magazine.image}}" class="w-100 rounded mx-auto d-block" alt="{{serie.name}}"/>
+          <div class="magazine text-center">
+            <a class="magazine-name" [routerLink]="['/magazine', magazine.id, magazine.stub]">
+              <div>{{magazine.name}}</div>
+            </a>
+            <a class="magazine-rol">
+              <div>{{magazine.rol}}</div>
+            </a>
+          </div>
+        </div>
+      </div>-->
+      <div *ngIf="magazine.series">
+        <h3>Últimas actualizaciones</h3>
+        <table class="table table-striped">
+          <tbody>
+            <tr *ngFor="let serie of magazine.series">
+              <td>
+                <a [routerLink]="['/serie', serie.id_series, serie.stub]">{{serie.name}}</a>
+              </td>
+              <td>{{serie.publicationDate | date: 'dd-MM-yyyy'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--<p class="text-center" *ngIf="magazine.series.length === 0">
+        No se han agregado series aún.
+      </p>-->
+      </div>
+    </div>
+  </section>
+</div>
