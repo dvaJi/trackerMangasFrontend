@@ -2,16 +2,16 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Serie } from '../shared/model';
+import { Serie } from './../../shared/model';
 
-import { SerieService } from './serie.service';
+import { SerieService } from './../serie.service';
 
 @Component({
-  selector: 'app-series',
-  templateUrl: './series.component.html',
-  styleUrls: ['./series.component.scss']
+  selector: 'app-series-detail',
+  templateUrl: './series-detail.component.html',
+  styleUrls: ['./series-detail.component.scss']
 })
-export class SeriesComponent implements OnInit {
+export class SeriesDetailComponent implements OnInit {
 
   serie: Serie;
   isLoading: boolean;

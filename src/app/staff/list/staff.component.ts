@@ -2,8 +2,8 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { Staff } from '../shared/model/staff';
-import { StaffService } from './staff.service';
+import { Staff } from '../../shared/model/staff';
+import { StaffService } from './../staff.service';
 
 @Component({
   selector: 'app-staff',
@@ -19,7 +19,7 @@ export class StaffComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.staffService.getStaff()
+    this.staffService.getStaffs()
       .finally(() => { this.isLoading = false; })
       .subscribe((staff: Staff) => { this.staff = staff; });
   }

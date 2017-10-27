@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SeriesRoutingModule } from './series-routing.module';
-import { SeriesComponent } from './series.component';
+import { SeriesComponent } from './list/series.component';
+import { SeriesDetailComponent } from './detail/series-detail.component';
 import { SerieFormComponent } from './form/serie-form.component';
 import { SerieService } from './serie.service';
 
@@ -28,7 +29,8 @@ import { SerieService } from './serie.service';
   ],
   declarations: [
     SeriesComponent,
-    SerieFormComponent
+    SerieFormComponent,
+    SeriesDetailComponent
   ],
   providers: [
     SerieService
