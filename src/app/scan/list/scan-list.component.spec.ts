@@ -3,14 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../shared/shared.module';
-import { ScanComponent } from './scan.component';
-import { ScanService } from './scan.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { SharedModule } from './../../shared/shared.module';
+import { ScanListComponent } from './scan-list.component';
+import { ScanService } from './../scan.service';
+import { AuthenticationService } from './../../core/authentication/authentication.service';
 
-describe('ScanComponent', () => {
-  let component: ScanComponent;
-  let fixture: ComponentFixture<ScanComponent>;
+describe('ScanListComponent', () => {
+  let component: ScanListComponent;
+  let fixture: ComponentFixture<ScanListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('ScanComponent', () => {
           SharedModule,
           RouterTestingModule
         ],
-        declarations: [ScanComponent],
+        declarations: [ScanListComponent],
         providers: [
           ScanService,
           AuthenticationService,
@@ -37,7 +37,7 @@ describe('ScanComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScanComponent);
+    fixture = TestBed.createComponent(ScanListComponent);
     component = fixture.componentInstance;
     const authenticationService = TestBed.get(AuthenticationService);
     authenticationService.guessCredentials = 'test';

@@ -2,15 +2,15 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { Scan } from '../shared/model/scan';
-import { ScanService } from './scan.service';
+import { Scan } from './../../shared/model/scan';
+import { ScanService } from './../scan.service';
 
 @Component({
-  selector: 'app-scan',
-  templateUrl: './scan.component.html',
-  styleUrls: ['./scan.component.scss']
+  selector: 'app-scan-list',
+  templateUrl: './scan-list.component.html',
+  styleUrls: ['./scan-list.component.scss']
 })
-export class ScanComponent implements OnInit {
+export class ScanListComponent implements OnInit {
 
   scans: Scan;
   isLoading: boolean;
