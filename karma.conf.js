@@ -38,7 +38,15 @@ module.exports = function(config) {
     // Level of logging, can be: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadless_custom'],
+    customLaunchers: {
+      'ChromeHeadless_custom': {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox']
+      }
+    },
     singleRun: false
   });
 };

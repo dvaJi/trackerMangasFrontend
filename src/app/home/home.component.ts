@@ -2,7 +2,10 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { QuoteService } from './quote.service';
+import { PollsService } from './polls.service';
+import { NewsService } from './news.service';
+import { Poll } from './poll';
+import { News } from './news';
 
 @Component({
   selector: 'app-home',
@@ -11,16 +14,51 @@ import { QuoteService } from './quote.service';
 })
 export class HomeComponent implements OnInit {
 
-  quote: string;
+  poll: Poll;
+  polls: Array<Poll>;
+  news: Array<News>;
   isLoading: boolean;
+  pollAnswer: any;
 
-  constructor(private quoteService: QuoteService) {}
+  constructor(private pollsService: PollsService, private newsService: NewsService) { }
+
+  onNotify(answer: number): void {
+    this.pollAnswer = answer;
+  }
 
   ngOnInit() {
     this.isLoading = true;
-    this.quoteService.getRandomQuote({ category: 'dev' })
+    this.pollsService.getPoll({ active: true, latest: true })
       .finally(() => { this.isLoading = false; })
-      .subscribe((quote: string) => { this.quote = quote; });
+      .subscribe((poll: Poll) => { this.poll = poll; });
+    this.pollsService.getPolls({ active: false, latest: false })
+      .finally(() => { this.isLoading = false; })
+      .subscribe((polls: Poll[]) => { this.polls = polls; });
+    this.newsService.getAllNews()
+      .finally(() => { this.isLoading = false; })
+      .subscribe((news: News[]) => { this.news = news; });
+  }
+
+  vote() {
+    this.pollsService.setPoll(this.pollAnswer)
+      .subscribe(credentials => {
+        this.poll = this.updatePoll();
+      }, error => {
+        console.log(`Error al votar: ${error}`);
+      });
+  }
+
+  updatePoll(): Poll {
+    const newPoll = this.poll;
+    newPoll.answered = true;
+    newPoll.totalVotes += 1;
+    newPoll.answers.forEach((ans) => {
+      if (ans.id === this.pollAnswer) {
+        ans.votes += 1;
+      }
+    });
+
+    return newPoll;
   }
 
 }
