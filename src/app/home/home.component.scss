@@ -1,9 +1,17 @@
-.logo {
-  width: 100px;
-}
+.card {
+  margin-top: 10px;
 
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
+  .card-img-top {
+    height: 12rem;
+    background-position: center center;
+  }
+
+  .post-info {
+    font-size: 80%;
+    margin-top: 0.6rem;
+
+    span {
+      margin-right: 0.2rem;
+    }
+  }
 }
