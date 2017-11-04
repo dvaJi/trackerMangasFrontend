@@ -43,7 +43,7 @@ export class SerieService {
   setSerie(context: Serie): Observable<Serie> {
     const options = new RequestOptions({
       headers: new Headers({
-        'Authorization': this.auth.credentials.token,
+        Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
         'Accept': 'application/json'
       })

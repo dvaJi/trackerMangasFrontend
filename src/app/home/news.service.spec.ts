@@ -2,16 +2,19 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { QuoteService } from './quote.service';
+import { NewsService } from './news.service';
+import { AuthenticationService } from '../core/authentication/authentication.service';
+import { News } from './news';
 
-describe('QuoteService', () => {
-  let quoteService: QuoteService;
+describe('NewsService', () => {
+  let newsService: NewsService;
   let mockBackend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        QuoteService,
+        NewsService,
+        AuthenticationService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -26,35 +29,45 @@ describe('QuoteService', () => {
   });
 
   beforeEach(inject([
-    QuoteService,
+    NewsService,
     MockBackend
-  ], (_quoteService: QuoteService,
+  ], (_newsService: NewsService,
       _mockBackend: MockBackend) => {
 
-    quoteService = _quoteService;
+    newsService = _newsService;
     mockBackend = _mockBackend;
+    const authenticationService = TestBed.get(AuthenticationService);
+    authenticationService.guessCredentials = 'test';
   }));
 
   afterEach(() => {
     mockBackend.verifyNoPendingRequests();
   });
 
-  describe('getRandomQuote', () => {
-    it('should return a random Chuck Norris quote', fakeAsync(() => {
+  describe('getNews', () => {
+    it('should return a news', fakeAsync(() => {
       // Arrange
-      const mockQuote = 'a random quote';
+      const mockNews: News = {
+          id: 1,
+          title: 'Fake news',
+          stub: 'fake_news',
+          content: 'This is a fake news.',
+          user: 'io',
+          created: new Date(),
+          updated: new Date()
+      };
       const response = new Response(new ResponseOptions({
-        body: { value: mockQuote }
+        body: mockNews
       }));
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
 
       // Act
-      const randomQuoteSubscription = quoteService.getRandomQuote({ category: 'toto' });
+      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
       tick();
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(quote).toEqual(mockQuote);
+      pollsSubscription.subscribe((news: News) => {
+        expect(news).toEqual(mockNews);
       });
     }));
 
@@ -64,13 +77,13 @@ describe('QuoteService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const randomQuoteSubscription = quoteService.getRandomQuote({ category: 'toto' });
+      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
       tick();
 
       // Assert
-      randomQuoteSubscription.subscribe((quote: string) => {
-        expect(typeof quote).toEqual('string');
-        expect(quote).toContain('Error');
+      pollsSubscription.subscribe((news: News) => {
+        expect(typeof news).toEqual('string');
+        expect(news).toContain('Error');
       });
     }));
   });

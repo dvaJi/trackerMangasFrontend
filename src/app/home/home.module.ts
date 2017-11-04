@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
+import { PollsService } from './polls.service';
+import { NewsService } from './news.service';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    NgbModule,
     TranslateModule,
     CoreModule,
     SharedModule,
@@ -20,7 +25,8 @@ import { QuoteService } from './quote.service';
     HomeComponent
   ],
   providers: [
-    QuoteService
+    PollsService,
+    NewsService
   ]
 })
 export class HomeModule { }

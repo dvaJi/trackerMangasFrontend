@@ -1,0 +1,19 @@
+<div>
+    <p [ngClass]="title"><span *ngIf="showDesc" translate>Encuesta - </span>{{poll.title}}</p>
+    <p *ngIf="showDesc">{{poll.description}}</p>
+    <div class="form-check" *ngFor="let answer of poll.answers">
+        <label class="form-check-label" *ngIf="!poll.answered">
+            <input class="form-check-input" type="radio" id="poll" value="{{answer.id}}" (click)="onClick(answer.id)" /> {{answer.answer}}
+        </label>
+        <small *ngIf="poll.answered">
+            {{answer.answer}}
+            <em>({{answer.votes}}
+                <span [ngPlural]="answer.votes">
+                    <ng-template ngPluralCase="=1" translate>Voto</ng-template>
+                    <ng-template ngPluralCase="other" translate>Votos</ng-template>
+                </span>)
+            </em>
+            <ngb-progressbar [type]="color" showValue="true" [value]="getPollProgress(answer.votes)"></ngb-progressbar>
+        </small>
+    </div>
+</div>
