@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../../core/authentication/authentication.service';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -24,11 +24,11 @@ describe('ReleasesFormComponent', () => {
           BrowserAnimationsModule,
           ReactiveFormsModule,
           FormsModule,
+          NgbModule.forRoot(),
           TranslateModule.forRoot({
             loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
           }),
-          TagInputModule,
-          NgDatepickerModule
+          TagInputModule
         ],
         declarations: [ReleasesFormComponent],
         providers: [

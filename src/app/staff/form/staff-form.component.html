@@ -5,7 +5,8 @@
       <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="name-input" translate>Nombre</label>
-          <input id="name-input" minlength="1" type="text" class="form-control" formControlName="name" placeholder="{{'Nombre principal' | translate}}" required />
+          <input id="name-input" minlength="1" type="text" class="form-control" formControlName="name" placeholder="{{'Nombre principal' | translate}}"
+            required />
         </div>
         <div class="form-group">
           <label for="alt-names" translate>Nombres Alternativos</label>
@@ -14,12 +15,18 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="birth-place" translate>Lugar de nacimiento</label>
-            <input id="birth-place" type="text" class="form-control" formControlName="birthPlace" placeholder="{{'Ciudad, País' | translate}}" />
+            <input id="birth-place" type="text" class="form-control" formControlName="birthPlace" placeholder="{{'Ciudad, País' | translate}}"
+            />
           </div>
           <div class="form-group col-md-4">
             <label for="birth-date" translate>Fecha de nacimiento</label>
-            <ng-datepicker class="newdatepicker-input d-block col-md-12" formControlName="birthDate" [options]="datePickerOptions"
-              [(ngModel)]="birthDate"></ng-datepicker>
+            <div class="input-group">
+              <input class="form-control" formControlName="birthDate" placeholder="yyyy-mm-dd" name="birthDate" [navigation]="'select'"
+                ngbDatepicker #d="ngbDatepicker"/>
+              <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </div>
           </div>
           <div class="form-group col-md-4">
             <label for="gender" translate>Género</label>
@@ -43,11 +50,13 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="website" translate>Sitio web</label>
-            <input id="website" type="text" class="form-control" formControlName="website" placeholder="{{'Sitio web' | translate}}" />
+            <input id="website" type="text" class="form-control" formControlName="website" placeholder="{{'Sitio web' | translate}}"
+            />
           </div>
           <div class="form-group col-md-6">
             <label for="twitter" translate>Twitter</label>
-            <input id="twitter" formControlName="twitter" type="text" class="col-md-10 form-control" placeholder="Nombre de usuario" />
+            <input id="twitter" formControlName="twitter" type="text" class="col-md-10 form-control" placeholder="Nombre de usuario"
+            />
           </div>
         </div>
         <div class="form-group">

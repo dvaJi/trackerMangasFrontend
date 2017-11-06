@@ -1,5 +1,5 @@
 import { AuthenticationService } from './../../core/authentication/authentication.service';
-import { NgDatepickerModule } from 'ng2-datepicker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -20,12 +20,12 @@ describe('MagazineFormComponent', () => {
         imports: [
           SharedModule,
           ReactiveFormsModule,
+          NgbModule.forRoot(),
           FormsModule,
           TranslateModule.forRoot({
             loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
           }),
-          TagInputModule,
-          NgDatepickerModule
+          TagInputModule
         ],
         declarations: [MagazineFormComponent],
         providers: [

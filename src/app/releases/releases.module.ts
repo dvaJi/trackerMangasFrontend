@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from '../core/core.module';
 import { TagInputModule } from 'ngx-chips';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { SharedModule } from '../shared/shared.module';
 import { ReleasesRoutingModule } from './releases-routing.module';
 import { ReleasesComponent } from './releases.component';
@@ -16,13 +16,13 @@ import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, F
   imports: [
     CommonModule,
     TranslateModule,
+    NgbModule,
     CoreModule,
     SharedModule,
     TagInputModule,
     ReleasesRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgDatepickerModule
+    ReactiveFormsModule
   ],
   declarations: [
     ReleasesComponent,

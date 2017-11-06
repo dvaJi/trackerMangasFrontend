@@ -1,6 +1,6 @@
 import { AuthenticationService } from './../../core/authentication/authentication.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -20,14 +20,14 @@ describe('SeriesFormComponent', () => {
     TestBed.configureTestingModule({
         imports: [
           SharedModule,
+          NgbModule,
           RouterTestingModule,
           ReactiveFormsModule,
           FormsModule,
           TranslateModule.forRoot({
             loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
           }),
-          TagInputModule,
-          NgDatepickerModule
+          TagInputModule
         ],
         declarations: [SeriesComponent],
         providers: [

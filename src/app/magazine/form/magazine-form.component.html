@@ -6,11 +6,13 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="name-input" translate>Nombre</label>
-            <input minlength="1" type="text" class="form-control" id="name-input" formControlName="name" placeholder="{{'Nombre de la revista' | translate}}" required />
+            <input minlength="1" type="text" class="form-control" id="name-input" formControlName="name" placeholder="{{'Nombre de la revista' | translate}}"
+              required />
           </div>
           <div class="form-group col-md-6">
             <label for="name-alt-input" translate>Nombre Nativo</label>
-            <input minlength="1" type="text" class="form-control" id="name-alt-input" formControlName="nameAltInput" placeholder="{{'Nombre nativo de la revista' | translate}}" required/>
+            <input minlength="1" type="text" class="form-control" id="name-alt-input" formControlName="nameAltInput" placeholder="{{'Nombre nativo de la revista' | translate}}"
+              required/>
           </div>
         </div>
         <div class="form-row">
@@ -28,8 +30,13 @@
           </div>
           <div class="form-group col-md-4">
             <label for="circulation" translate>Circulación</label>
-            <ng-datepicker class="newdatepicker-input d-block col-md-12" formControlName="circulation" [options]="datePickerOptions"
-              [(ngModel)]="circulation"></ng-datepicker>
+            <div class="input-group">
+              <input class="form-control" formControlName="circulation" placeholder="yyyy-mm-dd" name="circulation" [navigation]="'select'"
+                ngbDatepicker #d="ngbDatepicker"/>
+              <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -39,11 +46,13 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="website" translate>Sitio web</label>
-            <input type="text" class="form-control" id="website" formControlName="website" placeholder="{{'Sitio web' | translate}}" required />
+            <input type="text" class="form-control" id="website" formControlName="website" placeholder="{{'Sitio web' | translate}}"
+              required />
           </div>
           <div class="form-group col-md-6">
             <label for="twitter" translate>Twitter</label>
-            <input formControlName="twitter" type="text" class="col-md-12 form-control" placeholder="Nombre de usuario" id="twitter" />
+            <input formControlName="twitter" type="text" class="col-md-12 form-control" placeholder="Nombre de usuario" id="twitter"
+            />
           </div>
         </div>
         <div class="form-group">

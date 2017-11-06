@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { DatepickerOptions } from 'ng2-datepicker';
 import { Release } from '../release';
 import { Demographic } from '../../shared/model/demographic';
 
@@ -28,13 +27,7 @@ export class ReleasesFormComponent implements OnInit {
   types: string[];
   isLoading: boolean;
   publicationDate: Date = new Date();
-  datePickerOptions: DatepickerOptions = {
-    minYear: 1960,
-    maxYear: 2018,
-    displayFormat: 'D MMM [,] YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    firstCalendarDay: 1
-  };
+  d: Object;
   isLicensed: boolean;
 
   constructor(private releaseService: ReleaseService, private serieService: SerieService) { }
