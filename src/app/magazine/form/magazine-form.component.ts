@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { DatepickerOptions } from 'ng2-datepicker';
 import { Magazine } from '../../shared/model/magazine';
 
 import { MagazineService } from '../magazine.service';
@@ -27,13 +26,7 @@ export class MagazineFormComponent implements OnInit {
   schedules: Array<string>;
   isLoading: boolean;
   circulation: Date = new Date();
-  datePickerOptions: DatepickerOptions = {
-    minYear: 1960,
-    maxYear: 2018,
-    displayFormat: 'D MMM [,] YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    firstCalendarDay: 1
-  };
+  d: Object;
   isLicensed: boolean;
 
   constructor(private magazineService: MagazineService) { }

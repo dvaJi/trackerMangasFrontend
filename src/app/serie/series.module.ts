@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CoreModule } from '../core/core.module';
 import { TagInputModule } from 'ngx-chips';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
@@ -18,14 +18,14 @@ import { SerieService } from './serie.service';
   imports: [
     CommonModule,
     TranslateModule,
+    NgbModule,
     CoreModule,
     SharedModule,
     SeriesRoutingModule,
     TagInputModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgDatepickerModule
+    ReactiveFormsModule
   ],
   declarations: [
     SeriesComponent,
