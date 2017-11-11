@@ -2,18 +2,18 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { NewsService } from './news.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { News } from './news';
+import { MagazineService } from './magazine.service';
+import Magazine from './../models/magazine';
 
-describe('NewsService', () => {
-  let newsService: NewsService;
+describe('MagazineService', () => {
+  let magazineService: MagazineService;
   let mockBackend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NewsService,
+        MagazineService,
         AuthenticationService,
         MockBackend,
         BaseRequestOptions,
@@ -29,61 +29,51 @@ describe('NewsService', () => {
   });
 
   beforeEach(inject([
-    NewsService,
+    MagazineService,
     MockBackend
-  ], (_newsService: NewsService,
-      _mockBackend: MockBackend) => {
+  ], (_magazineService: MagazineService,
+    _mockBackend: MockBackend) => {
 
-    newsService = _newsService;
-    mockBackend = _mockBackend;
-    const authenticationService = TestBed.get(AuthenticationService);
-    authenticationService.guessCredentials = 'test';
-  }));
+      magazineService = _magazineService;
+      mockBackend = _mockBackend;
+    }));
 
   afterEach(() => {
     mockBackend.verifyNoPendingRequests();
   });
 
-  describe('getNews', () => {
-    it('should return a news', fakeAsync(() => {
+  describe('getMagazine', () => {
+    it('should return a magazine', fakeAsync(() => {
       // Arrange
-      const mockNews: News = {
-          id: 1,
-          title: 'Fake news',
-          stub: 'fake_news',
-          content: 'This is a fake news.',
-          user: 'io',
-          created: new Date(),
-          updated: new Date()
-      };
+      const mockMagazines: Magazine = Magazine.generateMockMagazine();
       const response = new Response(new ResponseOptions({
-        body: mockNews
+        body: mockMagazines
       }));
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
 
       // Act
-      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
+      const pollsSubscription = magazineService.getMagazine(1);
       tick();
 
       // Assert
-      pollsSubscription.subscribe((news: News) => {
-        expect(news).toEqual(mockNews);
+      pollsSubscription.subscribe((magazine: Magazine) => {
+        expect(magazine).toEqual(mockMagazines);
       });
     }));
 
-    it('should return a string in case of error', fakeAsync(() => {
+    it('should return a object in case of error', fakeAsync(() => {
       // Arrange
       const response = new Response(new ResponseOptions({ status: 500 }));
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
+      const magazines = magazineService.getMagazines();
       tick();
 
       // Assert
-      pollsSubscription.subscribe((news: News) => {
-        expect(typeof news).toEqual('string');
-        expect(news).toContain('Error');
+      magazines.subscribe((magazine: Magazine) => {
+        expect(typeof magazine).toEqual('string');
+        expect(magazine).toContain('Error');
       });
     }));
   });

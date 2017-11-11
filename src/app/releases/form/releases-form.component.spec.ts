@@ -10,8 +10,8 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { ReleasesFormComponent } from './releases-form.component';
-import { ReleaseService } from '../release.service';
-import { SerieService } from './../../serie/serie.service';
+import { ReleaseService } from './../../services/release.service';
+import { SerieService } from './../../services//serie.service';
 
 describe('ReleasesFormComponent', () => {
   let component: ReleasesFormComponent;

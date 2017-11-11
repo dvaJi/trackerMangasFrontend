@@ -5,9 +5,9 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { Magazine } from '../../shared/model/magazine';
+import Magazine from './../../models/magazine';
 
-import { MagazineService } from '../magazine.service';
+import { MagazineService } from './../../services/magazine.service';
 
 const log = new Logger('Magazine Add');
 

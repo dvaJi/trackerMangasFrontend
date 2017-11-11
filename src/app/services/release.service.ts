@@ -1,8 +1,8 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Release } from './release';
-import { Scan } from './scan';
+import Release from './../models/release';
+import Scan from './../models/scan';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';

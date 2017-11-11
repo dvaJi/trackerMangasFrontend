@@ -6,7 +6,7 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { BrowseRoutingModule } from './browse-routing.module';
 import { BrowseComponent } from './browse.component';
-import { SerieService } from '../serie/serie.service';
+import { SerieService } from './../services/serie.service';
 
 @NgModule({
   imports: [

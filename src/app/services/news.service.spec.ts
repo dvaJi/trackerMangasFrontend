@@ -2,18 +2,18 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { PollsService } from './polls.service';
+import { NewsService } from './news.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { Poll, Answers } from './poll';
+import News from './../models/news';
 
-describe('PollsService', () => {
-  let quoteService: PollsService;
+describe('NewsService', () => {
+  let newsService: NewsService;
   let mockBackend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        PollsService,
+        NewsService,
         AuthenticationService,
         MockBackend,
         BaseRequestOptions,
@@ -29,12 +29,12 @@ describe('PollsService', () => {
   });
 
   beforeEach(inject([
-    PollsService,
+    NewsService,
     MockBackend
-  ], (_quoteService: PollsService,
+  ], (_newsService: NewsService,
       _mockBackend: MockBackend) => {
 
-    quoteService = _quoteService;
+    newsService = _newsService;
     mockBackend = _mockBackend;
     const authenticationService = TestBed.get(AuthenticationService);
     authenticationService.guessCredentials = 'test';
@@ -44,47 +44,40 @@ describe('PollsService', () => {
     mockBackend.verifyNoPendingRequests();
   });
 
-  describe('getPolls', () => {
-    it('should return a poll', fakeAsync(() => {
+  describe('getNews', () => {
+    it('should return a news', fakeAsync(() => {
       // Arrange
-      const mockQuotes: Poll[] = [];
-      const randomAnswers: Answers[] = [];
-
-      const answerOne: Answers = { id: 1, answer: 'Dunno', votes: 0 };
-      const answerTwo: Answers = { id: 2, answer: 'Maybe', votes: 1 };
-      randomAnswers.push(answerOne, answerTwo);
-
-      const poll1: Poll = {
-        id: 1,
-        title: 'First Poll',
-        description: 'The first Poll',
-        question: 'Why?',
-        active: true,
-        totalVotes: 1,
-        answers: randomAnswers
-      };
-      const poll2: Poll = {
-        id: 2,
-        title: 'Second Poll',
-        description: 'The SeconD Poll',
-        question: 'Nani?!',
-        active: true,
-        totalVotes: 1,
-        answers: randomAnswers
-      };
-      mockQuotes.push(poll1, poll2);
+      const mockNews: News = News.generateMockNews();
       const response = new Response(new ResponseOptions({
-        body: mockQuotes
+        body: mockNews
       }));
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
 
       // Act
-      const pollsSubscription = quoteService.getPolls({ active: true, latest: true });
+      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
       tick();
 
       // Assert
-      pollsSubscription.subscribe((quote: Poll[]) => {
-        expect(quote).toEqual(mockQuotes);
+      pollsSubscription.subscribe((news: News) => {
+        expect(news).toEqual(mockNews);
+      });
+    }));
+
+    it('should return a news array', fakeAsync(() => {
+      // Arrange
+      const mockArrayNews: News[] = News.generateArrayMockNews();
+      const response = new Response(new ResponseOptions({
+        body: mockArrayNews
+      }));
+      mockBackend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
+
+      // Act
+      const pollsSubscription = newsService.getAllNews();
+      tick();
+
+      // Assert
+      pollsSubscription.subscribe((news: News[]) => {
+        expect(news).toEqual(mockArrayNews);
       });
     }));
 
@@ -94,12 +87,13 @@ describe('PollsService', () => {
       mockBackend.connections.subscribe((connection: MockConnection) => connection.mockError(response as any));
 
       // Act
-      const pollsSubscription = quoteService.getPolls({ latest: false });
+      const pollsSubscription = newsService.getNews({ id: 1, stub: 'fake_news' });
       tick();
 
       // Assert
-      pollsSubscription.subscribe((polls: Poll[]) => {
-        expect(typeof polls).toEqual('string');
+      pollsSubscription.subscribe((news: News) => {
+        expect(typeof news).toEqual('string');
+        expect(news).toContain('Error');
       });
     }));
   });

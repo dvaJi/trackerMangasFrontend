@@ -4,7 +4,7 @@ import 'rxjs/add/operator/catch';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Poll } from './poll';
+import Poll from './../models/poll';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {

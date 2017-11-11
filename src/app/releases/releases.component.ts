@@ -1,9 +1,9 @@
 import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
-import { Release } from './release';
+import Release from './../models/release';
 
-import { ReleaseService } from './release.service';
+import { ReleaseService } from './../services/release.service';
 
 @Component({
   selector: 'app-releases',

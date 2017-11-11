@@ -5,9 +5,9 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { Staff } from '../../shared/model/staff';
+import Staff from './../../models/staff';
 
-import { StaffService } from '../staff.service';
+import { StaffService } from './../../services/staff.service';
 
 const log = new Logger('Staff Add');
 
@@ -68,8 +68,8 @@ export class StaffFormComponent implements OnInit {
     const staff: Staff = this.myform.value;
     console.log(staff);
     this.staffService.setStaff(staff)
-    .subscribe(credentials => {
-      console.log(credentials);
+    .subscribe(response => {
+      console.log(response);
     }, error => {
       log.debug(`Error al añadir staff: ${error}`);
     });

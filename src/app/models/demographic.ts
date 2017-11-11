@@ -1,4 +1,4 @@
-export class Release {
+export default class Demographic {
     id: number;
     name: string;
 }

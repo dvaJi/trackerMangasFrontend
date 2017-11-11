@@ -9,7 +9,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { MagazineFormComponent } from './magazine-form.component';
-import { MagazineService } from '../magazine.service';
+import { MagazineService } from './../../services/magazine.service';
 
 describe('MagazineFormComponent', () => {
   let component: MagazineFormComponent;

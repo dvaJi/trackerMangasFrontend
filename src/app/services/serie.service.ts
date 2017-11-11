@@ -1,11 +1,11 @@
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-import { Serie } from '../shared/model/serie';
-import { Genre } from '../shared/model/genre';
-import { Staff } from '../shared/model/staff';
-import { Magazine } from '../shared/model/magazine';
-import { Demographic } from '../shared/model/demographic';
+import Serie from './../models/serie';
+import Genre from './../models/genre';
+import Staff from './../models/staff';
+import Magazine from './../models/magazine';
+import Demographic from './../models/demographic';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 import { Observable } from 'rxjs/Observable';

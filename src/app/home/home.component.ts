@@ -2,10 +2,10 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { PollsService } from './polls.service';
-import { NewsService } from './news.service';
-import { Poll } from './poll';
-import { News } from './news';
+import { PollsService } from './../services/polls.service';
+import { NewsService } from './../services/news.service';
+import Poll from './../models/poll';
+import News from './../models/news';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
 
   vote() {
     this.pollsService.setPoll(this.pollAnswer)
-      .subscribe(credentials => {
+      .subscribe(response => {
         this.poll = this.updatePoll();
       }, error => {
         console.log(`Error al votar: ${error}`);

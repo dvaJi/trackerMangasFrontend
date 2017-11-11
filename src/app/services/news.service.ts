@@ -4,9 +4,9 @@ import 'rxjs/add/operator/catch';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Poll } from './poll';
+import Poll from './../models/poll';
+import News from './../models/news';
 import { AuthenticationService } from '../core/authentication/authentication.service';
-import { News } from './news';
 
 const routes = {
     news: (n: NewsContext) => `/news?id=${n.id}&stub=${n.stub}`,

@@ -2,8 +2,8 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 
-import { Staff } from '../../shared/model/staff';
-import { StaffService } from './../staff.service';
+import Staff from './../../models/staff';
+import { StaffService } from './../../services/staff.service';
 
 @Component({
   selector: 'app-staff',

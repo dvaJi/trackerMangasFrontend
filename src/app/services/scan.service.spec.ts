@@ -1,18 +1,22 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import { Release } from './release';
 
-import { ReleaseService } from './release.service';
+import { ScanService } from './scan.service';
+import Scan from './../models/scan';
 
-describe('ReleaseService', () => {
-  let releaseService: ReleaseService;
+describe('ScanService', () => {
+  let scanService: ScanService;
   let mockBackend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       providers: [
-        ReleaseService,
+        ScanService,
         MockBackend,
         BaseRequestOptions,
         {
@@ -22,17 +26,18 @@ describe('ReleaseService', () => {
           },
           deps: [MockBackend, BaseRequestOptions]
         }
-      ]
+      ],
+      declarations: []
     });
   });
 
   beforeEach(inject([
-    ReleaseService,
+    ScanService,
     MockBackend
-  ], (_releaseService: ReleaseService,
+  ], (_scanService: ScanService,
       _mockBackend: MockBackend) => {
 
-    releaseService = _releaseService;
+    scanService = _scanService;
     mockBackend = _mockBackend;
   }));
 

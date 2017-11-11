@@ -9,7 +9,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { StaffFormComponent } from './staff-form.component';
-import { StaffService } from '../staff.service';
+import { StaffService } from './../../services/staff.service';
 
 describe('StaffFormComponent', () => {
   let component: StaffFormComponent;

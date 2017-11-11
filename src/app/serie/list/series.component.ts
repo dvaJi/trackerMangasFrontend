@@ -1,9 +1,9 @@
 import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
-import { Serie } from '../../shared/model';
+import Serie from '../../models/serie';
 
-import { SerieService } from './../serie.service';
+import { SerieService } from './../../services/serie.service';
 
 @Component({
   selector: 'app-series',

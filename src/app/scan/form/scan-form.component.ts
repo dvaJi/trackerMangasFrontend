@@ -5,9 +5,9 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { Scan } from '../../shared/model/scan';
+import Scan from './../../models/scan';
 
-import { ScanService } from '../scan.service';
+import { ScanService } from './../../services/scan.service';
 
 const log = new Logger('Scan Add');
 

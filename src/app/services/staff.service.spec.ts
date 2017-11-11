@@ -3,7 +3,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
 import { StaffService } from './staff.service';
-import { Staff } from '../shared/model/staff';
+import Staff from './../models/staff';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('StaffService', () => {
