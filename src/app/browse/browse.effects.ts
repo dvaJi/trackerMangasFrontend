@@ -1,32 +1,75 @@
-/*import { TodoState } from './todo.state';
-import Serie from './../models/serie';
-
+import { BrowseState, SerieState } from './browse.state';
+import { environment } from '../../environments/environment';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
+import { Actions, Effect } from '@ngrx/effects';
+import { of } from 'rxjs/observable/of';
 
-export const GET_TODO = '[Todo] GET_TODO';
-export const GET_TODO_SUCCESS = "[Todo] GET_TODO_SUCCESS";
-export const GET_TODO_ERROR = "[Todo] GET_TODO_ERROR";
+import * as BrowseActions from './browse.action';
+import { SerieService } from '../services/serie.service';
 
-export const COMPLETE_TODO = 'COMPLETE_TODO';
-// Actions for Getting  Todos
-export class GetTodos implements Action {
-    readonly type = GET_TODOS
+@Injectable()
+export class BrowseEffects {
+
+    @Effect()
+    GetTrendingThisWeek$: Observable<Action> = this.actions$.
+        ofType<BrowseActions.GetTrendingThisWeek>(BrowseActions.GET_TRENDING_THIS_WEEK)
+        .mergeMap(action =>
+            this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: 'weekly', limit: 5 })
+                .map(series => {
+                    return new BrowseActions.GetTrendingThisWeekSuccess(series as SerieState[]);
+                })
+                .catch(() => of(new BrowseActions.GetTrendingThisWeekError()))
+        );
+
+    @Effect()
+    GetRecentlyAdded$: Observable<Action> = this.actions$.
+        ofType<BrowseActions.GetRecentlyAdded>(BrowseActions.GET_RECENTLY_ADDED)
+        .mergeMap(action =>
+            this.serieService.getSeries({ type: 'Manga', order: 'created', time: '', limit: 5 })
+                .map(series => {
+                    return new BrowseActions.GetRecentlyAddedSuccess(series as SerieState[]);
+                })
+                .catch(() => of(new BrowseActions.GetRecentlyAddedError()))
+        );
+
+    @Effect()
+    GetHighRatedSeries$: Observable<Action> = this.actions$.
+        ofType<BrowseActions.GetHighRatedSeries>(BrowseActions.GET_HIGH_RATED_SERIES)
+        .mergeMap(action =>
+            this.serieService.getSeries({ type: 'Manga', order: 'rated', time: '', limit: 5 })
+                .map(series => {
+                    return new BrowseActions.GetHighRatedSeriesSuccess(series as SerieState[]);
+                })
+                .catch(() => of(new BrowseActions.GetHighRatedSeriesError()))
+        );
+
+    @Effect()
+    GetMostPopularSeries$: Observable<Action> = this.actions$.
+        ofType<BrowseActions.GetMostPopularSeries>(BrowseActions.GET_MOST_POPULAR_SERIES)
+        .mergeMap(action =>
+            this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: '', limit: 5 })
+                .map(series => {
+                    return new BrowseActions.GetMostPopularSeriesSuccess(series as SerieState[]);
+                })
+                .catch(() => of(new BrowseActions.GetMostPopularSeriesError()))
+        );
+
+    @Effect()
+    GetTrendingThisMonth$: Observable<Action> = this.actions$.
+        ofType<BrowseActions.GetTrendingThisMonth>(BrowseActions.GET_TRENDING_THIS_MONTH)
+        .mergeMap(action =>
+            this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: 'month', limit: 5 })
+                .map(series => {
+                    return new BrowseActions.GetTrendingThisMonthSuccess(series as SerieState[]);
+                })
+                .catch(() => of(new BrowseActions.GetTrendingThisMonthError()))
+        );
+
+    constructor(private actions$: Actions, private serieService: SerieService) { }
+
 }
-
-export class GetTodosSuccess implements Action {
-    readonly type = GET_TODOS_SUCCESS
-
-    constructor(public payload: TodoState[]) { }
-
-}
-export class GetTodosError implements Action {
-    readonly type = GET_TODOS_ERROR
-}
-// Action for Creating TOdos
-export class CreateTodo implements Action {
-    readonly type = CREATE_TODO
-
-    constructor(public payload: Todo) { }
-}
-
-export type All = GetTodos | GetTodosSuccess | GetTodosError;*/

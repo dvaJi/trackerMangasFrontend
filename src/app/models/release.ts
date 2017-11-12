@@ -2,27 +2,6 @@ import Scan from './scan';
 
 export default class Release {
 
-    static generateMockReleases(): Release[] {
-        return [
-            {
-                id: 1,
-                chapter: 1,
-                volume: 1,
-                groups: Scan.generateArrayMockScans(),
-                created: new Date,
-                updated: new Date
-            },
-            {
-                id: 2,
-                chapter: 2,
-                volume: 1,
-                groups: Scan.generateArrayMockScans(),
-                created: new Date,
-                updated: new Date
-            }
-        ];
-    }
-
     id: number;
     chapter: number;
     volume: number;

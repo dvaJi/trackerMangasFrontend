@@ -5,6 +5,7 @@ import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/ht
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { MagazineService } from './magazine.service';
 import Magazine from './../models/magazine';
+import { MagazineMock } from '../../../testing/mock/magazine-mock';
 
 describe('MagazineService', () => {
   let magazineService: MagazineService;
@@ -45,7 +46,7 @@ describe('MagazineService', () => {
   describe('getMagazine', () => {
     it('should return a magazine', fakeAsync(() => {
       // Arrange
-      const mockMagazines: Magazine = Magazine.generateMockMagazine();
+      const mockMagazines: Magazine = MagazineMock.generateMockMagazine();
       const response = new Response(new ResponseOptions({
         body: mockMagazines
       }));

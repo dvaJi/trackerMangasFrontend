@@ -7,36 +7,6 @@ import SerieRanking from './serieRanking';
 
 export default class Serie {
 
-    static generateMockSerie(): Serie {
-        return {
-            id: 1,
-            name: 'Prison School',
-            names: ['Kangoku Gakuen'],
-            type: 'Manga',
-            description: 'Hachimitus una honorable escuela únicamente para chicas.',
-            stub: 'prison_school',
-            uniqid: '99ssd999asd0',
-            demographic: 'Seinen',
-            status_oc: 0,
-            status_oc_note: '',
-            completely_sc: 0,
-            anime_status: '',
-            publication_date: new Date('2011-07-02'),
-            cover: Cover.generateMockCover(),
-            licensed: 0,
-            popularity: 0,
-            rated: 5,
-            rated_count: 2,
-            ranking: SerieRanking.generateArrayMockSerieRanking(),
-            staff: Staff.generateArrayMockStaffs(),
-            genres: Genre.generateMockGenres(),
-            releases: Release.generateMockReleases(),
-            magazines: Magazine.generateMockMagazines(),
-            created: new Date,
-            updated: new Date
-        };
-    }
-
     id: number;
     name: string;
     names: string[];
@@ -52,6 +22,7 @@ export default class Serie {
     publication_date: Date;
     cover: Object;
     licensed: number;
+    loading: boolean;
     popularity: number;
     rated: number;
     rated_count: number;
@@ -63,7 +34,7 @@ export default class Serie {
     created: Date;
     updated: Date;
 
-    constructor( ) {
+    constructor() {
         this.name = '';
         this.names = [];
         this.uniqid = '';
