@@ -10,7 +10,7 @@ import { StaffRoutingModule } from './staff-routing.module';
 import { StaffComponent } from './list/staff.component';
 import { StaffDetailComponent } from './detail/staff-detail.component';
 import { StaffFormComponent } from './form/staff-form.component';
-import { StaffService } from './staff.service';
+import { StaffService } from './../services/staff.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @NgModule({

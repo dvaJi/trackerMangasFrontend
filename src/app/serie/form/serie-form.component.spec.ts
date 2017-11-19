@@ -10,7 +10,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { SeriesComponent } from '../list/series.component';
-import { SerieService } from '../serie.service';
+import { SerieService } from './../../services/serie.service';
 
 describe('SeriesFormComponent', () => {
   let component: SeriesComponent;

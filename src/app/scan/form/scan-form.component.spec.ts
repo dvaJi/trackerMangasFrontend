@@ -9,7 +9,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { ScanFormComponent } from './scan-form.component';
-import { ScanService } from '../scan.service';
+import { ScanService } from './../../services/scan.service';
 
 describe('ScanFormComponent', () => {
   let component: ScanFormComponent;

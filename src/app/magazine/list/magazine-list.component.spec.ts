@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from './../../shared/shared.module';
 import { MagazineListComponent } from './magazine-list.component';
-import { MagazineService } from './../magazine.service';
+import { MagazineService } from './../../services/magazine.service';
 import { AuthenticationService } from './../../core/authentication/authentication.service';
 
 describe('MagazineListComponent', () => {

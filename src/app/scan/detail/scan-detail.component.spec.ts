@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from './../../shared/shared.module';
 import { ScanDetailComponent } from './scan-detail.component';
-import { ScanService } from './../scan.service';
+import { ScanService } from './../../services/scan.service';
 import { AuthenticationService } from './../../core/authentication/authentication.service';
 
 describe('ScanDetailComponent', () => {

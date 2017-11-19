@@ -12,7 +12,7 @@ import { SeriesRoutingModule } from './series-routing.module';
 import { SeriesComponent } from './list/series.component';
 import { SeriesDetailComponent } from './detail/series-detail.component';
 import { SerieFormComponent } from './form/serie-form.component';
-import { SerieService } from './serie.service';
+import { SerieService } from './../services/serie.service';
 
 @NgModule({
   imports: [

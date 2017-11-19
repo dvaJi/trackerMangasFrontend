@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Poll } from '../../home/poll';
+import Poll from '../../models/poll';
 
 @Component({
   selector: 'app-poll',

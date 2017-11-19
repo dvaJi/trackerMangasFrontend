@@ -3,8 +3,8 @@ import 'rxjs/add/operator/finally';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Scan } from '../../shared/model/scan';
-import { ScanService } from './../scan.service';
+import Scan from './../../models/scan';
+import { ScanService } from './../../services/scan.service';
 
 @Component({
   selector: 'app-scan-detail',

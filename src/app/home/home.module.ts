@@ -8,8 +8,8 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { PollsService } from './polls.service';
-import { NewsService } from './news.service';
+import { PollsService } from './../services/polls.service';
+import { NewsService } from './../services/news.service';
 
 @NgModule({
   imports: [

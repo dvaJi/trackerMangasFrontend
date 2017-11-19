@@ -1,0 +1,12 @@
+<div *ngIf="!serie.loading">
+  <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
+  </a>
+  <div class="cover-data">
+    <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
+    <span>
+      <div title="Type">{{serie.type}}</div>
+      <div title="Popularity">{{serie.popularity}}</div>
+      <div title="Average Score">{{serie.rated}}</div>
+    </span>
+  </div>
+</div>

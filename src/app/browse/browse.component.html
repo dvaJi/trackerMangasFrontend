@@ -13,37 +13,24 @@
                   <path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path>
                 </svg>
               </div>
-              <input type="text" class="form-control" id="search" placeholder="Buscar..."/>
+              <input type="text" class="form-control" id="search" placeholder="Buscar..." />
             </div>
           </div>
 
         </div>
 
         <div class="explore-search-info">
-          O has una 
+          O has una
           <a href="/serie">búsqueda avanzada</a>
         </div>
       </div>
 
-      <!--<app-loader [isLoading]="isLoading"></app-loader>-->
-
-      <div class="explore-section" *ngIf="trendingThisWeek">
+      <div class="explore-section" *ngIf="browseSeries$ | async as browse">
         <h6 translate>Populares de la semana</h6>
         <div class="media-browse">
           <div class="media-grid container">
             <div class="row">
-              <div class="cover-card" *ngFor="let serie of trendingThisWeek">
-                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
-                </a>
-                <div class="cover-data">
-                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
-                  <span>
-                    <div title="Type">{{serie.type}}</div>
-                    <div title="Popularity">{{serie.popularity}}</div>
-                    <div title="Average Score">{{serie.rated}}</div>
-                  </span>
-                </div>
-              </div>
+              <app-serie-card class="cover-card skeleton-loader-background" *ngFor="let serie of browse.series.trendingThisWeek" [serie]="serie"></app-serie-card>
             </div>
           </div>
         </div>
@@ -52,23 +39,12 @@
         </div>
       </div>
 
-      <div class="explore-section" *ngIf="highRatedSeries">
+      <div class="explore-section" *ngIf="browseSeries$ | async as browse">
         <h6 translate>Mejor votados</h6>
         <div class="media-browse">
           <div class="media-grid container">
             <div class="row">
-              <div class="cover-card" *ngFor="let serie of highRatedSeries">
-                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
-                </a>
-                <div class="cover-data">
-                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
-                  <span>
-                    <div title="Type">{{serie.type}}</div>
-                    <div title="Popularity">{{serie.popularity}}</div>
-                    <div title="Average Score">{{serie.rated}}</div>
-                  </span>
-                </div>
-              </div>
+              <app-serie-card class="cover-card skeleton-loader-background" *ngFor="let serie of browse.series.highRatedSeries" [serie]="serie"></app-serie-card>
             </div>
           </div>
         </div>
@@ -77,23 +53,12 @@
         </div>
       </div>
 
-      <div class="explore-section" *ngIf="mostPopularSeries">
+      <div class="explore-section" *ngIf="browseSeries$ | async as browse">
         <h6 translate>Más Populares</h6>
         <div class="media-browse">
           <div class="media-grid container">
             <div class="row">
-              <div class="cover-card" *ngFor="let serie of mostPopularSeries">
-                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
-                </a>
-                <div class="cover-data">
-                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
-                  <span>
-                    <div title="Type">{{serie.type}}</div>
-                    <div title="Popularity">{{serie.popularity}}</div>
-                    <div title="Average Score">{{serie.rated}}</div>
-                  </span>
-                </div>
-              </div>
+              <app-serie-card class="cover-card skeleton-loader-background" *ngFor="let serie of browse.series.mostPopularSeries" [serie]="serie"></app-serie-card>
             </div>
           </div>
         </div>
@@ -102,23 +67,12 @@
         </div>
       </div>
 
-      <div class="explore-section" *ngIf="recentlyAdded">
+      <div class="explore-section" *ngIf="browseSeries$ | async as browse">
         <h6 translate>Agregados Recientemente</h6>
         <div class="media-browse">
           <div class="media-grid container">
             <div class="row">
-              <div class="cover-card" *ngFor="let serie of recentlyAdded">
-                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
-                </a>
-                <div class="cover-data">
-                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
-                  <span>
-                    <div title="Type">{{serie.type}}</div>
-                    <div title="Popularity">{{serie.popularity}}</div>
-                    <div title="Average Score">{{serie.rated}}</div>
-                  </span>
-                </div>
-              </div>
+              <app-serie-card class="cover-card skeleton-loader-background" *ngFor="let serie of browse.series.recentlyAdded" [serie]="serie"></app-serie-card>
             </div>
           </div>
         </div>
@@ -127,23 +81,12 @@
         </div>
       </div>
 
-      <div class="explore-section" *ngIf="trendingThisMonth">
+      <div class="explore-section" *ngIf="browseSeries$ | async as browse">
         <h6 translate>Nuevos del Mes</h6>
         <div class="media-browse">
           <div class="media-grid container">
             <div class="row">
-              <div class="cover-card" *ngFor="let serie of trendingThisMonth">
-                <a class="cover-img" [routerLink]="['/serie', serie.id, serie.stub]" [ngStyle]="{ 'background-image': 'url(' + serie.cover.medium.path_full + ')'}">
-                </a>
-                <div class="cover-data">
-                  <a [routerLink]="['/serie', serie.id, serie.stub]">{{serie.name}}</a>
-                  <span>
-                    <div title="Type">{{serie.type}}</div>
-                    <div title="Popularity">{{serie.popularity}}</div>
-                    <div title="Average Score">{{serie.rated}}</div>
-                  </span>
-                </div>
-              </div>
+              <app-serie-card class="cover-card skeleton-loader-background" *ngFor="let serie of browse.series.trendingThisMonth" [serie]="serie"></app-serie-card>
             </div>
           </div>
         </div>

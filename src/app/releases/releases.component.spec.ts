@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../shared/shared.module';
 import { ReleasesComponent } from './releases.component';
-import { ReleaseService } from './release.service';
+import { ReleaseService } from './../services/release.service';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 describe('ReleasesComponent', () => {

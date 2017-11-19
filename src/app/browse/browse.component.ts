@@ -1,9 +1,12 @@
 import 'rxjs/add/operator/finally';
+import { Observable } from 'rxjs/Observable';
 
-import { Component, OnInit } from '@angular/core';
-import { Serie } from '../shared/model/serie';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { BrowseState, SerieState } from './browse.state';
+import { Store } from '@ngrx/store';
+import Serie from './../models/serie';
 
-import { SerieService } from '../serie/serie.service';
+import * as BrowseAction from './browse.action';
 
 @Component({
   selector: 'app-browse',
@@ -13,40 +16,17 @@ import { SerieService } from '../serie/serie.service';
 export class BrowseComponent implements OnInit {
 
   isLoading: boolean;
-  trendingThisWeek: Array<Serie> = [];
-  recentlyAdded: Array<Serie> = [];
-  highRatedSeries: Array<Serie> = [];
-  mostPopularSeries: Array<Serie> = [];
-  trendingThisMonth: Array<Serie> = [];
+  browseSeries$: Observable<BrowseState>;
 
-  constructor(private serieService: SerieService) { }
+  constructor(private store: Store<BrowseState>) { }
 
   ngOnInit() {
-    this.isLoading = true;
-    // Populares de la Semana
-    this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: 'weekly', limit: 5 })
-      .finally(() => { this.isLoading = false; })
-      .subscribe((series: Array<Serie>) => { this.trendingThisWeek = series; });
-
-    // Agregados recuentemente
-    this.serieService.getSeries({ type: 'Manga', order: 'created', time: '', limit: 5 })
-      .finally(() => { this.isLoading = false; })
-      .subscribe((series: Array<Serie>) => { this.recentlyAdded = series; });
-
-    // Más votados
-    this.serieService.getSeries({ type: 'Manga', order: 'rated', time: '', limit: 5 })
-      .finally(() => { this.isLoading = false; })
-      .subscribe((series: Array<Serie>) => { this.highRatedSeries = series; });
-
-    // Más populares
-    this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: '', limit: 5 })
-      .finally(() => { this.isLoading = false; })
-      .subscribe((series: Array<Serie>) => { this.mostPopularSeries = series; });
-
-    // Populares del mes
-    this.serieService.getSeries({ type: 'Manga', order: 'popularity', time: 'month', limit: 5 })
-      .finally(() => { this.isLoading = false; })
-      .subscribe((series: Array<Serie>) => { this.trendingThisMonth = series; });
+    this.browseSeries$ = this.store.select(state => state);
+    this.store.dispatch(new BrowseAction.GetTrendingThisWeek());
+    this.store.dispatch(new BrowseAction.GetHighRatedSeries());
+    this.store.dispatch(new BrowseAction.GetRecentlyAdded());
+    this.store.dispatch(new BrowseAction.GetTrendingThisMonth());
+    this.store.dispatch(new BrowseAction.GetMostPopularSeries());
   }
 
 }

@@ -10,7 +10,7 @@ import { MagazineRoutingModule } from './magazine-routing.module';
 import { MagazineListComponent } from './list/magazine-list.component';
 import { MagazineDetailComponent } from './detail/magazine-detail.component';
 import { MagazineFormComponent } from './form/magazine-form.component';
-import { MagazineService } from './magazine.service';
+import { MagazineService } from './../services/magazine.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @NgModule({

@@ -5,13 +5,13 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { Staff } from '../../shared/model/staff';
-import { Magazine } from '../../shared/model/magazine';
-import { Genre } from '../../shared/model/genre';
-import { Serie } from '../../shared/model/serie';
-import { Demographic } from '../../shared/model/demographic';
+import Staff from './../../models/staff';
+import Magazine from './../../models/magazine';
+import Genre from './../../models/genre';
+import Serie from './../../models/serie';
+import Demographic from './../../models/demographic';
 
-import { SerieService } from '../serie.service';
+import { SerieService } from './../../services/serie.service';
 
 const log = new Logger('Serie Add');
 
@@ -85,8 +85,8 @@ export class SerieFormComponent implements OnInit {
     const serie: Serie = this.myform.value;
     serie.genres = this.genresSelected;
     this.serieService.setSerie(serie)
-    .subscribe(credentials => {
-      console.log(credentials);
+    .subscribe(response => {
+      console.log(response);
     }, error => {
       log.debug(`Error al añadir serie: ${error}`);
     });
@@ -149,10 +149,9 @@ export class SerieFormComponent implements OnInit {
     return nuevaLista;
   }
 
-  get genresSelected() {
+  get genresSelected(): Genre[] {
     return this.genres
-      .filter(opt => opt.checked)
-      .map(opt => opt.id);
+      .filter(opt => opt.checked);
   }
 
 }

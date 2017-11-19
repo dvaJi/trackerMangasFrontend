@@ -5,11 +5,11 @@ import 'rxjs/add/operator/map';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import { Release } from '../release';
-import { Demographic } from '../../shared/model/demographic';
+import Release from './../../models/release';
+import Demographic from './../../models/demographic';
 
-import { ReleaseService } from '../release.service';
-import { SerieService } from '../../serie/serie.service';
+import { ReleaseService } from './../../services/release.service';
+import { SerieService } from './../../services/serie.service';
 
 const log = new Logger('Releases Add');
 

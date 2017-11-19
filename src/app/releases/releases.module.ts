@@ -9,7 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ReleasesRoutingModule } from './releases-routing.module';
 import { ReleasesComponent } from './releases.component';
 import { ReleasesFormComponent } from './form/releases-form.component';
-import { ReleaseService } from './release.service';
+import { ReleaseService } from './../services/release.service';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @NgModule({

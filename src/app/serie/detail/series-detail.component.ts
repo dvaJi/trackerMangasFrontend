@@ -2,9 +2,10 @@ import 'rxjs/add/operator/finally';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Serie } from './../../shared/model';
+import Serie from '../../models/serie';
+import Staff from '../../models/staff';
 
-import { SerieService } from './../serie.service';
+import { SerieService } from './../../services/serie.service';
 
 @Component({
   selector: 'app-series-detail',
@@ -15,7 +16,7 @@ export class SeriesDetailComponent implements OnInit {
 
   serie: Serie;
   isLoading: boolean;
-  staff: string[];
+  staff: Staff[];
 
   constructor(private serieService: SerieService, private route: ActivatedRoute) {}
 

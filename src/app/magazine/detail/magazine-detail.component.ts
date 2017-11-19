@@ -3,8 +3,8 @@ import 'rxjs/add/operator/finally';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Magazine } from './../../shared/model/magazine';
-import { MagazineService } from './../magazine.service';
+import Magazine from './../../models/magazine';
+import { MagazineService } from './../../services/magazine.service';
 
 @Component({
   selector: 'app-magazine-detail',
