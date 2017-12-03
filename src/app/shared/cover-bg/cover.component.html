@@ -1,13 +1,24 @@
 <div id="my-carousel" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="first-slide" [src]="imgSrc" alt="{{name}}" />
+      <img class="first-slide" [src]="serie.cover.large.path_full" alt="{{serie.name}}" />
+      <div class="gradient-bg"></div>
       <div class="container">
-        <div class="carousel-caption d-none d-md-block text-left">
-          <!--<h1>Example headline.</h1>
-          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-            Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>-->
+        <div class="carousel-caption d-md-block text-left">
+          <div class="badges">
+            <h3>
+              <span class="badge badge-secondary" [ngClass]="badgeColor(serie.type)">{{serie.type}}</span>
+            </h3>
+          </div>
+          <h1>{{serie.name}}</h1>
+          <p>
+            <ngb-rating [(rate)]="serie.rated">
+              <ng-template let-fill="fill">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+              </ng-template>
+            </ngb-rating>
+            ({{serie.rated_count}} votos)
+          </p>
         </div>
       </div>
     </div>

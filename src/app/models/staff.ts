@@ -22,6 +22,8 @@ export default class Staff {
     rol?: string;
     created: Date;
     updated: Date;
+    id_staff?: number;
+    id_roles?: number;
 
     constructor() {
         this.id = 1;

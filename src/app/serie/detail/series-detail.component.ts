@@ -18,12 +18,12 @@ export class SeriesDetailComponent implements OnInit {
   isLoading: boolean;
   staff: Staff[];
 
-  constructor(private serieService: SerieService, private route: ActivatedRoute) {}
+  constructor(private serieService: SerieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.isLoading = true;
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.serieService.getSerie({ id: id})
+    this.serieService.getSerie({ id: id })
       .finally(() => {
         this.isLoading = false;
         this.staff = this.serie.staff;
