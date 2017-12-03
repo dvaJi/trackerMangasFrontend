@@ -20,7 +20,7 @@ export default class Serie {
     completely_sc: number;
     anime_status: string;
     publication_date: Date;
-    cover: Object;
+    cover: Cover;
     licensed: number;
     loading: boolean;
     popularity: number;
