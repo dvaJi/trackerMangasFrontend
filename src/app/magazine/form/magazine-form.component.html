@@ -24,9 +24,10 @@
           </div>
           <div class="form-group col-md-4">
             <label for="publisher" translate>Editorial</label>
-            <select formControlName="publisher" class="custom-select d-block col-md-12" id="publisher">
-              <option *ngFor="let publisher of publishers" value="{{publisher.id}}" translate>{{publisher.name}}</option>
-            </select>
+            <ng-template #rt let-r="result" let-t="term">
+              {{ r.name}}
+            </ng-template>
+            <input id="publisher" type="text" class="form-control" [class.is-invalid]="searchFailed" [ngbTypeahead]="getPublishers" placeholder="Editorial" [resultTemplate]="rt" [inputFormatter]="formatter" formControlName="publisher" />
           </div>
           <div class="form-group col-md-4">
             <label for="circulation" translate>Circulación</label>

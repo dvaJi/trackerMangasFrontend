@@ -6,3 +6,12 @@
 body {
   margin-bottom: 10px;
 }
+
+.custom-file-control:lang(en):empty::after,
+.custom-file-control:lang(en)::after {
+  content: "Seleccionar archivo...";
+}
+
+.custom-file-control:lang(en)::before {
+  content: "Buscar";
+}

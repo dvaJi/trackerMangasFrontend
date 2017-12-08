@@ -15,14 +15,15 @@ const routes = {
   serie: (c: SerieContext) => `/serie/page/${c.id}`,
   serieSet: () => `/serie/page`,
   series: (query: any) => `/serie/list?type=${query.type}&order=${query.order}&time=${query.time}&limit=${query.limit}`,
+  search: (c: SerieContext) => `/serie/search?q=${c.q}&limit=${c.limit}`,
   genres: () => `/genre/list`,
-  staffs: () => `/staffs/list`,
-  magazines: () => `/magazine/list`,
   demographic: () => `/demographic/list`
 };
 
 export interface SerieContext {
-  id: number;
+  id?: number;
+  q?: string;
+  limit?: number;
 }
 
 @Injectable()
@@ -65,6 +66,18 @@ export class SerieService {
   }
 
   /*
+  * Buscar series por sus nombres.
+  */
+  searchSeries(context: SerieContext): Observable<Serie> {
+    const options = new RequestOptions({
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+    });
+    return this.http.get(routes.search(context), options)
+      .map((res: Response) => res.json())
+      .catch(() => Observable.of('Error, No se encontraron series.'));
+  }
+
+  /*
    * Obtener todos los géneros de las series.
    */
   getGenres(): Observable<Genre[]> {
@@ -75,32 +88,6 @@ export class SerieService {
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay géneros.'));
-  }
-
-  /*
-   * Obtener todos los géneros de las series.
-   */
-  getStaff(): Observable<Response> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.staffs(), options)
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Staff.'));
-  }
-
-  /*
-   * Obtener todos las revistas.
-   */
-  getMagazines(): Observable<Magazine[]> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.magazines(), options)
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Revistas.'));
   }
 
   /*

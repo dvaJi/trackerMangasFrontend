@@ -21,7 +21,7 @@ export class ScanDetailComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.scanService.getScan(id)
+    this.scanService.getScan({ id: id })
       .finally(() => { this.isLoading = false; })
       .subscribe((scan: Scan) => { this.scan = scan; });
   }

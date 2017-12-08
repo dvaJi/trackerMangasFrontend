@@ -10,14 +10,24 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 
 const routes = {
   staffs: () => `/staffs`,
-  staff: (id: number) => `/staffs?id=${id}`
+  staffsByName: (c: StaffContext) => `/staffs/search?q=${c.q}&limit=${c.limit}`,
+  staff: (s: StaffContext) => `/staffs?id=${s.id}`
 };
+
+export class StaffContext {
+  id?: number;
+  q?: string;
+  limit? = 10;
+}
 
 @Injectable()
 export class StaffService {
 
   constructor(private http: Http, private auth: AuthenticationService) { }
 
+  /*
+   * /Obtener los staff.
+   */
   getStaffs(): Observable<Staff> {
     const options = new RequestOptions({
       headers: new Headers({'Authorization': this.auth.credentials.token})
@@ -28,11 +38,27 @@ export class StaffService {
       .catch(() => Observable.of('Error, no hay Staff.'));
   }
 
-  getStaff(id: number): Observable<Staff> {
+  /*
+   * /Obtener staff por nombre.
+   */
+  getStaffsByName(context?: StaffContext): Observable<any> {
     const options = new RequestOptions({
       headers: new Headers({'Authorization': this.auth.credentials.token})
     });
-    return this.http.get(routes.staff(id), options)
+    return this.http.get(routes.staffsByName(context), options)
+      .map((res: Response) => res.json())
+      .map(body => body)
+      .catch(() => Observable.of('Error, no hay Staff.'));
+  }
+
+  /*
+   * /Obtener staff por id.
+   */
+  getStaff(context: StaffContext): Observable<Staff> {
+    const options = new RequestOptions({
+      headers: new Headers({'Authorization': this.auth.credentials.token})
+    });
+    return this.http.get(routes.staff(context), options)
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Staff.'));

@@ -45,21 +45,21 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="author-input" translate>Guión</label>
-            <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar...'" [onlyFromAutocomplete]="true" formControlName="author">
-              <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="staff"></tag-input-dropdown>
+            <tag-input [secondaryPlaceholder]="'Buscar...'" [identifyBy]="'id'" [displayBy]="'name'" formControlName="author">
+              <tag-input-dropdown [autocompleteObservable]="getStaff" [identifyBy]="'id'" [displayBy]="'name'"></tag-input-dropdown>
             </tag-input>
           </div>
           <div class="form-group col-md-6">
             <label for="art-input" translate>Arte</label>
-            <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar artistas...'" [onlyFromAutocomplete]="true" formControlName="artist">
-              <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="staff"></tag-input-dropdown>
+            <tag-input [secondaryPlaceholder]="'Buscar...'" [identifyBy]="'id'" [displayBy]="'name'" formControlName="artist">
+              <tag-input-dropdown [autocompleteObservable]="getStaff" [identifyBy]="'id'" [displayBy]="'name'"></tag-input-dropdown>
             </tag-input>
           </div>
         </div>
         <div class="form-group">
           <label for="magazines" translate>Revista</label>
-          <tag-input [secondaryPlaceholder]="'Buscar revistas...'" (click)="getMagazines()" [onlyFromAutocomplete]="true" formControlName="magazine">
-            <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="magazines"></tag-input-dropdown>
+          <tag-input [secondaryPlaceholder]="'Buscar...'" [identifyBy]="'id'" [displayBy]="'name'" formControlName="magazine">
+            <tag-input-dropdown [autocompleteObservable]="getMagazines" [identifyBy]="'id'" [displayBy]="'name'"></tag-input-dropdown>
           </tag-input>
         </div>
         <div class="form-row">

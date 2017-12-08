@@ -20,8 +20,8 @@ export class StaffDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    const id: number = Number(this.route.snapshot.paramMap.get('id'));
-    this.staffService.getStaff(id)
+    const staffId: number = Number(this.route.snapshot.paramMap.get('id'));
+    this.staffService.getStaff({ id: staffId })
       .finally(() => { this.isLoading = false; })
       .subscribe((staff: Staff) => { this.staff = staff; });
   }

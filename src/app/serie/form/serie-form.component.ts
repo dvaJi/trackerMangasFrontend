@@ -1,6 +1,8 @@
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -12,6 +14,8 @@ import Serie from './../../models/serie';
 import Demographic from './../../models/demographic';
 
 import { SerieService } from './../../services/serie.service';
+import { StaffService } from './../../services/staff.service';
+import { MagazineService } from './../../services/magazine.service';
 
 const log = new Logger('Serie Add');
 
@@ -35,7 +39,11 @@ export class SerieFormComponent implements OnInit {
   d: Object;
   isLicensed: boolean;
 
-  constructor(private serieService: SerieService) { }
+  constructor(
+    private serieService: SerieService,
+    private staffService: StaffService,
+    private magazineService: MagazineService
+  ) { }
 
   ngOnInit() {
     this.getGenres();
@@ -85,73 +93,50 @@ export class SerieFormComponent implements OnInit {
     const serie: Serie = this.myform.value;
     serie.genres = this.genresSelected;
     this.serieService.setSerie(serie)
-    .subscribe(response => {
-      console.log(response);
-    }, error => {
-      log.debug(`Error al añadir serie: ${error}`);
-    });
-  }
-
-  public getStaff() {
-    if ((!this.staff) && !this.isLoading) {
-      this.isLoading = true;
-      this.serieService.getStaff()
-      .finally(() => {
-        this.isLoading = false;
-        this.staff = this.toChipsObject(this.staff);
-      })
-      .subscribe((staff: any) => { this.staff = staff; });
-    }
-  }
-
-  getGenres() {
-    if (!this.genres) {
-      this.serieService.getGenres()
-      .finally(() => {
-        this.isLoading = false;
-      })
-      .subscribe((genres: Genre[]) => { this.genres = genres; });
-    }
-  }
-
-  getDemographics() {
-    if (!this.demographics) {
-      this.serieService.getDemographics()
-      .finally(() => {
-        this.isLoading = false;
-      })
-      .subscribe((demographics: Demographic[]) => { this.demographics = demographics; });
-    }
-  }
-
-  public getMagazines() {
-    if (!this.magazines) {
-      this.serieService.getMagazines()
-      .finally(() => {
-        this.isLoading = false;
-        this.magazines = this.toChipsObject(this.magazines);
-      })
-      .subscribe((magazines: any) => { this.magazines = magazines; });
-    }
-  }
-
-  /* Convierte el array con los valores necesarios para los chips */
-  toChipsObject(lista: any[]) {
-    const nuevaLista: any = [];
-    lista.forEach(objeto => {
-      const obj = {
-        value: objeto.id,
-        display: objeto.name
-      };
-      nuevaLista.push(obj);
-    });
-
-    return nuevaLista;
+      .subscribe(response => {
+        console.log(response);
+      }, error => {
+        log.debug(`Error al añadir serie: ${error}`);
+      });
   }
 
   get genresSelected(): Genre[] {
     return this.genres
       .filter(opt => opt.checked);
+  }
+
+  /*
+  * Obtener Observable de staff según búsqueda
+  */
+  public getStaff = (text: string): Observable<Response> => {
+    return this.staffService.getStaffsByName({ q: text, limit: 10 });
+  }
+
+  /*
+  * Obtener Observable de revistas según búsqueda
+  */
+  public getMagazines = (text: string): Observable<Magazine> => {
+    return this.magazineService.searchMagazine({ q: text, limit: 10 });
+  }
+
+  private getGenres() {
+    if (!this.genres) {
+      this.serieService.getGenres()
+        .finally(() => {
+          this.isLoading = false;
+        })
+        .subscribe((genres: Genre[]) => { this.genres = genres; });
+    }
+  }
+
+  private getDemographics() {
+    if (!this.demographics) {
+      this.serieService.getDemographics()
+        .finally(() => {
+          this.isLoading = false;
+        })
+        .subscribe((demographics: Demographic[]) => { this.demographics = demographics; });
+    }
   }
 
 }

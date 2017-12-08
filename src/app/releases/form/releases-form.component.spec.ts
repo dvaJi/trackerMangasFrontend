@@ -11,7 +11,8 @@ import { MockBackend } from '@angular/http/testing';
 import { SharedModule } from '../../shared/shared.module';
 import { ReleasesFormComponent } from './releases-form.component';
 import { ReleaseService } from './../../services/release.service';
-import { SerieService } from './../../services//serie.service';
+import { SerieService } from './../../services/serie.service';
+import { ScanService } from './../../services/scan.service';
 
 describe('ReleasesFormComponent', () => {
   let component: ReleasesFormComponent;
@@ -35,6 +36,7 @@ describe('ReleasesFormComponent', () => {
           ReleaseService,
           AuthenticationService,
           SerieService,
+          ScanService,
           MockBackend,
           BaseRequestOptions,
           {

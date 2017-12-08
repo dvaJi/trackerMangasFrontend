@@ -1,11 +1,20 @@
-import 'rxjs/add/operator/finally';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
+
 import Magazine from './../../models/magazine';
+import Publisher from '../../models/publisher';
 
 import { MagazineService } from './../../services/magazine.service';
 
@@ -28,11 +37,13 @@ export class MagazineFormComponent implements OnInit {
   circulation: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  searching = false;
+  searchFailed = false;
+  hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
 
   constructor(private magazineService: MagazineService) { }
 
   ngOnInit() {
-    this.getPublishers();
     this.schedules = ['Semanal', 'Quincenal', 'Mensual', 'Bi-mensual'];
     this.myform = new FormGroup({
       name: new FormControl(),
@@ -69,22 +80,35 @@ export class MagazineFormComponent implements OnInit {
 
   onSubmit() {
     const magazine: Magazine = this.myform.value;
-    console.log(magazine);
     this.magazineService.setMagazine(magazine)
-    .subscribe(credentials => {
-      console.log(credentials);
-    }, error => {
-      log.debug(`Error al añadir magazine: ${error}`);
-    });
+      .subscribe(credentials => {
+        console.log(credentials);
+      }, error => {
+        log.debug(`Error al añadir magazine: ${error}`);
+      });
   }
 
-  getPublishers() {
-    this.isLoading = true;
-    this.magazineService.getPublisher().
-      finally(() => {
-        this.isLoading = false;
-      }).
-      subscribe((publishers: any) => { this.publishers = publishers; });
-  }
+  /*
+  * Obtener Observable de los publishers según búsqueda
+  */
+  getPublishers = (text$: Observable<string>) =>
+    text$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .do(() => this.searching = true)
+      .switchMap(term =>
+        this.magazineService.getPublisher({ q: term, limit: 10 })
+          .do(() => this.searchFailed = false)
+          .catch(() => {
+            this.searchFailed = true;
+            return Observable.of([]);
+          }))
+      .do(() => this.searching = false)
+      .merge(this.hideSearchingWhenUnsubscribed)
+
+  /*
+  * Formatea el objeto dentro del input
+  */
+  formatter = (x: Publisher) => x.name;
 
 }
