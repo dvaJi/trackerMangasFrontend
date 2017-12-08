@@ -1,6 +1,6 @@
 {
   "name": "trackermangas",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "ng": "ng",
@@ -13,7 +13,8 @@
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env2json npm_package_version",
-    "generate": "ng generate"
+    "generate": "ng generate",
+    "release": "standard-version && git push — follow-tags origin develop"
   },
   "dependencies": {
     "@angular/animations": "^4.2.6",
@@ -64,6 +65,7 @@
     "karma-junit-reporter": "^1.2.0",
     "protractor": "~5.2.0",
     "puppeteer": "^0.13.0",
+    "standard-version": "^4.2.0",
     "stylelint": "~8.2.0",
     "stylelint-config-recommended-scss": "~2.0.0",
     "stylelint-config-standard": "~17.0.0",
