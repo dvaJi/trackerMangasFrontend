@@ -10,8 +10,7 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 
 const routes = {
   release: () => `/release/list`,
-  releaseSet: () => `/release`,
-  scans: () => `/scan/list`
+  releaseSet: () => `/release`
 };
 
 @Injectable()
@@ -41,16 +40,6 @@ export class ReleaseService {
       .flatMap((data: any) => {
         return Observable.of(data);
     });
-  }
-
-  getScans(): Observable<Scan> {
-    const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
-    });
-    return this.http.get(routes.scans(), options)
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay scans.'));
   }
 
 }

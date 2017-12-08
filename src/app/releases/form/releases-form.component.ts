@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -9,7 +10,10 @@ import Release from './../../models/release';
 import Demographic from './../../models/demographic';
 
 import { ReleaseService } from './../../services/release.service';
+import { ScanService } from './../../services/scan.service';
 import { SerieService } from './../../services/serie.service';
+import Scan from '../../models/scan';
+import Serie from '../../models/serie';
 
 const log = new Logger('Releases Add');
 
@@ -30,7 +34,10 @@ export class ReleasesFormComponent implements OnInit {
   d: Object;
   isLicensed: boolean;
 
-  constructor(private releaseService: ReleaseService, private serieService: SerieService) { }
+  constructor(
+    private releaseService: ReleaseService,
+    private serieService: SerieService,
+    private scanService: ScanService) { }
 
   ngOnInit() {
     this.myform = new FormGroup({
@@ -46,37 +53,26 @@ export class ReleasesFormComponent implements OnInit {
     const release: Release = this.myform.value;
     console.log(release);
     this.releaseService.setRelease(release)
-    .subscribe(credentials => {
-      console.log(credentials);
-    }, error => {
-      log.debug(`Error al añadir release: ${error}`);
-    });
+      .subscribe(credentials => {
+        console.log(credentials);
+      }, error => {
+        log.debug(`Error al añadir release: ${error}`);
+      });
   }
 
-  public getSeries() {
-    if ((!this.series) && !this.isLoading) {
-      this.isLoading = true;
-      this.serieService.getSeries({type: 'Manga', order: 'created'})
-      .finally(() => {
-        this.isLoading = false;
-        this.series = this.seriesNamesToChipsObject(this.series);
-      })
-      .subscribe((series: any) => { this.series = series; });
-    }
+  /*
+  * Obtener Observable de staff según búsqueda
+  */
+  public getSeries = (text: string): Observable<Serie> => {
+    return this.serieService.searchSeries({ q: text, limit: 10 });
   }
 
-  public getScans() {
-    if ((!this.scans) && !this.isLoading) {
-      this.isLoading = true;
-      this.releaseService.getScans()
-      .finally(() => {
-        this.isLoading = false;
-        this.scans = this.toChipsObject(this.scans);
-      })
-      .subscribe((scans: any) => { this.scans = scans; });
-    }
+  /*
+  * Obtener Observable de staff según búsqueda
+  */
+  public getScans = (text: string): Observable<Scan> => {
+    return this.scanService.searchScans({ q: text, limit: 10 });
   }
-
 
   /* Convierte el array con los valores necesarios para los chips */
   seriesNamesToChipsObject(lista: any[]) {

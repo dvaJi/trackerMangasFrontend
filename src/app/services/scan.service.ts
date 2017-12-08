@@ -10,8 +10,15 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 
 const routes = {
   scans: () => `/scan`,
-  scan: (id: number) => `/scan?id=${id}`
+  scan: (s: ScanContext) => `/scan?id=${s.id}`,
+  search: (s: ScanContext) => `/scan/search?q=${s.q}&limit=${s.limit}`
 };
+
+export class ScanContext {
+  id?: number;
+  q?: string;
+  limit?: 10;
+}
 
 @Injectable()
 export class ScanService {
@@ -24,17 +31,15 @@ export class ScanService {
     });
     return this.http.get(routes.scans(), options)
       .map((res: Response) => res.json())
-      .map(body => body)
       .catch(() => Observable.of('Error, no hay Scan.'));
   }
 
-  getScan(id: number): Observable<Scan> {
+  getScan(context: ScanContext): Observable<Scan> {
     const options = new RequestOptions({
       headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
     });
-    return this.http.get(routes.scan(id), options)
+    return this.http.get(routes.scan(context), options)
       .map((res: Response) => res.json())
-      .map(body => body)
       .catch(() => Observable.of('Error, no hay Scan.'));
   }
 
@@ -50,6 +55,15 @@ export class ScanService {
       .flatMap((data: any) => {
         return Observable.of(data);
     });
+  }
+
+  searchScans(context: ScanContext): Observable<Scan> {
+    const options = new RequestOptions({
+      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+    });
+    return this.http.get(routes.search(context), options)
+      .map((res: Response) => res.json())
+      .catch(() => Observable.of('Error, No se encontraron scans.'));
   }
 
 }

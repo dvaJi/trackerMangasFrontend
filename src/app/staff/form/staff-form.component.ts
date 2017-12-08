@@ -1,6 +1,8 @@
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/first';
+import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -75,47 +77,11 @@ export class StaffFormComponent implements OnInit {
     });
   }
 
-  public getStaff() {
-    if ((!this.series) && !this.isLoading) {
-      this.isLoading = true;
-      this.staffService.getStaffs()
-      .finally(() => {
-        this.isLoading = false;
-        this.series = this.seriesNamesToChipsObject(this.series);
-      })
-      .subscribe((series: any) => { this.series = series; });
-    }
-  }
-
-  /* Convierte el array con los valores necesarios para los chips */
-  seriesNamesToChipsObject(lista: any[]) {
-    const nuevaLista: any = [];
-    lista.forEach(serie => {
-      for (const name in serie.names) {
-        if (name !== null) {
-          const obj = {
-            value: serie.id,
-            display: serie.names[name].name
-          };
-          nuevaLista.push(obj);
-        }
-      }
-    });
-
-    return nuevaLista;
-  }
-
-  toChipsObject(lista: any[]) {
-    const nuevaLista: any = [];
-    lista.forEach(objeto => {
-      const obj = {
-        value: objeto.id,
-        display: objeto.name
-      };
-      nuevaLista.push(obj);
-    });
-
-    return nuevaLista;
+  /*
+  * Obtener Observable de staff según búsqueda
+  */
+  public getStaff = (text: string): Observable<Response> => {
+    return this.staffService.getStaffsByName({ q: text, limit: 10 });
   }
 
 }

@@ -43,8 +43,8 @@
         <!-- RELACIÓN
           <div class="form-group *ngFor="let rel of relations">
             <label for="guionInput" translate>Guión</label>
-            <tag-input (click)="getStaff()" [secondaryPlaceholder]="'Buscar...'" [onlyFromAutocomplete]="true" formControlName="author">
-              <tag-input-dropdown [showDropdownIfEmpty]="false" [autocompleteItems]="staff"></tag-input-dropdown>
+            <tag-input [secondaryPlaceholder]="'Buscar...'" [identifyBy]="'id'" [displayBy]="'name'" formControlName="relations">
+              <tag-input-dropdown [autocompleteObservable]='getStaff' [identifyBy]="'id'" [displayBy]="'name'"></tag-input-dropdown>
             </tag-input>
           </div>-->
         <div class="form-row">
