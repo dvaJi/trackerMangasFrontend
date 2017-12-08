@@ -14,7 +14,7 @@
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env2json npm_package_version",
     "generate": "ng generate",
-    "release": "standard-version && git push — follow-tags origin develop"
+    "release": "standard-version && git push --follow-tags origin develop"
   },
   "dependencies": {
     "@angular/animations": "^4.2.6",
