@@ -33,36 +33,30 @@ export class MagazineService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getMagazines(): Observable<Magazine> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.magazines(), options)
+    return this.http.get(routes.magazines())
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Magazine.'));
   }
 
   getMagazine(id: number): Observable<Magazine> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.magazine(id), options)
+    return this.http.get(routes.magazine(id))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, revista no encontrada.'));
   }
 
   searchMagazine(context: MagazineContext): Observable<Magazine> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.searchmagazine(context), options)
+    return this.http.get(routes.searchmagazine(context))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, No se encontró la revista.'));
   }
 
   setMagazine(context: Magazine): Observable<Magazine> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
     const options = new RequestOptions({
       headers: new Headers({
         'Authorization': `Bearer ${this.auth.credentials.token}`,

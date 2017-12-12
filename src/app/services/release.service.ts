@@ -19,19 +19,19 @@ export class ReleaseService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getReleases(): Observable<Release> {
-    const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
-    });
-    return this.http.get(routes.release(), options)
+    return this.http.get(routes.release())
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay releases.'));
   }
 
   setRelease(context: Release): Observable<Release> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
     const options = new RequestOptions({
       headers: new Headers({
-        'Authorization': this.auth.credentials.token,
+        Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
         'Accept': 'application/json'})
     });

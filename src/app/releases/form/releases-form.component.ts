@@ -33,6 +33,7 @@ export class ReleasesFormComponent implements OnInit {
   publicationDate: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  formAlert: { active: boolean, msg: string, type: string };
 
   constructor(
     private releaseService: ReleaseService,
@@ -47,15 +48,29 @@ export class ReleasesFormComponent implements OnInit {
       chapter: new FormControl(),
       publicationDate: new FormControl()
     });
+
+    this.formAlert = {
+      active: false,
+      msg: '',
+      type: ''
+    };
   }
 
   onSubmit() {
     const release: Release = this.myform.value;
-    console.log(release);
     this.releaseService.setRelease(release)
-      .subscribe(credentials => {
-        console.log(credentials);
+      .subscribe(response => {
+        this.formAlert = {
+          active: true,
+          msg: '¡Se ha creado el registro exitosamente!',
+          type: 'success'
+        };
       }, error => {
+        this.formAlert = {
+          active: true,
+          msg: error,
+          type: 'danger'
+        };
         log.debug(`Error al añadir release: ${error}`);
       });
   }
@@ -74,35 +89,8 @@ export class ReleasesFormComponent implements OnInit {
     return this.scanService.searchScans({ q: text, limit: 10 });
   }
 
-  /* Convierte el array con los valores necesarios para los chips */
-  seriesNamesToChipsObject(lista: any[]) {
-    const nuevaLista: any = [];
-    lista.forEach(serie => {
-      for (const name in serie.names) {
-        if (name !== null) {
-          const obj = {
-            value: serie.id,
-            display: serie.names[name].name
-          };
-          nuevaLista.push(obj);
-        }
-      }
-    });
-
-    return nuevaLista;
-  }
-
-  toChipsObject(lista: any[]) {
-    const nuevaLista: any = [];
-    lista.forEach(objeto => {
-      const obj = {
-        value: objeto.id,
-        display: objeto.name
-      };
-      nuevaLista.push(obj);
-    });
-
-    return nuevaLista;
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.formAlert = { active: false, msg: '', type: '' };
   }
 
 }

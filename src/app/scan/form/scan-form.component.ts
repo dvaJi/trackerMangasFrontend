@@ -28,6 +28,7 @@ export class ScanFormComponent implements OnInit {
   creationDate: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  formAlert: { active: boolean, msg: string, type: string };
 
   constructor(private scanService: ScanService) { }
 
@@ -41,6 +42,12 @@ export class ScanFormComponent implements OnInit {
       facebook: new FormControl(),
       cover: new FormControl()
     });
+
+    this.formAlert = {
+      active: false,
+      msg: '',
+      type: ''
+    };
   }
 
   onFileChange(event: any) {
@@ -66,11 +73,24 @@ export class ScanFormComponent implements OnInit {
   onSubmit() {
     const scan: Scan = this.myform.value;
     this.scanService.setScan(scan)
-    .subscribe(credentials => {
-      console.log(credentials);
+    .subscribe(response => {
+      this.formAlert = {
+        active: true,
+        msg: '¡Se ha creado el registro exitosamente!',
+        type: 'success'
+      };
     }, error => {
+      this.formAlert = {
+        active: true,
+        msg: error,
+        type: 'danger'
+      };
       log.debug(`Error al añadir scan: ${error}`);
     });
+  }
+
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.formAlert = { active: false, msg: '', type: '' };
   }
 
 }

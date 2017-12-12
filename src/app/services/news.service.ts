@@ -24,20 +24,14 @@ export class NewsService {
     constructor(private http: Http, private auth: AuthenticationService) { }
 
     getNews(context: NewsContext): Observable<News> {
-        const options = new RequestOptions({
-            headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-        });
-        return this.http.get(routes.news(context), options)
+        return this.http.get(routes.news(context))
             .map((res: Response) => res.json())
             .map(body => body)
             .catch(() => Observable.of('Error, could not news.'));
     }
 
     getAllNews(): Observable<News[]> {
-        const options = new RequestOptions({
-            headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-        });
-        return this.http.get(routes.allNews(), options)
+        return this.http.get(routes.allNews())
             .map((res: Response) => res.json())
             .map(body => body)
             .catch(() => Observable.of('Error, could not news.'));

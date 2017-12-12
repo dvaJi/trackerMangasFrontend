@@ -38,6 +38,7 @@ export class SerieFormComponent implements OnInit {
   publicationDate: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  formAlert: { active: boolean, msg: string, type: string };
 
   constructor(
     private serieService: SerieService,
@@ -67,6 +68,12 @@ export class SerieFormComponent implements OnInit {
       genres: new FormControl()
     });
     this.types = ['Manga', 'Manhwa', 'Manhua', 'Artbook', 'Doujinshi', 'Drama CD', 'Novela Ligera'];
+
+    this.formAlert = {
+      active: false,
+      msg: '',
+      type: ''
+    };
   }
 
   onFileChange(event: any) {
@@ -94,10 +101,23 @@ export class SerieFormComponent implements OnInit {
     serie.genres = this.genresSelected;
     this.serieService.setSerie(serie)
       .subscribe(response => {
-        console.log(response);
+        this.formAlert = {
+          active: true,
+          msg: '¡Se ha creado el registro exitosamente!',
+          type: 'success'
+        };
       }, error => {
+        this.formAlert = {
+          active: true,
+          msg: error,
+          type: 'danger'
+        };
         log.debug(`Error al añadir serie: ${error}`);
       });
+  }
+
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.formAlert = { active: false, msg: '', type: '' };
   }
 
   get genresSelected(): Genre[] {
