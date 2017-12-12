@@ -32,16 +32,16 @@ export class SerieService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getSerie(context: SerieContext): Observable<Serie> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.serie(context), options)
+    return this.http.get(routes.serie(context))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no se encontró la serie.'));
   }
 
   setSerie(context: Serie): Observable<Serie> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
     const options = new RequestOptions({
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
@@ -57,9 +57,7 @@ export class SerieService {
   }
 
   getSeries(query: any): Observable<Array<Serie>> {
-    const headers = new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` });
-    const options = new RequestOptions({ withCredentials: true, headers });
-    return this.http.get(routes.series(query), options)
+    return this.http.get(routes.series(query))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error'));
@@ -69,10 +67,7 @@ export class SerieService {
   * Buscar series por sus nombres.
   */
   searchSeries(context: SerieContext): Observable<Serie> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.search(context), options)
+    return this.http.get(routes.search(context))
       .map((res: Response) => res.json())
       .catch(() => Observable.of('Error, No se encontraron series.'));
   }
@@ -81,10 +76,7 @@ export class SerieService {
    * Obtener todos los géneros de las series.
    */
   getGenres(): Observable<Genre[]> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.genres(), options)
+    return this.http.get(routes.genres())
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay géneros.'));
@@ -94,10 +86,7 @@ export class SerieService {
    * Obtener todos las demografias.
    */
   getDemographics(): Observable<Demographic[]> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.demographic(), options)
+    return this.http.get(routes.demographic())
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Demografías.'));

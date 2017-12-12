@@ -25,9 +25,12 @@ export class PollsService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getPoll(context: PollContext): Observable<Poll> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
+    let options = new RequestOptions();
+    if (this.auth.credentials !== null) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
     return this.http.get(routes.polls(context), options)
       .map((res: Response) => res.json())
       .map(body => body)
@@ -35,9 +38,12 @@ export class PollsService {
   }
 
   getPolls(context: PollContext): Observable<Poll[]> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
+    let options = new RequestOptions();
+    if (this.auth.credentials !== null) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
     return this.http.get(routes.polls(context), options)
       .map((res: Response) => res.json())
       .map(body => body)
@@ -45,6 +51,9 @@ export class PollsService {
   }
 
   setPoll(answer: number): Observable<string> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Inicie sesión para votar.'));
+    }
     const answerContext: PollContext = {
       answer: answer,
       user: this.auth.credentials.username

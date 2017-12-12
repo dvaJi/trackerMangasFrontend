@@ -29,6 +29,7 @@ export class StaffFormComponent implements OnInit {
   birthDate: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  formAlert: { active: boolean, msg: string, type: string };
 
   constructor(private staffService: StaffService) { }
 
@@ -44,6 +45,12 @@ export class StaffFormComponent implements OnInit {
       twitter: new FormControl(),
       cover: new FormControl()
     });
+
+    this.formAlert = {
+      active: false,
+      msg: '',
+      type: ''
+    };
   }
 
   onFileChange(event: any) {
@@ -68,11 +75,19 @@ export class StaffFormComponent implements OnInit {
 
   onSubmit() {
     const staff: Staff = this.myform.value;
-    console.log(staff);
     this.staffService.setStaff(staff)
     .subscribe(response => {
-      console.log(response);
+      this.formAlert = {
+        active: true,
+        msg: '¡Se ha creado el registro exitosamente!',
+        type: 'success'
+      };
     }, error => {
+      this.formAlert = {
+        active: true,
+        msg: error,
+        type: 'danger'
+      };
       log.debug(`Error al añadir staff: ${error}`);
     });
   }
@@ -82,6 +97,10 @@ export class StaffFormComponent implements OnInit {
   */
   public getStaff = (text: string): Observable<Response> => {
     return this.staffService.getStaffsByName({ q: text, limit: 10 });
+  }
+
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.formAlert = { active: false, msg: '', type: '' };
   }
 
 }

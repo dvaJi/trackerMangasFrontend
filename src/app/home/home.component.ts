@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   news: Array<News>;
   isLoading: boolean;
   pollAnswer: any;
+  pollAlert: { active: boolean, msg: string };
 
   constructor(private pollsService: PollsService, private newsService: NewsService) { }
 
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pollAlert = { active: false, msg: '' };
     this.isLoading = true;
     this.pollsService.getPoll({ active: true, latest: true })
       .finally(() => { this.isLoading = false; })
@@ -44,7 +46,7 @@ export class HomeComponent implements OnInit {
       .subscribe(response => {
         this.poll = this.updatePoll();
       }, error => {
-        console.log(`Error al votar: ${error}`);
+        this.pollAlert = { active: true, msg: error };
       });
   }
 
@@ -59,6 +61,10 @@ export class HomeComponent implements OnInit {
     });
 
     return newPoll;
+  }
+
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.pollAlert = { active: false, msg: '' };
   }
 
 }

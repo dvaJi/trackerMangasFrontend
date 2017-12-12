@@ -40,6 +40,7 @@ export class MagazineFormComponent implements OnInit {
   searching = false;
   searchFailed = false;
   hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
+  formAlert: { active: boolean, msg: string, type: string };
 
   constructor(private magazineService: MagazineService) { }
 
@@ -56,6 +57,12 @@ export class MagazineFormComponent implements OnInit {
       twitter: new FormControl(),
       cover: new FormControl()
     });
+
+    this.formAlert = {
+      active: false,
+      msg: '',
+      type: ''
+    };
   }
 
   onFileChange(event: any) {
@@ -82,8 +89,17 @@ export class MagazineFormComponent implements OnInit {
     const magazine: Magazine = this.myform.value;
     this.magazineService.setMagazine(magazine)
       .subscribe(credentials => {
-        console.log(credentials);
+        this.formAlert = {
+          active: true,
+          msg: '¡Se ha creado el registro exitosamente!',
+          type: 'success'
+        };
       }, error => {
+        this.formAlert = {
+          active: true,
+          msg: error,
+          type: 'danger'
+        };
         log.debug(`Error al añadir magazine: ${error}`);
       });
   }
@@ -110,5 +126,9 @@ export class MagazineFormComponent implements OnInit {
   * Formatea el objeto dentro del input
   */
   formatter = (x: Publisher) => x.name;
+
+  public closeAlert(alert: { active: boolean, msg: string }) {
+    this.formAlert = { active: false, msg: '', type: '' };
+  }
 
 }

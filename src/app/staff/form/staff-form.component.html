@@ -2,6 +2,7 @@
   <h3 translate>Añadir Staff</h3>
   <section role="data" class="row staffs">
     <div class="col-md-9">
+      <ngb-alert *ngIf="formAlert.active" [type]="formAlert.type" (close)="closeAlert(alert)">{{ formAlert.msg }}</ngb-alert>
       <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="name-input" translate>Nombre</label>
@@ -22,7 +23,7 @@
             <label for="birth-date" translate>Fecha de nacimiento</label>
             <div class="input-group">
               <input class="form-control" formControlName="birthDate" placeholder="yyyy-mm-dd" name="birthDate" [navigation]="'select'"
-                ngbDatepicker #d="ngbDatepicker"/>
+                ngbDatepicker #d="ngbDatepicker" />
               <button class="input-group-addon" (click)="d.toggle()" type="button">
                 <i class="fa fa-calendar"></i>
               </button>

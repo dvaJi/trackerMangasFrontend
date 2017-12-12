@@ -2,6 +2,7 @@
   <h3 translate>Añadir serie</h3>
   <section role="data" class="row series">
     <div class="col-md-9">
+      <ngb-alert *ngIf="formAlert.active" [type]="formAlert.type" (close)="closeAlert(alert)">{{ formAlert.msg }}</ngb-alert>
       <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="name-input" translate>Nombre</label>

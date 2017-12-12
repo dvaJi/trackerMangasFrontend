@@ -12,7 +12,7 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: 'https://localhost/trackerMangasBackend/',
+    target: 'http://localhost/trackerMangasBackend/',
     changeOrigin: true,
     secure: false
   }

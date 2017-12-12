@@ -29,10 +29,7 @@ export class StaffService {
    * /Obtener los staff.
    */
   getStaffs(): Observable<Staff> {
-    const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
-    });
-    return this.http.get(routes.staffs(), options)
+    return this.http.get(routes.staffs())
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Staff.'));
@@ -42,10 +39,7 @@ export class StaffService {
    * /Obtener staff por nombre.
    */
   getStaffsByName(context?: StaffContext): Observable<any> {
-    const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
-    });
-    return this.http.get(routes.staffsByName(context), options)
+    return this.http.get(routes.staffsByName(context))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Staff.'));
@@ -55,19 +49,19 @@ export class StaffService {
    * /Obtener staff por id.
    */
   getStaff(context: StaffContext): Observable<Staff> {
-    const options = new RequestOptions({
-      headers: new Headers({'Authorization': this.auth.credentials.token})
-    });
-    return this.http.get(routes.staff(context), options)
+    return this.http.get(routes.staff(context))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no hay Staff.'));
   }
 
   setStaff(context: Staff): Observable<Staff> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
     const options = new RequestOptions({
       headers: new Headers({
-        'Authorization': this.auth.credentials.token,
+        Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
         'Accept': 'application/json'})
     });

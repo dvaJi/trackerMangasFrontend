@@ -94,6 +94,7 @@ export class AuthenticationService {
     } else {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
+      document.cookie = '';
     }
   }
 

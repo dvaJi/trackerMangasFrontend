@@ -18,7 +18,7 @@ export class Route {
       path: '',
       component: ShellComponent,
       children: routes,
-      canActivate: [AuthenticationGuard]
+      canActivate: []
     }];
   }
 

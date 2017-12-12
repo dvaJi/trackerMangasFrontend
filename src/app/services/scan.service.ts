@@ -26,24 +26,21 @@ export class ScanService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getScans(): Observable<Scan> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.scans(), options)
+    return this.http.get(routes.scans())
       .map((res: Response) => res.json())
       .catch(() => Observable.of('Error, no hay Scan.'));
   }
 
   getScan(context: ScanContext): Observable<Scan> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.scan(context), options)
+    return this.http.get(routes.scan(context))
       .map((res: Response) => res.json())
       .catch(() => Observable.of('Error, no hay Scan.'));
   }
 
   setScan(context: Scan): Observable<Scan> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
     const options = new RequestOptions({
       headers: new Headers({
         'Authorization': `Bearer ${this.auth.credentials.token}`,
@@ -58,10 +55,7 @@ export class ScanService {
   }
 
   searchScans(context: ScanContext): Observable<Scan> {
-    const options = new RequestOptions({
-      headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
-    });
-    return this.http.get(routes.search(context), options)
+    return this.http.get(routes.search(context))
       .map((res: Response) => res.json())
       .catch(() => Observable.of('Error, No se encontraron scans.'));
   }

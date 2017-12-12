@@ -5,10 +5,17 @@ import { Route } from '../core/route.service';
 import { extract } from '../core/i18n.service';
 import { ReleasesComponent } from './releases.component';
 import { ReleasesFormComponent } from './form/releases-form.component';
+import { AuthenticationGuard } from '../core/authentication/authentication.guard';
 
 const routes: Routes = Route.withShell([
   { path: 'releases', component: ReleasesComponent, data: { title: extract('Releases') } },
-  { path: 'releases/add', pathMatch: 'full', component: ReleasesFormComponent, data: { title: extract('Add Release')}}
+  {
+    path: 'releases/add',
+    pathMatch: 'full',
+    component: ReleasesFormComponent,
+    data: { title: extract('Add Release') },
+    canActivate: [AuthenticationGuard]
+  }
 ]);
 
 @NgModule({
