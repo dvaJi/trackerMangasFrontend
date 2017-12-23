@@ -1,0 +1,70 @@
+<div class="d-flex align-items-stretch flex-nowrap min-height-100 h-100">
+  <div class="bg-cover bg-2 d-none d-md-inline-flex col-md-6 col-lg-8"></div>
+  <div class="card card-body mb-0 rounded-0 p-5 col-sm-12 col-md-6 col-lg-4">
+    <form [hidden]="hideForgotForm" (ngSubmit)="forgot()" [formGroup]="forgotForm" novalidate>
+      <div class="mb-3">
+        <img alt="" class="avatar-xs mb-1 w-25" src="assets/ngx-rocket-logo.png"/>
+        <p class="ff-headers text-uppercase" translate>Reestablecer contraseña</p>
+      </div>
+      <ngb-alert [type]="alert.type" *ngIf="alert.active && !hideForgotForm" (close)="closeAlert(alert)">{{ alert.msg }}</ngb-alert>
+      <fieldset class="form-group">
+        <label for="email" translate>
+          Correo electrónico
+        </label>
+        <input class="form-control" placeholder="Dirección de correo electrónico" type="text" formControlName="email" required />
+        <small [hidden]="forgotForm.controls.email.valid || forgotForm.controls.email.untouched" class="text-danger" translate>
+          Se requiere de un correo electrónico válido
+        </small>
+      </fieldset>
+      <div class="block mb-3"></div>
+      <button class="btn btn-primary" type="submit" [disabled]="forgotForm.invalid || isLoading" translate>
+        <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
+        <span translate>Enviar</span>
+      </button>
+    </form>
+    <!--  -->
+    <form [hidden]="hideResetPasswordForm" (ngSubmit)="resetPassword()" [formGroup]="resetPasswordForm" novalidate>
+      <div class="mb-3">
+        <img alt="" class="avatar-xs mb-1 w-25" src="assets/ngx-rocket-logo.png"/>
+        <p class="ff-headers text-uppercase" translate>Cambiar contraseña</p>
+      </div>
+      <ngb-alert [type]="alert.type" *ngIf="alert.active && !hideResetPasswordForm" (close)="closeAlert(alert)">{{ alert.msg }}</ngb-alert>
+      <fieldset class="form-group">
+        <label for="code" translate>
+          Código
+        </label>
+        <input class="form-control" placeholder="Código" type="text" formControlName="code" required />
+        <small [hidden]="resetPasswordForm.controls.code.valid || resetPasswordForm.controls.code.untouched" class="text-danger" translate>
+          Se requiere del código para poder cambiar la contraseña, si no lo tiene revise su correo electrónico para obtenerlo, si aún no ha solicitado reestablecer su contraseña haga <a routerLink="/auth/forgot">click aquí</a>.
+        </small>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="password" translate>
+          Ingrese su nueva contraseña
+        </label>
+        <input class="form-control" placeholder="********" type="password" formControlName="password" required />
+        <small [hidden]="resetPasswordForm.controls.password.valid || resetPasswordForm.controls.password.untouched" class="text-danger" translate>
+          Ingrese una contraseña
+        </small>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="password" translate>
+          Confirme su nueva contraseña
+        </label>
+        <input class="form-control" placeholder="********" type="password" formControlName="repassword" required />
+        <small [hidden]="resetPasswordForm.controls.repassword.valid || resetPasswordForm.controls.repassword.untouched" class="text-danger"
+          translate>
+          Ingrese una contraseña
+        </small>
+        <small [hidden]="resetPasswordForm.controls.password.value == resetPasswordForm.controls.repassword.value" class="text-danger" translate>
+          Sus contraseñas no coinciden
+        </small>
+      </fieldset>
+      <div class="block mb-3"></div>
+      <button class="btn btn-primary" type="submit" [disabled]="resetPasswordForm.invalid" translate>
+        <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
+        <span translate>Enviar</span>
+      </button>
+    </form>
+  </div>
+</div>
