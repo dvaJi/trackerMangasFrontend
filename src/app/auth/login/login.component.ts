@@ -4,10 +4,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { environment } from '../../environments/environment';
-import { Logger } from '../core/logger.service';
-import { I18nService } from '../core/i18n.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { environment } from '../../../environments/environment';
+import { Logger } from '../../core/logger.service';
+import { I18nService } from '../../core/i18n.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { Alert } from '../../models/alert';
 
 const log = new Logger('Login');
 
@@ -22,12 +23,14 @@ export class LoginComponent implements OnInit {
   error: string = null;
   loginForm: FormGroup;
   isLoading = false;
+  alert: Alert;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private i18nService: I18nService,
               private authenticationService: AuthenticationService) {
     this.createForm();
+    this.alert = { type: 'danger', msg: '', active: false };
   }
 
   ngOnInit() { }
@@ -44,8 +47,12 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/'], { replaceUrl: true });
       }, error => {
         log.debug(`Login error: ${error}`);
-        this.error = error;
+        this.alert = { type: 'danger', msg: JSON.parse(error._body).message, active: true };
       });
+  }
+
+  closeAlert(alert: Alert) {
+    this.alert = { type: '', msg: '', active: false };
   }
 
   setLanguage(language: string) {

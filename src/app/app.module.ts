@@ -18,7 +18,7 @@ import { StaffModule } from './staff/staff.module';
 import { MagazineModule } from './magazine/magazine.module';
 import { ScanModule } from './scan/scan.module';
 import { AboutModule } from './about/about.module';
-import { LoginModule } from './login/login.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   imports: [
@@ -37,7 +37,7 @@ import { LoginModule } from './login/login.module';
     ScanModule,
     SeriesModule,
     AboutModule,
-    LoginModule,
+    AuthModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],

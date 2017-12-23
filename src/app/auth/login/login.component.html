@@ -1,0 +1,36 @@
+<div class="d-flex align-items-stretch flex-nowrap min-height-100 h-100">
+  <div class="bg-cover bg-2 d-none d-md-inline-flex col-md-6 col-lg-8"></div>
+  <div class="card card-body mb-0 rounded-0 p-5 col-sm-12 col-md-6 col-lg-4">
+    <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+      <div class="mb-3">
+        <img alt="" class="avatar-xs mb-1 w-25" src="assets/ngx-rocket-logo.png"/>
+        <p class="ff-headers text-uppercase" translate>Crear una cuenta</p>
+      </div>
+      <ngb-alert [type]="alert.type" *ngIf="alert.active" (close)="closeAlert(alert)">{{ alert.msg }}</ngb-alert>
+      <fieldset class="form-group">
+        <label for="username" translate>
+          Nombre de usuario
+        </label>
+        <input type="text" class="form-control" formControlName="username" [placeholder]="'Username' | translate"/>
+        <small [hidden]="loginForm.controls.username.valid || loginForm.controls.username.untouched" class="text-danger" translate>
+          Se requiere de un nombre de usuario
+        </small>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="password" translate>
+          Ingrese una contraseña
+        </label>
+        <input type="password" class="form-control" formControlName="password" [placeholder]="'Password' | translate" required/>
+        <small [hidden]="loginForm.controls.password.valid || loginForm.controls.password.untouched" class="text-danger" translate>
+          Ingrese una contraseña
+        </small>
+      </fieldset>
+      <div class="block mb-3"></div>
+      <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid || isLoading" translate>
+        <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
+        <span translate>Login</span>
+      </button>
+      <small>¿No tienes una cuenta? <a routerLink="/auth/register" translate>Crear cuenta</a></small>
+    </form>
+  </div>
+</div>

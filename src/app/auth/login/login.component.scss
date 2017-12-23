@@ -1,0 +1,13 @@
+.register-module {
+  min-height: calc(100%);
+}
+
+.bg-2 {
+  background-image: url("/assets/bg-register.jpg");
+}
+
+.bg-cover {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}

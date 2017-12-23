@@ -3,9 +3,15 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 
 export interface Credentials {
-  // Customize received credentials here
   username: string;
   token: string;
+}
+
+export interface RegisterContext {
+  username: string;
+  email: string;
+  password: string;
+  repassword: string;
 }
 
 export interface LoginContext {
@@ -14,16 +20,30 @@ export interface LoginContext {
   remember?: boolean;
 }
 
+export interface ActivateContext {
+  id: number;
+  code: string;
+}
+
+export interface ForgotContext {
+  email: string;
+}
+
+export interface ResetPasswordContext {
+  code: string;
+  password: string;
+}
+
 const credentialsKey = 'credentials';
 
 const routes = {
-  login: () => `/auth/login`
+  login: () => `/auth/login`,
+  register: () => `/auth/register`,
+  activate: (a: ActivateContext) => `/auth/activate/${a.id}/${a.code}`,
+  forgot: () => `/auth/forgot`,
+  reset_password: () => `/auth/reset_password`
 };
 
-/**
- * Provides a base for authentication workflow.
- * The Credentials interface as well as login/logout methods should be replaced with proper implementation.
- */
 @Injectable()
 export class AuthenticationService {
 
@@ -44,7 +64,60 @@ export class AuthenticationService {
       .flatMap((data: any) => {
         this.setCredentials(data, context.remember);
         return Observable.of(data);
-    });
+      });
+  }
+
+  /**
+   * Registro de usuarios.
+   * @param {RegisterContext} context Parámetros para el registro.
+   * @return {Observable<any>} Retorna el estado del registro.
+   */
+  register(context: RegisterContext): Observable<any> {
+    return this.http.post(routes.register(), JSON.stringify(context))
+      .map((res: any) => res.json())
+      .flatMap((data: any) => {
+        return Observable.of(data);
+      });
+  }
+
+  /**
+   * Activa la cuenta del usuario.
+   * @param {ActivateContext} context Parámetros para la activación.
+   * @return {Observable<any>} Retorna el estado de la activación.
+   */
+  activate(context: ActivateContext): Observable<any> {
+    return this.http.post(routes.activate(context), JSON.stringify(context))
+      .map((res: any) => res.json())
+      .flatMap((data: any) => {
+        return Observable.of(data);
+      });
+  }
+
+  /**
+   * Desactiva la cuenta y envía un código para reestablecer la
+   * contraseña del correo asociado.
+   * @param {ForgotContext} context Parámetros para reestablecer la contraseña.
+   * @return {Observable<any>} Retorna un mensaje con las instrucciones.
+   */
+  forgot(context: ForgotContext): Observable<any> {
+    return this.http.post(routes.forgot(), JSON.stringify(context))
+      .map((res: any) => res.json())
+      .flatMap((data: any) => {
+        return Observable.of(data);
+      });
+  }
+
+  /**
+   * Activa y reestablece la contraseña con el código
+   * @param {ResetPasswordContext} context Parámetros para nueva contraseña.
+   * @return {Observable<any>} Retorna un mensaje con las instrucciones.
+   */
+  resetPassword(context: ResetPasswordContext): Observable<any> {
+    return this.http.post(routes.reset_password(), JSON.stringify(context))
+      .map((res: any) => res.json())
+      .flatMap((data: any) => {
+        return Observable.of(data);
+      });
   }
 
   /**
@@ -74,7 +147,7 @@ export class AuthenticationService {
   }
 
   set guessCredentials(data: any) {
-    const guess: Credentials = {username: 'Guess', token: 'asaa'};
+    const guess: Credentials = { username: 'Guess', token: 'asaa' };
     this.setCredentials(guess, false);
   }
 
