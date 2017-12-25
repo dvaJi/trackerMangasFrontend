@@ -88,16 +88,16 @@ export class MagazineFormComponent implements OnInit {
   onSubmit() {
     const magazine: Magazine = this.myform.value;
     this.magazineService.setMagazine(magazine)
-      .subscribe(credentials => {
+      .subscribe((response: any) => {
         this.formAlert = {
           active: true,
-          msg: '¡Se ha creado el registro exitosamente!',
+          msg: response.message,
           type: 'success'
         };
       }, error => {
         this.formAlert = {
           active: true,
-          msg: error,
+          msg: JSON.parse(error._body).message,
           type: 'danger'
         };
         log.debug(`Error al añadir magazine: ${error}`);

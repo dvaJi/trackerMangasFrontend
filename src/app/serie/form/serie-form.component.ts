@@ -100,16 +100,16 @@ export class SerieFormComponent implements OnInit {
     const serie: Serie = this.myform.value;
     serie.genres = this.genresSelected;
     this.serieService.setSerie(serie)
-      .subscribe(response => {
+      .subscribe((response: any) => {
         this.formAlert = {
           active: true,
-          msg: '¡Se ha creado el registro exitosamente!',
+          msg: response.message,
           type: 'success'
         };
       }, error => {
         this.formAlert = {
           active: true,
-          msg: error,
+          msg: JSON.parse(error._body).message,
           type: 'danger'
         };
         log.debug(`Error al añadir serie: ${error}`);

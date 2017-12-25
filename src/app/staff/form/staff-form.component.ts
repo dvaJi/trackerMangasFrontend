@@ -76,16 +76,16 @@ export class StaffFormComponent implements OnInit {
   onSubmit() {
     const staff: Staff = this.myform.value;
     this.staffService.setStaff(staff)
-    .subscribe(response => {
+    .subscribe((response: any) => {
       this.formAlert = {
         active: true,
-        msg: '¡Se ha creado el registro exitosamente!',
+        msg: response.message,
         type: 'success'
       };
     }, error => {
       this.formAlert = {
         active: true,
-        msg: error,
+        msg: JSON.parse(error._body).message,
         type: 'danger'
       };
       log.debug(`Error al añadir staff: ${error}`);

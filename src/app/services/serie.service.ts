@@ -12,8 +12,8 @@ import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
-  serie: (c: SerieContext) => `/serie/page/${c.id}`,
-  serieSet: () => `/serie/page`,
+  getSerie: (c: SerieContext) => `/serie/page/${c.id}`,
+  setSerie: () => `/serie`,
   series: (query: any) => `/serie/list?type=${query.type}&order=${query.order}&time=${query.time}&limit=${query.limit}`,
   search: (c: SerieContext) => `/serie/search?q=${c.q}&limit=${c.limit}`,
   genres: () => `/genre/list`,
@@ -32,7 +32,7 @@ export class SerieService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getSerie(context: SerieContext): Observable<Serie> {
-    return this.http.get(routes.serie(context))
+    return this.http.get(routes.getSerie(context))
       .map((res: Response) => res.json())
       .map(body => body)
       .catch(() => Observable.of('Error, no se encontró la serie.'));
@@ -49,7 +49,7 @@ export class SerieService {
         'Accept': 'application/json'
       })
     });
-    return this.http.post(routes.serieSet(), context, options)
+    return this.http.post(routes.setSerie(), context, options)
       .map((res: any) => res.json())
       .flatMap((data: any) => {
         return Observable.of(data);
