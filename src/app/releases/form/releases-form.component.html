@@ -6,9 +6,10 @@
       <form [formGroup]="myform" (ngSubmit)="onSubmit()" novalidate>
         <div class="form-group">
           <label for="nameInput" translate>Serie</label>
-          <tag-input [secondaryPlaceholder]="'Buscar serie...'" [identifyBy]="'id'" [displayBy]="'name'" formControlName="scans">
-            <tag-input-dropdown [autocompleteObservable]="getSeries" [identifyBy]="'id'" [displayBy]="'name'"></tag-input-dropdown>
-          </tag-input>
+          <ng-template #rt let-r="result" let-t="term">
+              {{ r.name }}
+          </ng-template>
+          <input id="serie" type="text" class="form-control" [class.is-invalid]="searchFailed" [ngbTypeahead]="getSeries" placeholder="Buscar serie..." [resultTemplate]="rt" [inputFormatter]="formatter" formControlName="serie" />
         </div>
         <div class="form-group">
           <label for="nameInput" translate>Scans</label>

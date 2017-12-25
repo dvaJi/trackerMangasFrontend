@@ -73,16 +73,16 @@ export class ScanFormComponent implements OnInit {
   onSubmit() {
     const scan: Scan = this.myform.value;
     this.scanService.setScan(scan)
-    .subscribe(response => {
+    .subscribe((response: any) => {
       this.formAlert = {
         active: true,
-        msg: '¡Se ha creado el registro exitosamente!',
+        msg: response.message,
         type: 'success'
       };
     }, error => {
       this.formAlert = {
         active: true,
-        msg: error,
+        msg: JSON.parse(error._body).message,
         type: 'danger'
       };
       log.debug(`Error al añadir scan: ${error}`);

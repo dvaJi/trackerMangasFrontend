@@ -33,6 +33,9 @@ export class ReleasesFormComponent implements OnInit {
   publicationDate: Date = new Date();
   d: Object;
   isLicensed: boolean;
+  searching = false;
+  searchFailed = false;
+  hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
   formAlert: { active: boolean, msg: string, type: string };
 
   constructor(
@@ -59,16 +62,16 @@ export class ReleasesFormComponent implements OnInit {
   onSubmit() {
     const release: Release = this.myform.value;
     this.releaseService.setRelease(release)
-      .subscribe(response => {
+      .subscribe((response: any) => {
         this.formAlert = {
           active: true,
-          msg: '¡Se ha creado el registro exitosamente!',
+          msg: response.message,
           type: 'success'
         };
       }, error => {
         this.formAlert = {
           active: true,
-          msg: error,
+          msg: JSON.parse(error._body).message,
           type: 'danger'
         };
         log.debug(`Error al añadir release: ${error}`);
@@ -78,9 +81,25 @@ export class ReleasesFormComponent implements OnInit {
   /*
   * Obtener Observable de staff según búsqueda
   */
-  public getSeries = (text: string): Observable<Serie> => {
-    return this.serieService.searchSeries({ q: text, limit: 10 });
-  }
+  getSeries = (text$: Observable<string>) =>
+    text$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .do(() => this.searching = true)
+      .switchMap(term =>
+        this.serieService.searchSeries({ q: term, limit: 10 })
+          .do(() => this.searchFailed = false)
+          .catch(() => {
+            this.searchFailed = true;
+            return Observable.of([]);
+          }))
+      .do(() => this.searching = false)
+      .merge(this.hideSearchingWhenUnsubscribed)
+
+  /*
+  * Formatea el objeto dentro del input
+  */
+  formatter = (x: Serie) => x.name;
 
   /*
   * Obtener Observable de staff según búsqueda
