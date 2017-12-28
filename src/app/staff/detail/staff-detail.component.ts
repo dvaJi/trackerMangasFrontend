@@ -1,10 +1,9 @@
-import 'rxjs/add/operator/finally';
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import Staff from './../../models/staff';
 import { StaffService } from './../../services/staff.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-staff-detail',
@@ -22,7 +21,7 @@ export class StaffDetailComponent implements OnInit {
     this.isLoading = true;
     const staffId: number = Number(this.route.snapshot.paramMap.get('id'));
     this.staffService.getStaff({ id: staffId })
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((staff: Staff) => { this.staff = staff; });
   }
 

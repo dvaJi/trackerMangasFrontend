@@ -37,7 +37,7 @@ describe('PollsService', () => {
     quoteService = _quoteService;
     mockBackend = _mockBackend;
     const authenticationService = TestBed.get(AuthenticationService);
-    authenticationService.guessCredentials = 'test';
+    authenticationService.fakeCredential();
   }));
 
   afterEach(() => {

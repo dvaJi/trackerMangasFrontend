@@ -1,11 +1,10 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import Scan from './../models/scan';
 
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
@@ -27,14 +26,18 @@ export class ScanService {
 
   getScans(): Observable<Scan> {
     return this.http.get(routes.scans())
-      .map((res: Response) => res.json())
-      .catch(() => Observable.of('Error, no hay Scan.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay scans.'))
+      );
   }
 
   getScan(context: ScanContext): Observable<Scan> {
     return this.http.get(routes.scan(context))
-      .map((res: Response) => res.json())
-      .catch(() => Observable.of('Error, no hay Scan.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontró el scan.'))
+      );
   }
 
   setScan(context: Scan): Observable<Scan> {
@@ -45,19 +48,22 @@ export class ScanService {
       headers: new Headers({
         'Authorization': `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'})
+        'Accept': 'application/json'
+      })
     });
     return this.http.post(routes.scans(), context, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-    });
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
 
   searchScans(context: ScanContext): Observable<Scan> {
     return this.http.get(routes.search(context))
-      .map((res: Response) => res.json())
-      .catch(() => Observable.of('Error, No se encontraron scans.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontraron scans.'))
+      );
   }
 
 }

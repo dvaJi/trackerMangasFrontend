@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,10 +32,10 @@ export class RegisterComponent implements OnInit {
   register() {
     this.isLoading = true;
     this.authenticationService.register(this.registerForm.value)
-      .finally(() => {
+      .pipe(finalize(() => {
         this.registerForm.markAsPristine();
         this.isLoading = false;
-      })
+      }))
       .subscribe(response => {
         this.alert = { type: 'success', msg: response, active: true };
         this.router.navigate(['/auth/activate'], { replaceUrl: true });

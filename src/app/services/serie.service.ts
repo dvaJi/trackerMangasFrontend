@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import Serie from './../models/serie';
 import Genre from './../models/genre';
 import Staff from './../models/staff';
@@ -8,7 +8,6 @@ import Magazine from './../models/magazine';
 import Demographic from './../models/demographic';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
@@ -33,9 +32,10 @@ export class SerieService {
 
   getSerie(context: SerieContext): Observable<Serie> {
     return this.http.get(routes.getSerie(context))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no se encontró la serie.'));
+    .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontró la serie.'))
+      );
   }
 
   setSerie(context: Serie): Observable<Serie> {
@@ -50,17 +50,18 @@ export class SerieService {
       })
     });
     return this.http.post(routes.setSerie(), context, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-      });
+    .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
 
   getSeries(query: any): Observable<Array<Serie>> {
     return this.http.get(routes.series(query))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error'));
+    .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay series.'))
+      );
   }
 
   /*
@@ -68,8 +69,10 @@ export class SerieService {
   */
   searchSeries(context: SerieContext): Observable<Serie> {
     return this.http.get(routes.search(context))
-      .map((res: Response) => res.json())
-      .catch(() => Observable.of('Error, No se encontraron series.'));
+    .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontraron series para ' + context.q))
+      );
   }
 
   /*
@@ -77,9 +80,10 @@ export class SerieService {
    */
   getGenres(): Observable<Genre[]> {
     return this.http.get(routes.genres())
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay géneros.'));
+    .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay géneros.'))
+      );
   }
 
   /*
@@ -87,9 +91,10 @@ export class SerieService {
    */
   getDemographics(): Observable<Demographic[]> {
     return this.http.get(routes.demographic())
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Demografías.'));
+    .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay demografías.'))
+      );
   }
 
 }

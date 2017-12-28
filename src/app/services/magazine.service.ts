@@ -1,13 +1,13 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
+
+import { AuthenticationService } from '../core/authentication/authentication.service';
 
 import Magazine from './../models/magazine';
 import Publisher from '../models/publisher';
-
-import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
   magazines: () => `/magazine`,
@@ -34,23 +34,26 @@ export class MagazineService {
 
   getMagazines(): Observable<Magazine> {
     return this.http.get(routes.magazines())
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Magazine.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, no hay revistas.'))
+      );
   }
 
   getMagazine(id: number): Observable<Magazine> {
     return this.http.get(routes.magazine(id))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, revista no encontrada.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, revista no encontrada.'))
+      );
   }
 
   searchMagazine(context: MagazineContext): Observable<Magazine> {
     return this.http.get(routes.searchmagazine(context))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, No se encontró la revista.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, revista no encontrada.'))
+      );
   }
 
   setMagazine(context: Magazine): Observable<Magazine> {
@@ -65,18 +68,19 @@ export class MagazineService {
       })
     });
     return this.http.post(routes.magazines(), context, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-      });
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
 
   getPublisher(context: PublisherContext): Observable<Publisher> {
     context.q = (context.q !== '') ? context.q : ' ';
     return this.http.get(routes.publishers(context))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Publishers.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, no hay Editoriales.'))
+      );
   }
 
 }

@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -36,9 +35,9 @@ export class AuthActivateComponent implements OnInit {
 
     if (id !== 0 && code !== null) {
       this.authenticationService.activate({ id: id, code: code })
-        .finally(() => {
+        .pipe(finalize(() => {
           this.router.navigate(['/auth/login'], { replaceUrl: true });
-        })
+        }))
         .subscribe(credentials => {
           log.debug(`${credentials.username} successfully logged in`);
         }, error => {

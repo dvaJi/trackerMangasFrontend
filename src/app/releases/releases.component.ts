@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/finally';
+import { finalize } from 'rxjs/operators/finalize';
 
 import { Component, OnInit } from '@angular/core';
 import Release from './../models/release';
@@ -15,12 +15,12 @@ export class ReleasesComponent implements OnInit {
   releases: Release;
   isLoading: boolean;
 
-  constructor(private releaseService: ReleaseService) {}
+  constructor(private releaseService: ReleaseService) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.releaseService.getReleases()
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((releases: Release) => { this.releases = releases; });
   }
 

@@ -1,9 +1,8 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import Poll from './../models/poll';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
@@ -32,9 +31,10 @@ export class PollsService {
       });
     }
     return this.http.get(routes.polls(context), options)
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, could not load poll.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, No se pudo obtener la encuesta.'))
+      );
   }
 
   getPolls(context: PollContext): Observable<Poll[]> {
@@ -45,9 +45,10 @@ export class PollsService {
       });
     }
     return this.http.get(routes.polls(context), options)
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, could not load polls.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, No se pudieron obtener las encuestas.'))
+      );
   }
 
   setPoll(answer: number): Observable<string> {
@@ -66,10 +67,10 @@ export class PollsService {
       })
     });
     return this.http.post(routes.poll(), answerContext, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-      });
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
 
 }

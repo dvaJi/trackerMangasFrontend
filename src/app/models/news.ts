@@ -1,5 +1,13 @@
 export default class News {
 
+    id: number;
+    title: string;
+    stub: string;
+    content: string;
+    user: string;
+    created: Date;
+    updated: Date;
+
     static generateMockNews(): News {
         return {
             id: 1,
@@ -34,14 +42,6 @@ export default class News {
             }
         ];
     }
-
-    id: number;
-    title: string;
-    stub: string;
-    content: string;
-    user: string;
-    created: Date;
-    updated: Date;
 
     constructor() {
         this.id = 0;
