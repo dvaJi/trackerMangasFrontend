@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { Http, Response } from '@angular/http';
+import { map, flatMap } from 'rxjs/operators';
 
 export interface Credentials {
+  // Customize received credentials here
   username: string;
   token: string;
 }
@@ -47,10 +50,13 @@ const routes = {
 @Injectable()
 export class AuthenticationService {
 
-  private _credentials: Credentials;
+  private _credentials: Credentials | null;
 
   constructor(private http: Http) {
-    this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
+    const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
+    if (savedCredentials) {
+      this._credentials = JSON.parse(savedCredentials);
+    }
   }
 
   /**
@@ -60,11 +66,12 @@ export class AuthenticationService {
    */
   login(context: LoginContext): Observable<Credentials> {
     return this.http.post(routes.login(), JSON.stringify(context))
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
+      .pipe(
+      map((res: any) => res.json()),
+      flatMap((data: any) => {
         this.setCredentials(data, context.remember);
-        return Observable.of(data);
-      });
+        return of(data);
+      }));
   }
 
   /**
@@ -74,10 +81,11 @@ export class AuthenticationService {
    */
   register(context: RegisterContext): Observable<any> {
     return this.http.post(routes.register(), JSON.stringify(context))
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
+      .pipe(
+      map((res: any) => res.json()),
+      flatMap((data: any) => {
         return Observable.of(data);
-      });
+      }));
   }
 
   /**
@@ -87,10 +95,11 @@ export class AuthenticationService {
    */
   activate(context: ActivateContext): Observable<any> {
     return this.http.post(routes.activate(context), JSON.stringify(context))
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
+      .pipe(
+      map((res: any) => res.json()),
+      flatMap((data: any) => {
         return Observable.of(data);
-      });
+      }));
   }
 
   /**
@@ -101,10 +110,11 @@ export class AuthenticationService {
    */
   forgot(context: ForgotContext): Observable<any> {
     return this.http.post(routes.forgot(), JSON.stringify(context))
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
+      .pipe(
+      map((res: any) => res.json()),
+      flatMap((data: any) => {
         return Observable.of(data);
-      });
+      }));
   }
 
   /**
@@ -114,10 +124,11 @@ export class AuthenticationService {
    */
   resetPassword(context: ResetPasswordContext): Observable<any> {
     return this.http.post(routes.reset_password(), JSON.stringify(context))
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
+      .pipe(
+      map((res: any) => res.json()),
+      flatMap((data: any) => {
         return Observable.of(data);
-      });
+      }));
   }
 
   /**
@@ -127,7 +138,7 @@ export class AuthenticationService {
   logout(): Observable<boolean> {
     // Customize credentials invalidation here
     this.setCredentials();
-    return Observable.of(true);
+    return of(true);
   }
 
   /**
@@ -142,13 +153,8 @@ export class AuthenticationService {
    * Gets the user credentials.
    * @return {Credentials} The user credentials or null if the user is not authenticated.
    */
-  get credentials(): Credentials {
+  get credentials(): Credentials | null {
     return this._credentials;
-  }
-
-  set guessCredentials(data: any) {
-    const guess: Credentials = { username: 'Guess', token: 'asaa' };
-    this.setCredentials(guess, false);
   }
 
   /**
@@ -167,8 +173,16 @@ export class AuthenticationService {
     } else {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
-      document.cookie = '';
     }
+  }
+
+  fakeCredential() {
+    const fakeCredential: Credentials = {
+      token: 'qwertyuiopasdfghjkl34567890zxcvbnm6789',
+      username: 'fake'
+    };
+
+    this._credentials = fakeCredential;
   }
 
 }

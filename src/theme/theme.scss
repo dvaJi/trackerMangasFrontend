@@ -9,8 +9,8 @@ body {
   height: 100%;
 }
 
-.custom-file-control:lang(en):empty::after,
-.custom-file-control:lang(en)::after {
+.custom-file-control:lang(en)::after,
+.custom-file-control:lang(en):empty::after {
   content: "Seleccionar archivo...";
 }
 

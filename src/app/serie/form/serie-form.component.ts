@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/finally';
+import { finalize } from 'rxjs/operators/finalize';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
@@ -142,9 +142,7 @@ export class SerieFormComponent implements OnInit {
   private getGenres() {
     if (!this.genres) {
       this.serieService.getGenres()
-        .finally(() => {
-          this.isLoading = false;
-        })
+        .pipe(finalize(() => { this.isLoading = false; }))
         .subscribe((genres: Genre[]) => { this.genres = genres; });
     }
   }
@@ -152,9 +150,7 @@ export class SerieFormComponent implements OnInit {
   private getDemographics() {
     if (!this.demographics) {
       this.serieService.getDemographics()
-        .finally(() => {
-          this.isLoading = false;
-        })
+        .pipe(finalize(() => { this.isLoading = false; }))
         .subscribe((demographics: Demographic[]) => { this.demographics = demographics; });
     }
   }

@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/finally';
+import { finalize } from 'rxjs/operators/finalize';
 
 import { Component, OnInit } from '@angular/core';
 
@@ -15,12 +15,12 @@ export class ScanListComponent implements OnInit {
   scans: Scan;
   isLoading: boolean;
 
-  constructor(private scanService: ScanService) {}
+  constructor(private scanService: ScanService) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.scanService.getScans()
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((scans: Scan) => { this.scans = scans; });
   }
 

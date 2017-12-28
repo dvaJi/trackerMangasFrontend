@@ -1,11 +1,10 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import Release from './../models/release';
 import Scan from './../models/scan';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
@@ -20,9 +19,10 @@ export class ReleaseService {
 
   getReleases(): Observable<Release> {
     return this.http.get(routes.release())
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay releases.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('Error, no hay releases.'))
+      );
   }
 
   setRelease(context: Release): Observable<Release> {
@@ -33,13 +33,13 @@ export class ReleaseService {
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'})
+        'Accept': 'application/json'
+      })
     });
     return this.http.post(routes.releaseSet(), context, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-    });
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
-
 }

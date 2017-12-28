@@ -1,19 +1,18 @@
-import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
+import { distinctUntilChanged, debounceTime, tap, switchMap, merge, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Logger } from '../../core/logger.service';
-import Release from './../../models/release';
-import Demographic from './../../models/demographic';
 
 import { ReleaseService } from './../../services/release.service';
 import { ScanService } from './../../services/scan.service';
 import { SerieService } from './../../services/serie.service';
+
 import Scan from '../../models/scan';
 import Serie from '../../models/serie';
+import Release from './../../models/release';
+import Demographic from './../../models/demographic';
 
 const log = new Logger('Releases Add');
 
@@ -82,19 +81,22 @@ export class ReleasesFormComponent implements OnInit {
   * Obtener Observable de staff según búsqueda
   */
   getSeries = (text$: Observable<string>) =>
-    text$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .do(() => this.searching = true)
-      .switchMap(term =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap(term =>
         this.serieService.searchSeries({ q: term, limit: 10 })
-          .do(() => this.searchFailed = false)
-          .catch(() => {
+          .pipe(
+          tap(() => this.searchFailed = false),
+          catchError(() => {
             this.searchFailed = true;
             return Observable.of([]);
           }))
-      .do(() => this.searching = false)
-      .merge(this.hideSearchingWhenUnsubscribed)
+      ),
+      tap(() => this.searching = false),
+      merge(this.hideSearchingWhenUnsubscribed)
+    )
 
   /*
   * Formatea el objeto dentro del input

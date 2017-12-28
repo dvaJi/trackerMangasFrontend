@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import Serie from '../../models/serie';
 
@@ -16,14 +15,12 @@ export class SeriesComponent implements OnInit {
   isLoading: boolean;
   staff: string[];
 
-  constructor(private serieService: SerieService) {}
+  constructor(private serieService: SerieService) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.serieService.getSeries({ type: 'Manga', order: 'stub', time: '', limit: 15 })
-      .finally(() => {
-        this.isLoading = false;
-      })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((series: Serie[]) => { this.series = series; });
   }
 

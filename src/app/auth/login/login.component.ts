@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -26,9 +25,9 @@ export class LoginComponent implements OnInit {
   alert: Alert;
 
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private i18nService: I18nService,
-              private authenticationService: AuthenticationService) {
+    private formBuilder: FormBuilder,
+    private i18nService: I18nService,
+    private authenticationService: AuthenticationService) {
     this.createForm();
     this.alert = { type: 'danger', msg: '', active: false };
   }
@@ -38,10 +37,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.isLoading = true;
     this.authenticationService.login(this.loginForm.value)
-      .finally(() => {
+      .pipe(finalize(() => {
         this.loginForm.markAsPristine();
         this.isLoading = false;
-      })
+      }))
       .subscribe(credentials => {
         log.debug(`${credentials.username} successfully logged in`);
         this.router.navigate(['/'], { replaceUrl: true });

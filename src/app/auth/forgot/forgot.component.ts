@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -40,10 +39,10 @@ export class ForgotComponent implements OnInit {
   forgot() {
     this.isLoading = true;
     this.authenticationService.forgot(this.forgotForm.value)
-      .finally(() => {
+      .pipe(finalize(() => {
         this.forgotForm.markAsPristine();
         this.isLoading = false;
-      })
+      }))
       .subscribe(credentials => {
         this.alert = { type: 'success', msg: credentials.message, active: true };
       }, error => {
@@ -55,10 +54,10 @@ export class ForgotComponent implements OnInit {
   resetPassword() {
     this.isLoading = true;
     this.authenticationService.resetPassword(this.resetPasswordForm.value)
-      .finally(() => {
+      .pipe(finalize(() => {
         this.resetPasswordForm.markAsPristine();
         this.isLoading = false;
-      })
+      }))
       .subscribe(credentials => {
         this.alert = { type: 'success', msg: credentials.message, active: true };
         this.router.navigate(['/auth/login'], { replaceUrl: true });
@@ -97,17 +96,17 @@ export class ForgotComponent implements OnInit {
   private selectForm() {
     // Valida el parámetro para saber que formulario debe desplegar
     this.activeRouter.queryParams
-    .subscribe(params => {
-      if (params['code'] !== undefined && params['code'] !== null) {
-        this.resetCode = params['code'];
-        this.resetPasswordForm.controls['code'].setValue(this.resetCode);
-        this.hideForgotForm = true;
-        this.hideResetPasswordForm = false;
-      } else {
-        this.hideForgotForm = false;
-        this.hideResetPasswordForm = true;
-      }
-    });
+      .subscribe(params => {
+        if (params['code'] !== undefined && params['code'] !== null) {
+          this.resetCode = params['code'];
+          this.resetPasswordForm.controls['code'].setValue(this.resetCode);
+          this.hideForgotForm = true;
+          this.hideResetPasswordForm = false;
+        } else {
+          this.hideForgotForm = false;
+          this.hideResetPasswordForm = true;
+        }
+      });
   }
 
 }

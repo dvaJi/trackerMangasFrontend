@@ -1,9 +1,9 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 import { PollsService } from './../services/polls.service';
 import { NewsService } from './../services/news.service';
+
 import Poll from './../models/poll';
 import News from './../models/news';
 
@@ -31,13 +31,13 @@ export class HomeComponent implements OnInit {
     this.pollAlert = { active: false, msg: '' };
     this.isLoading = true;
     this.pollsService.getPoll({ active: true, latest: true })
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((poll: Poll) => { this.poll = poll; });
     this.pollsService.getPolls({ active: false, latest: false })
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((polls: Poll[]) => { this.polls = polls; });
     this.newsService.getAllNews()
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((news: News[]) => { this.news = news; });
   }
 

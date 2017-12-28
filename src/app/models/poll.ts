@@ -1,15 +1,15 @@
 export class Answers {
 
+    id: number;
+    answer: string;
+    votes: number;
+
     static generateMockAnswers(): Answers[] {
         return [
             { id: 1, answer: 'Dunno', votes: 0 },
             { id: 2, answer: 'Maybe', votes: 1 }
         ];
     }
-
-    id: number;
-    answer: string;
-    votes: number;
 
     constructor() {
         this.id = 0;
@@ -19,6 +19,15 @@ export class Answers {
 }
 
 export default class Poll {
+
+    id: number;
+    title: string;
+    question: string;
+    description: string;
+    answers: Array<Answers>;
+    active: boolean;
+    totalVotes: number;
+    answered?: boolean;
 
     static generateMockPolls(): Poll[] {
         return [
@@ -54,15 +63,6 @@ export default class Poll {
             answers: Answers.generateMockAnswers()
         };
     }
-
-    id: number;
-    title: string;
-    question: string;
-    description: string;
-    answers: Array<Answers>;
-    active: boolean;
-    totalVotes: number;
-    answered?: boolean;
 
     constructor() {
         this.id = 0;

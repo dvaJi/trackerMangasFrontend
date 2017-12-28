@@ -21,14 +21,14 @@
   background: #f5f8f9;
 }
 
+.serie_data div > span {
+  display: inline-block;
+  width: 52%;
+}
+
 .serie_data div > span:first-of-type {
   color: #0591da;
   font-weight: 600;
   vertical-align: top;
   width: 46%;
-}
-
-.serie_data div > span {
-  display: inline-block;
-  width: 52%;
 }

@@ -1,11 +1,10 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import Staff from './../models/staff';
 
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { AuthenticationService } from '../core/authentication/authentication.service';
 
 const routes = {
@@ -17,7 +16,7 @@ const routes = {
 export class StaffContext {
   id?: number;
   q?: string;
-  limit? = 10;
+  limit?= 10;
 }
 
 @Injectable()
@@ -30,9 +29,10 @@ export class StaffService {
    */
   getStaffs(): Observable<Staff> {
     return this.http.get(routes.staffs())
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Staff.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay staffs.'))
+      );
   }
 
   /*
@@ -40,9 +40,10 @@ export class StaffService {
    */
   getStaffsByName(context?: StaffContext): Observable<any> {
     return this.http.get(routes.staffsByName(context))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Staff.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontró el staff.'))
+      );
   }
 
   /*
@@ -50,9 +51,10 @@ export class StaffService {
    */
   getStaff(context: StaffContext): Observable<Staff> {
     return this.http.get(routes.staff(context))
-      .map((res: Response) => res.json())
-      .map(body => body)
-      .catch(() => Observable.of('Error, no hay Staff.'));
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No se encontró staff.'))
+      );
   }
 
   setStaff(context: Staff): Observable<Staff> {
@@ -63,13 +65,14 @@ export class StaffService {
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'})
+        'Accept': 'application/json'
+      })
     });
     return this.http.post(routes.staffs(), context, options)
-      .map((res: any) => res.json())
-      .flatMap((data: any) => {
-        return Observable.of(data);
-    });
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
   }
 
 }

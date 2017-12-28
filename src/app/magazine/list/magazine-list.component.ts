@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 
 import Magazine from './../../models/magazine';
@@ -20,7 +19,7 @@ export class MagazineListComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.magazineService.getMagazines()
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((magazines: Magazine) => { this.magazines = magazines; });
   }
 

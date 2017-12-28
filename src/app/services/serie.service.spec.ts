@@ -94,7 +94,7 @@ describe('SerieService', () => {
       // Assert
       pollsSubscription.subscribe((serie: Serie) => {
         expect(typeof serie).toEqual('string');
-        expect(serie).toContain('Error');
+        expect(serie).toContain('No se encontró');
       });
     }));
   });

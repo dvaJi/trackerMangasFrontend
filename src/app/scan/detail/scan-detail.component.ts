@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -22,7 +21,7 @@ export class ScanDetailComponent implements OnInit {
     this.isLoading = true;
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
     this.scanService.getScan({ id: id })
-      .finally(() => { this.isLoading = false; })
+      .pipe(finalize(() => { this.isLoading = false; }))
       .subscribe((scan: Scan) => { this.scan = scan; });
   }
 

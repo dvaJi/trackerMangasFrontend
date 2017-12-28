@@ -1,5 +1,4 @@
-import 'rxjs/add/operator/finally';
-
+import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import Serie from '../../models/serie';
@@ -24,10 +23,10 @@ export class SeriesDetailComponent implements OnInit {
     this.isLoading = true;
     const id: number = Number(this.route.snapshot.paramMap.get('id'));
     this.serieService.getSerie({ id: id })
-      .finally(() => {
+      .pipe(finalize(() => {
         this.isLoading = false;
         this.staff = this.serie.staff;
-      })
+      }))
       .subscribe((serie: Serie) => { this.serie = serie; });
   }
 

@@ -1,17 +1,17 @@
 # trackermangas
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
-version 2.3.0
+version 3.1.1
 
 # Getting started
 
 1. Go to project folder and install dependencies:
- ```bash
+ ```sh
  npm install
  ```
  
 2. Launch development server, and open `localhost:4200` in your browser:
- ```bash
+ ```sh
  npm start
  ```
  
@@ -105,7 +105,7 @@ Development, build and quality processes are based on [angular-cli](https://gith
 #### Libraries
 
 - [Angular](https://angular.io)
-- [Bootstrap 4](https://v4-alpha.getbootstrap.com)
+- [Bootstrap 4](https://getbootstrap.com)
 - [ng-bootsrap](https://ng-bootstrap.github.io/)
 - [Font Awesome](http://fontawesome.io)
 - [RxJS](http://reactivex.io/rxjs)

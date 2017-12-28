@@ -1,12 +1,4 @@
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/first';
+import { distinctUntilChanged, debounceTime, tap, switchMap, merge, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
@@ -108,19 +100,22 @@ export class MagazineFormComponent implements OnInit {
   * Obtener Observable de los publishers según búsqueda
   */
   getPublishers = (text$: Observable<string>) =>
-    text$
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .do(() => this.searching = true)
-      .switchMap(term =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap(term =>
         this.magazineService.getPublisher({ q: term, limit: 10 })
-          .do(() => this.searchFailed = false)
-          .catch(() => {
+          .pipe(
+          tap(() => this.searchFailed = false),
+          catchError(() => {
             this.searchFailed = true;
             return Observable.of([]);
           }))
-      .do(() => this.searching = false)
-      .merge(this.hideSearchingWhenUnsubscribed)
+      ),
+      tap(() => this.searching = false),
+      merge(this.hideSearchingWhenUnsubscribed)
+    )
 
   /*
   * Formatea el objeto dentro del input
