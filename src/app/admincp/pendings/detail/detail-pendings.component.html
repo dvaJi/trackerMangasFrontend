@@ -1,0 +1,172 @@
+<div class="container">
+    <header>
+        <div class="pull-right">
+            <button class="btn btn-success" (click)="openModal(approve)">
+                <i class="fa fa-check"></i> Aprobar</button>
+            <button class="btn btn-danger" (click)="openModal(deny)">
+                <i class="fa fa-times"></i> Rechazar</button>
+        </div>
+        <h2>Validar {{module}}</h2>
+    </header>
+    <div *ngIf="object">
+        <table class="table table-striped">
+            <thead></thead>
+            <tbody>
+                <tr *ngIf="object?.name">
+                    <td>Nombre</td>
+                    <td>{{object.name}}</td>
+                </tr>
+                <tr *ngIf="object?.native_name">
+                    <td>Nombre nativo</td>
+                    <td>{{object.native_name}}</td>
+                </tr>
+                <tr *ngIf="object?.names">
+                    <td>Nombres</td>
+                    <td>
+                        <span *ngFor="let objName of object.names | toArray; let isLast=last">
+                            <span *ngIf="objName.def === '0'">{{objName.name}}{{isLast ? '' : ', '}}</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="object?.description">
+                    <td>Descripción</td>
+                    <td>{{object.description}}</td>
+                </tr>
+                <tr *ngIf="object?.cover_filename">
+                    <td>Portada</td>
+                    <td>
+                        <a href="/api/content/pending_{{module}}/{{object.stub}}_{{object.uniqid}}/{{object.cover_filename}}" target="_blank">{{object.cover_filename}}</a>
+                    </td>
+                </tr>
+                <tr *ngIf="object?.type">
+                    <td>Tipo</td>
+                    <td>{{object.type}}</td>
+                </tr>
+                <tr *ngIf="object?.release_schedule">
+                    <td>Frecuencia</td>
+                    <td>{{object.release_schedule}}</td>
+                </tr>
+                <tr *ngIf="object?.publisher">
+                    <td>Editorial</td>
+                    <td>{{object.publisher[0].name}}</td>
+                </tr>
+                <tr *ngIf="object?.circulation">
+                    <td>Circulación</td>
+                    <td>{{object.circulation}}</td>
+                </tr>
+                <tr *ngIf="object?.publication_date">
+                    <td>Fecha Publicación</td>
+                    <td>{{object.publication_date}}</td>
+                </tr>
+                <tr *ngIf="object?.completely_sc">
+                    <td>Estado Traducción</td>
+                    <td>{{getStatusSC(object.completely_sc)}}</td>
+                </tr>
+                <tr *ngIf="object?.creation_date">
+                    <td>Fecha creación</td>
+                    <td>{{object.creation_date}}</td>
+                </tr>
+                <tr *ngIf="object?.staff">
+                    <td>Staff</td>
+                    <td>
+                        <ul>
+                            <li *ngFor="let objStaff of object.staff | toArray">
+                                <b>{{objStaff.name}}</b>:
+                                <span *ngFor="let rol of objStaff.rol | toArray; let isLast=last">{{rol}}{{isLast ? '' : ', '}}</span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr *ngIf="object?.magazines">
+                    <td>Nombres</td>
+                    <td>
+                        <span *ngFor="let objMagazine of object.magazines | toArray; let isLast=last">
+                            {{objMagazine.name}}{{isLast ? '' : ', '}}
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="object?.status_oc">
+                    <td>Estado en país origen</td>
+                    <td>{{getStatusOC(object.status_oc)}}</td>
+                </tr>
+                <tr *ngIf="object?.status_oc_note">
+                    <td>info adicional al estado en país origen</td>
+                    <td>{{object.status_oc_note}}</td>
+                </tr>
+                <tr *ngIf="object?.licensed">
+                    <td>Licensiado</td>
+                    <td>{{object.licensed}}</td>
+                </tr>
+                <tr *ngIf="object?.demographic">
+                    <td>Demografía</td>
+                    <td>{{object.demographic[0].name}}</td>
+                </tr>
+                <tr *ngIf="object?.genres">
+                    <td>Géneros</td>
+                    <td>
+                        <span *ngFor="let objGenre of object.genres | toArray; let isLast=last">
+                            {{objGenre.name}}{{isLast ? '' : ', '}}
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="object?.birth_place">
+                    <td>Lugar de nacimiento</td>
+                    <td>{{object.birth_place}}</td>
+                </tr>
+                <tr *ngIf="object?.birth_date">
+                    <td>Fecha de nacimiento</td>
+                    <td>{{object.birth_date}}</td>
+                </tr>
+                <tr *ngIf="object?.gender">
+                    <td>Género</td>
+                    <td>{{getGender(object.gender)}}</td>
+                </tr>
+                <tr *ngIf="object?.website">
+                    <td>Sitio Web</td>
+                    <td>{{object.website}}</td>
+                </tr>
+                <tr *ngIf="object?.twitter">
+                    <td>Twitter</td>
+                    <td>{{object.twitter}}</td>
+                </tr>
+                <tr *ngIf="object?.pixiv">
+                    <td>Pixiv</td>
+                    <td>{{object.pixiv}}</td>
+                </tr>
+                <tr *ngIf="object?.facebook">
+                    <td>Facebook</td>
+                    <td>{{object.facebook}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<ng-template #approve let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Por favor confirme</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modalApprove(approve)">Aprobar</button>
+    </div>
+</ng-template>
+<ng-template #deny let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Por favor confirme</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group col-md-12">
+            <label for="reason" translate>Razón por el cual se rechazó:</label>
+            <input minlength="1" type="text" class="form-control" id="reason" [(ngModel)]="statusReason" placeholder="Razón"
+                required />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modalDeny(deny)">Rechazar</button>
+    </div>
+</ng-template>

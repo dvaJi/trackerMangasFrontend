@@ -4,7 +4,7 @@
     <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
       <div class="mb-3">
         <img alt="" class="avatar-xs mb-1 w-25" src="assets/ngx-rocket-logo.png"/>
-        <p class="ff-headers text-uppercase" translate>Crear una cuenta</p>
+        <p class="ff-headers text-uppercase" translate>Iniciar sesión</p>
       </div>
       <ngb-alert [type]="alert.type" *ngIf="alert.active" (close)="closeAlert(alert)">{{ alert.msg }}</ngb-alert>
       <fieldset class="form-group">
@@ -26,9 +26,9 @@
         </small>
       </fieldset>
       <div class="block mb-3"></div>
-      <button class="btn btn-primary" type="submit" [disabled]="loginForm.invalid || isLoading" translate>
+      <button class="btn btn-primary" type="submit" translate>
         <i class="fa fa-cog fa-spin" [hidden]="!isLoading"></i>
-        <span translate>Login</span>
+        <span translate>Iniciar sesión</span>
       </button>
       <small>¿No tienes una cuenta? <a routerLink="/auth/register" translate>Crear cuenta</a></small>
     </form>

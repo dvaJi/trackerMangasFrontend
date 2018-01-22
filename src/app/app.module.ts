@@ -19,6 +19,7 @@ import { MagazineModule } from './magazine/magazine.module';
 import { ScanModule } from './scan/scan.module';
 import { AboutModule } from './about/about.module';
 import { AuthModule } from './auth/auth.module';
+import { AdminCPModule } from './admincp/admincp.module';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AuthModule } from './auth/auth.module';
     SeriesModule,
     AboutModule,
     AuthModule,
+    AdminCPModule,
     AppRoutingModule
   ],
   declarations: [AppComponent],
