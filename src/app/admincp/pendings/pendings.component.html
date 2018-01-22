@@ -1,0 +1,161 @@
+<div class="container">
+    <ngb-tabset>
+        <ngb-tab title="Serie">
+            <ng-template ngbTabContent>
+                <div *ngIf="series && series.length === 0">
+                    <br/>
+                    <div class="alert alert-secondary" role="alert">
+                        No hay series pendientes por validar.
+                    </div>
+                </div>
+                <table *ngIf="!isLoading" class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serie of series">
+                            <td>
+                                <a routerLink="/admincp/pendings/series/{{serie.id}}">{{serie.name}}</a>
+                            </td>
+                            <td>{{serie.user[0].username}}</td>
+                            <td>{{serie.created}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Revistas">
+            <ng-template ngbTabContent>
+                <div *ngIf="magazines && magazines.length === 0">
+                    <br/>
+                    <div class="alert alert-secondary" role="alert">
+                        No hay revistas pendientes por validar.
+                    </div>
+                </div>
+                <table *ngIf="!isLoading" class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let magazine of magazines">
+                            <td>
+                                <a routerLink="/admincp/pendings/magazine/{{magazine.id}}">{{magazine.name}}</a>
+                            </td>
+                            <td>{{magazine.user[0].username}}</td>
+                            <td>{{magazine.created}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Staffs">
+            <ng-template ngbTabContent>
+                <div *ngIf="staffs && staffs.length === 0">
+                    <br/>
+                    <div class="alert alert-secondary" role="alert">
+                        No hay staffs pendientes por validar.
+                    </div>
+                </div>
+                <table *ngIf="!isLoading" class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let staff of staffs">
+                            <td>
+                                <a routerLink="/admincp/pendings/staff/{{staff.id}}">{{staff.name}}</a>
+                            </td>
+                            <td>{{staff.user[0].username}}</td>
+                            <td>{{staff.created}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Scans">
+            <ng-template ngbTabContent>
+                <div *ngIf="scans && scans.length === 0">
+                    <br/>
+                    <div class="alert alert-secondary" role="alert">
+                        No hay scans pendientes por validar.
+                    </div>
+                </div>
+                <table *ngIf="!isLoading" class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let scan of scans">
+                            <td>
+                                <a routerLink="/admincp/pendings/scans/{{scan.id}}">{{scan.name}}</a>
+                            </td>
+                            <td>{{scan.user[0].username}}</td>
+                            <td>{{scan.created}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Releases">
+            <ng-template ngbTabContent>
+                <div *ngIf="releases && releases.length === 0">
+                    <br/>
+                    <div class="alert alert-secondary" role="alert">
+                        No hay releases pendientes por validar.
+                    </div>
+                </div>
+                <table *ngIf="!isLoading" class="table table-striped">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let release of releases">
+                            <td>{{release.serie}}</td>
+                            <td>
+                                <span *ngIf="release.volume !== '0'">v{{release.volume}} </span>c{{release.chapter}}</td>
+                            <td>
+                                <span *ngFor="let scan of release.scans; let isLast=last">
+                                    <a href="/scan/{{scan.id_scan}}/{{scan.stub}}">{{scan.name}}</a>{{isLast ? '' : ' & '}}
+                                </span>
+                            </td>
+                            <td>{{release.user[0].username}}</td>
+                            <td>{{release.created}}</td>
+                            <td>
+                                <button class="btn btn-success btn-sm" placement="top" ngbTooltip="Aprobar" (click)="openModal(approve, release.id)">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" placement="top" ngbTooltip="Rechazar" (click)="openModal(deny, release.id)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>
+<ng-template #approve let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Por favor confirme</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateRelease(approve, 'APPROVE')">Aprobar</button>
+    </div>
+</ng-template>
+<ng-template #deny let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Por favor confirme</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group col-md-12">
+            <label for="reason" translate>Razón por el cual se rechazó:</label>
+            <input minlength="1" type="text" class="form-control" id="reason" [(ngModel)]="statusReason" placeholder="Razón" required
+            />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="updateRelease(deny, 'DENY')">Rechazar</button>
+    </div>
+</ng-template>

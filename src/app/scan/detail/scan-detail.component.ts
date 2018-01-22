@@ -15,7 +15,7 @@ export class ScanDetailComponent implements OnInit {
   scan: Scan;
   isLoading: boolean;
 
-  constructor(private scanService: ScanService, private route: ActivatedRoute) {}
+  constructor(private scanService: ScanService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.isLoading = true;

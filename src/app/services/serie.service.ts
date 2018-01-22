@@ -13,16 +13,29 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 const routes = {
   getSerie: (c: SerieContext) => `/serie/page/${c.id}`,
   setSerie: () => `/serie`,
-  series: (query: any) => `/serie/list?type=${query.type}&order=${query.order}&time=${query.time}&limit=${query.limit}`,
+  series: (c: SerieContext) => `/serie/list?type=${c.type}&order=${c.order}&time=${c.time}&limit=${c.limit}`,
   search: (c: SerieContext) => `/serie/search?q=${c.q}&limit=${c.limit}`,
   genres: () => `/genre/list`,
-  demographic: () => `/demographic/list`
+  demographic: () => `/demographic/list`,
+  getPendingSerie: (c: SerieContext) => `/serie/pending?id=${c.id}`,
+  updatePendingSerie: (c: StatusPendingSerieContext) => {
+    return `/serie/update_pending_serie?id=${c.id}&status=${c.status}&reason=${c.reason}`;
+  }
 };
 
 export interface SerieContext {
   id?: number;
   q?: string;
   limit?: number;
+  type?: string;
+  order?: string;
+  time?: string;
+}
+
+export interface StatusPendingSerieContext {
+  id: number;
+  status: boolean;
+  reason?: string;
 }
 
 @Injectable()
@@ -30,14 +43,28 @@ export class SerieService {
 
   constructor(private http: Http, private auth: AuthenticationService) { }
 
+  /**
+   * Obtiene una Serie por su ID
+   * @param {SerieContext} context
+   * @returns {Observable<Serie>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
   getSerie(context: SerieContext): Observable<Serie> {
     return this.http.get(routes.getSerie(context))
-    .pipe(
+      .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontró la serie.'))
       );
   }
 
+  /**
+   * Método POST que envía una Serie para pasar a la tabla pending_serie
+   * @param {Serie} context
+   * @returns {Observable<Serie>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
   setSerie(context: Serie): Observable<Serie> {
     if (this.auth.credentials === null) {
       return Observable.throw(new Error('Error, no logeado'));
@@ -50,48 +77,119 @@ export class SerieService {
       })
     });
     return this.http.post(routes.setSerie(), context, options)
-    .pipe(
+      .pipe(
       map((res: Response) => res.json()),
       flatMap((data: any) => of(data))
       );
   }
 
-  getSeries(query: any): Observable<Array<Serie>> {
-    return this.http.get(routes.series(query))
-    .pipe(
+  /**
+   * Obtiene una lista de series según parametros.
+   * @param {SerieContext} context
+   * @returns {Observable<Serie[]>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
+  getSeries(context: SerieContext): Observable<Serie[]> {
+    return this.http.get(routes.series(context))
+      .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay series.'))
       );
   }
 
-  /*
-  * Buscar series por sus nombres.
-  */
-  searchSeries(context: SerieContext): Observable<Serie> {
+  /**
+   * Obtiene la serie pendiente por id, si esta es
+   * undefined, trae la lista de series pendientes
+   * @param {SerieContext} context
+   * @returns {Observable<Array<Serie>>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
+  getPendingSeries(context: SerieContext): Observable<Array<Serie>> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
+    const options = new RequestOptions({
+      headers: new Headers({
+        Authorization: `Bearer ${this.auth.credentials.token}`,
+        'Content-Type': false,
+        'Accept': 'application/json'
+      })
+    });
+    return this.http.get(routes.getPendingSerie(context), options)
+      .pipe(
+      map((res: Response) => res.json()),
+      catchError(() => of('No hay series pendientes.'))
+      );
+  }
+
+  /**
+   * Actualiza la serie pendiente, si es aprobada se crea una
+   * nueva serie en la tabla [series] y la columna status_approbal es 1
+   * si es rechazada la columna pasa a ser -1
+   * @param {StatusPendingSerieContext} context
+   * @returns {Observable<Serie>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
+  updatePendingSeries(context: StatusPendingSerieContext): Observable<Serie> {
+    if (this.auth.credentials === null) {
+      return Observable.throw(new Error('Error, no logeado'));
+    }
+    const options = new RequestOptions({
+      headers: new Headers({
+        Authorization: `Bearer ${this.auth.credentials.token}`,
+        'Content-Type': false,
+        'Accept': 'application/json'
+      })
+    });
+    return this.http.get(routes.updatePendingSerie(context), options)
+      .pipe(
+      map((res: Response) => res.json()),
+      flatMap((data: any) => of(data))
+      );
+  }
+
+  /**
+   * Busca y trae una lista de Series según su nombre.
+   * TODO: debe filtrar las series 'repetidas', puesto que trae todos los nombres alternativos
+   * @param {SerieContext} context
+   * @returns {Observable<Serie[]>}
+   * @memberof SerieService
+   * @author dvaJi
+   */
+  searchSeries(context: SerieContext): Observable<Serie[]> {
     return this.http.get(routes.search(context))
-    .pipe(
+      .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontraron series para ' + context.q))
       );
   }
 
-  /*
-   * Obtener todos los géneros de las series.
+  /**
+   * Obtiene una lista de los géneros disponibles
+   * @returns {Observable<Genre[]>}
+   * @memberof SerieService
+   * @author dvaJi
    */
   getGenres(): Observable<Genre[]> {
     return this.http.get(routes.genres())
-    .pipe(
+      .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay géneros.'))
       );
   }
 
-  /*
-   * Obtener todos las demografias.
+  /**
+   * Obtiene una lista las demografías disponibles
+   * @returns {Observable<Demographic[]>}
+   * @memberof SerieService
+   * @author dvaJi
    */
   getDemographics(): Observable<Demographic[]> {
     return this.http.get(routes.demographic())
-    .pipe(
+      .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay demografías.'))
       );
