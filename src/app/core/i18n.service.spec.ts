@@ -4,12 +4,12 @@ import { Subject } from 'rxjs/Subject';
 
 import { extract, I18nService } from './i18n.service';
 
-const defaultLanguage = 'en-US';
-const supportedLanguages = ['eo', 'en-US', 'fr-FR', 'es-ES'];
+const defaultLanguage = 'es-ES';
+const supportedLanguages = ['eo', 'en-US', 'es-ES'];
 
 class MockTranslateService {
 
-  currentLang: string = null;
+  currentLang: string;
   onLangChange = new Subject();
 
   use(language: string) {
@@ -21,7 +21,7 @@ class MockTranslateService {
   }
 
   getBrowserCultureLang() {
-    return 'en-US';
+    return 'es-ES';
   }
 
   setTranslation(lang: string, translations: Object, shouldMerge?: boolean) { }
@@ -111,20 +111,20 @@ describe('I18nService', () => {
 
     it('should change current language without a region match', () => {
       // Arrange
-      const newLanguage = 'fr-CA';
+      const newLanguage = 'en-CA';
       i18nService.init(defaultLanguage, supportedLanguages);
 
       // Act
       i18nService.language = newLanguage;
 
       // Assert
-      expect(translateService.use).toHaveBeenCalledWith('fr-FR');
-      expect(onLangChangeSpy).toHaveBeenCalledWith('fr-FR');
+      expect(translateService.use).toHaveBeenCalledWith('en-US');
+      expect(onLangChangeSpy).toHaveBeenCalledWith('en-US');
     });
 
     it('should change current language to default if unsupported', () => {
       // Arrange
-      const newLanguage = 'es';
+      const newLanguage = 'fr';
       i18nService.init(defaultLanguage, supportedLanguages);
 
       // Act

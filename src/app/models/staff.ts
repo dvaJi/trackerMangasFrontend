@@ -1,7 +1,6 @@
-import Serie from './serie';
-import Cover from './cover';
+import { Serie, Cover } from '@app/models';
 
-export default class Staff {
+export class Staff {
 
     id: number;
     name: string;

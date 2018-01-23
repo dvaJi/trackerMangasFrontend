@@ -1,4 +1,4 @@
-import Release from '../../src/app/models/release';
+import { Release } from '@app/models';
 import { ScanMock } from './scan-mock';
 
 export class ReleaseMock {

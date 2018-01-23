@@ -2,8 +2,8 @@ import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import Scan from './../../models/scan';
-import { ScanService } from './../../services/scan.service';
+import { Scan } from '@app/models';
+import { ScanService } from '@app/services';
 
 @Component({
   selector: 'app-scan-detail',

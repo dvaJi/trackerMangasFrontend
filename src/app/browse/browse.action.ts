@@ -1,5 +1,5 @@
 import { BrowseState, SerieState } from './browse.state';
-import Serie from '../models/serie';
+import { Serie } from '@app/models';
 
 import { Action } from '@ngrx/store';
 

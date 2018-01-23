@@ -6,10 +6,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Logger } from '../../core/logger.service';
-import Staff from './../../models/staff';
-
-import { StaffService } from './../../services/staff.service';
+import { Logger } from '@app/core';
+import { Staff } from '@app/models';
+import { StaffService } from '@app/services';
 
 const log = new Logger('Staff Add');
 

@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from './../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { ScanDetailComponent } from './scan-detail.component';
-import { ScanService } from './../../services/scan.service';
-import { AuthenticationService } from './../../core/authentication/authentication.service';
+import { ScanService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('ScanDetailComponent', () => {
   let component: ScanDetailComponent;

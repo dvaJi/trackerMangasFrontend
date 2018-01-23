@@ -18,7 +18,7 @@ export class Answers {
     }
 }
 
-export default class Poll {
+export class Poll {
 
     id: number;
     title: string;

@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import Scan from './../models/scan';
+import { Scan } from '@app/models';
 
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
   scans: () => `/scan`,
@@ -35,21 +35,33 @@ export class ScanService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getScans(): Observable<Scan> {
-    return this.http.get(routes.scans()).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.scans(), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay scans.'))
     );
   }
 
   getScan(context: ScanContext): Observable<Scan> {
-    return this.http.get(routes.scan(context)).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.scan(context), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontró el scan.'))
     );
   }
 
   getPendingScan(context: ScanContext): Observable<Scan[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -66,7 +78,7 @@ export class ScanService {
   }
 
   updatePendingScan(context: StatusPendingScanContext): Observable<Scan[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -83,7 +95,7 @@ export class ScanService {
   }
 
   setScan(context: Scan): Observable<Scan> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -100,7 +112,13 @@ export class ScanService {
   }
 
   searchScans(context: ScanContext): Observable<Scan> {
-    return this.http.get(routes.search(context)).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.search(context), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontraron scans.'))
     );

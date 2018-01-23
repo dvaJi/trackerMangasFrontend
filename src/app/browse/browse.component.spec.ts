@@ -5,10 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { BrowseComponent } from './browse.component';
-import { SerieService } from './../services/serie.service';
-import { AuthenticationService } from './../core/authentication/authentication.service';
+import { SerieService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 import * as BrowseActions from './browse.action';
 import { BrowseEffects } from './browse.effects';

@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SerieService } from '../../services/serie.service';
-import Serie from '../../models/serie';
-import { StaffService } from '../../services/staff.service';
-import Staff from '../../models/staff';
-import Magazine from '../../models/magazine';
-import { MagazineService } from '../../services/magazine.service';
-import { ScanService } from '../../services/scan.service';
-import Scan from '../../models/scan';
-import { ReleaseService } from '../../services/release.service';
-import Release from '../../models/release';
 import { Router } from '@angular/router';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { Serie, Staff, Magazine, Scan, Release } from '@app/models';
+import { StaffService, MagazineService, ScanService, ReleaseService, SerieService } from '@app/services';
 
 @Component({
   selector: 'app-pendings',

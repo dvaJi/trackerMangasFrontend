@@ -2,14 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { environment } from '@env/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
+import { CoreModule } from '@app/core';
+import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { BrowseModule } from './browse/browse.module';
 import { SeriesModule } from './serie/series.module';
@@ -24,6 +26,7 @@ import { AdminCPModule } from './admincp/admincp.module';
 @NgModule({
   imports: [
     BrowserModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     FormsModule,
     HttpModule,
     TranslateModule.forRoot(),

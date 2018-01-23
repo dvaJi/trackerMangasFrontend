@@ -1,11 +1,8 @@
 import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
-import { PollsService } from './../services/polls.service';
-import { NewsService } from './../services/news.service';
-
-import Poll from './../models/poll';
-import News from './../models/news';
+import { PollsService, NewsService } from '@app/services';
+import { Poll, News } from '@app/models';
 
 @Component({
   selector: 'app-home',

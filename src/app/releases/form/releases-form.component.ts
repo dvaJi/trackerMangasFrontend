@@ -3,16 +3,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Logger } from '../../core/logger.service';
+import { Logger } from '@app/core';
 
-import { ReleaseService } from './../../services/release.service';
-import { ScanService } from './../../services/scan.service';
-import { SerieService } from './../../services/serie.service';
-
-import Scan from '../../models/scan';
-import Serie from '../../models/serie';
-import Release from './../../models/release';
-import Demographic from './../../models/demographic';
+import { ReleaseService, ScanService, SerieService } from '@app/services';
+import { Scan, Serie, Release, Demographic } from '@app/models';
 
 const log = new Logger('Releases Add');
 

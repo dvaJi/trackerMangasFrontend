@@ -1,21 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import { Observable } from 'rxjs/Observable';
 import { finalize } from 'rxjs/operators/finalize';
 import { KeysPipe } from './details.pipe';
 
-import { SerieService } from '../../../services/serie.service';
-import { StaffService } from '../../../services/staff.service';
-import Staff from '../../../models/staff';
-import Serie from '../../../models/serie';
-import { MagazineService } from '../../../services/magazine.service';
-import Magazine from '../../../models/magazine';
-import { ScanService } from '../../../services/scan.service';
-import Scan from '../../../models/scan';
-import { ReleaseService } from '../../../services/release.service';
-import Release from '../../../models/release';
-import { Observable } from 'rxjs/Observable';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap/modal/modal-ref';
+import { Serie, Staff, Magazine, Scan, Release } from '@app/models';
+import { StaffService, MagazineService, ScanService, ReleaseService, SerieService } from '@app/services';
+
 
 @Component({
     selector: 'app-detail-pendings',

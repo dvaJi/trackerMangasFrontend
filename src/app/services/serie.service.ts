@@ -1,14 +1,10 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import Serie from './../models/serie';
-import Genre from './../models/genre';
-import Staff from './../models/staff';
-import Magazine from './../models/magazine';
-import Demographic from './../models/demographic';
+import { Serie, Genre, Staff, Magazine, Demographic } from '@app/models';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
   getSerie: (c: SerieContext) => `/serie/page/${c.id}`,
@@ -51,7 +47,13 @@ export class SerieService {
    * @author dvaJi
    */
   getSerie(context: SerieContext): Observable<Serie> {
-    return this.http.get(routes.getSerie(context))
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.getSerie(context), options)
       .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontró la serie.'))
@@ -66,7 +68,7 @@ export class SerieService {
    * @author dvaJi
    */
   setSerie(context: Serie): Observable<Serie> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -91,7 +93,13 @@ export class SerieService {
    * @author dvaJi
    */
   getSeries(context: SerieContext): Observable<Serie[]> {
-    return this.http.get(routes.series(context))
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.series(context), options)
       .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay series.'))
@@ -107,7 +115,7 @@ export class SerieService {
    * @author dvaJi
    */
   getPendingSeries(context: SerieContext): Observable<Array<Serie>> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -134,7 +142,7 @@ export class SerieService {
    * @author dvaJi
    */
   updatePendingSeries(context: StatusPendingSerieContext): Observable<Serie> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -160,7 +168,13 @@ export class SerieService {
    * @author dvaJi
    */
   searchSeries(context: SerieContext): Observable<Serie[]> {
-    return this.http.get(routes.search(context))
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.search(context), options)
       .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No se encontraron series para ' + context.q))
@@ -174,7 +188,13 @@ export class SerieService {
    * @author dvaJi
    */
   getGenres(): Observable<Genre[]> {
-    return this.http.get(routes.genres())
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.genres(), options)
       .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay géneros.'))
@@ -188,7 +208,13 @@ export class SerieService {
    * @author dvaJi
    */
   getDemographics(): Observable<Demographic[]> {
-    return this.http.get(routes.demographic())
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.demographic(), options)
       .pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay demografías.'))

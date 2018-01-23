@@ -4,10 +4,8 @@ import { map, catchError, flatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 
-import { AuthenticationService } from '../core/authentication/authentication.service';
-
-import Magazine from './../models/magazine';
-import Publisher from '../models/publisher';
+import { AuthenticationService } from '@app/core';
+import { Magazine, Publisher } from '@app/models';
 
 const routes = {
   magazines: () => `/magazine`,
@@ -23,7 +21,7 @@ const routes = {
 export class MagazineContext {
   id?: number;
   q?: string;
-  limit?= 10;
+  limit ?= 10;
 }
 
 export class PublisherContext {
@@ -49,7 +47,13 @@ export class MagazineService {
    * @author dvaJi
    */
   getMagazines(): Observable<Magazine> {
-    return this.http.get(routes.magazines()).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.magazines(), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('Error, no hay revistas.'))
     );
@@ -63,7 +67,13 @@ export class MagazineService {
    * @author dvaJi
    */
   getMagazine(id: number): Observable<Magazine> {
-    return this.http.get(routes.magazine(id)).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.magazine(id), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('Error, revista no encontrada.'))
     );
@@ -77,7 +87,7 @@ export class MagazineService {
    * @author dvaJi
    */
   getPendingMagazine(context: MagazineContext): Observable<Magazine[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -102,7 +112,7 @@ export class MagazineService {
    * @memberof MagazineService
    */
   updatePendingMagazine(context: StatusPendingMagazineContext): Observable<Magazine[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -126,7 +136,13 @@ export class MagazineService {
    * @author dvaJi
    */
   searchMagazine(context: MagazineContext): Observable<Magazine> {
-    return this.http.get(routes.searchmagazine(context)).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.searchmagazine(context), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('Error, revista no encontrada.'))
     );
@@ -140,7 +156,7 @@ export class MagazineService {
    * @author dvaJi
    */
   setMagazine(context: Magazine): Observable<Magazine> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -164,8 +180,14 @@ export class MagazineService {
    * @author dvaJi
    */
   getPublisher(context: PublisherContext): Observable<Publisher> {
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
     context.q = (context.q !== '') ? context.q : ' ';
-    return this.http.get(routes.publishers(context)).pipe(
+    return this.http.get(routes.publishers(context), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('Error, no hay Editoriales.'))
     );

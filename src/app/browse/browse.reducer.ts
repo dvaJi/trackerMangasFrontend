@@ -1,4 +1,4 @@
-import Serie from '../models/serie';
+import { Serie } from '@app/models';
 import { SerieMock } from '../../../testing/mock/serie-mock';
 import { initializeListState, BrowseState, SerieState } from './browse.state';
 import * as BrowseActions from './browse.action';

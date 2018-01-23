@@ -1,10 +1,12 @@
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { _throw } from 'rxjs/observable/throw';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import Poll from './../models/poll';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { Poll } from '@app/models';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
   polls: (p: PollContext) => `/poll?latest=${p.latest}&active=${p.active}`,
@@ -25,7 +27,7 @@ export class PollsService {
 
   getPoll(context: PollContext): Observable<Poll> {
     let options = new RequestOptions();
-    if (this.auth.credentials !== null) {
+    if (this.auth.isAuthenticated()) {
       options = new RequestOptions({
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
@@ -39,7 +41,7 @@ export class PollsService {
 
   getPolls(context: PollContext): Observable<Poll[]> {
     let options = new RequestOptions();
-    if (this.auth.credentials !== null) {
+    if (this.auth.isAuthenticated()) {
       options = new RequestOptions({
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
@@ -52,8 +54,8 @@ export class PollsService {
   }
 
   setPoll(answer: number): Observable<string> {
-    if (this.auth.credentials === null) {
-      return Observable.throw(new Error('Inicie sesión para votar.'));
+    if (!this.auth.isAuthenticated()) {
+      return _throw('Inicie sesión para votar.');
     }
     const answerContext: PollContext = {
       answer: answer,

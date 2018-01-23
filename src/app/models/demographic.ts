@@ -1,4 +1,4 @@
-export default class Demographic {
+export class Demographic {
     id: number;
     name: string;
 }

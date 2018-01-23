@@ -8,7 +8,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 
 import * as BrowseActions from './browse.action';
-import { SerieService } from '../services/serie.service';
+import { SerieService } from '@app/services';
 
 
 @Injectable()

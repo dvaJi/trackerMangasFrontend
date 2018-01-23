@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '@app/core';
+import { SharedModule } from '@app/shared';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { PollsService } from './../services/polls.service';
-import { NewsService } from './../services/news.service';
+import { PollsService, NewsService } from '@app/services';
 
 @NgModule({
   imports: [

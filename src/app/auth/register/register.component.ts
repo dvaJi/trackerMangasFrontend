@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Logger } from '../../core/logger.service';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { Alert } from '../../models/alert';
+import { Logger, AuthenticationService } from '@app/core';
+import { Alert } from '@app/models';
 
 const log = new Logger('Register');
 

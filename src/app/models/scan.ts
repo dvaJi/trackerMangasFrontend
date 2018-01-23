@@ -1,7 +1,6 @@
-import Release from './release';
-import Cover from './cover';
+import { Release, Cover } from '@app/models';
 
-export default class Scan {
+export class Scan {
 
   id: number;
   name: string;

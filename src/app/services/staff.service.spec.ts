@@ -2,9 +2,9 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { StaffService } from './staff.service';
-import Staff from './../models/staff';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { StaffService } from '@app/services';
+import { Staff } from '@app/models';
+import { AuthenticationService } from '@app/core';
 
 describe('StaffService', () => {
   let staffService: StaffService;

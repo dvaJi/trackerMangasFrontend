@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route } from '../core/route.service';
-import { extract } from '../core/i18n.service';
+import { Route, extract } from '@app/core';
 import { SeriesComponent } from './list/series.component';
 import { SeriesDetailComponent } from './detail/series-detail.component';
 import { SerieFormComponent } from './form/serie-form.component';

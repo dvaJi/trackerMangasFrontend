@@ -2,9 +2,9 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { NewsService } from './news.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import News from './../models/news';
+import { NewsService } from '@app/services';
+import { AuthenticationService } from '@app/core';
+import { News } from '@app/models';
 
 describe('NewsService', () => {
   let newsService: NewsService;

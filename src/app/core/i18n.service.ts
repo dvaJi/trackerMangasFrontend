@@ -3,9 +3,8 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { includes } from 'lodash';
 
 import { Logger } from './logger.service';
-import enUS from '../../translations/en-US.json';
-import esES from '../../translations/es-ES.json';
-import frFR from '../../translations/fr-FR.json';
+import * as enUS from '../../translations/en-US.json';
+import * as esES from '../../translations/es-ES.json';
 
 const log = new Logger('I18nService');
 const languageKey = 'language';
@@ -28,9 +27,8 @@ export class I18nService {
 
   constructor(private translateService: TranslateService) {
     // Embed languages to avoid extra HTTP requests
-    translateService.setTranslation('es-ES', esES );
-    translateService.setTranslation('en-US', enUS );
-    // translateService.setTranslation('fr-FR', frFR);
+    translateService.setTranslation('en-US', enUS);
+    translateService.setTranslation('es-ES', esES);
   }
 
   /**
@@ -42,7 +40,7 @@ export class I18nService {
   init(defaultLanguage: string, supportedLanguages: string[]) {
     this.defaultLanguage = defaultLanguage;
     this.supportedLanguages = supportedLanguages;
-    this.language = null;
+    this.language = '';
 
     this.translateService.onLangChange
       .subscribe((event: LangChangeEvent) => { localStorage.setItem(languageKey, event.lang); });
@@ -61,7 +59,7 @@ export class I18nService {
     // If no exact match is found, search without the region
     if (language && !isSupportedLanguage) {
       language = language.split('-')[0];
-      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language));
+      language = this.supportedLanguages.find(supportedLanguage => supportedLanguage.startsWith(language)) || '';
       isSupportedLanguage = Boolean(language);
     }
 

@@ -3,9 +3,8 @@ import { of } from 'rxjs/observable/of';
 import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import Poll from './../models/poll';
-import News from './../models/news';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { Poll, News } from '@app/models';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
     news: (n: NewsContext) => `/news?id=${n.id}&stub=${n.stub}`,
@@ -23,7 +22,13 @@ export class NewsService {
     constructor(private http: Http, private auth: AuthenticationService) { }
 
     getNews(context: NewsContext): Observable<News> {
-        return this.http.get(routes.news(context))
+        let options = new RequestOptions();
+        if (this.auth.isAuthenticated()) {
+            options = new RequestOptions({
+                headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+            });
+        }
+        return this.http.get(routes.news(context), options)
             .pipe(
             map((res: Response) => res.json()),
             catchError(() => of('Error, no se encontró la noticia.'))
@@ -31,7 +36,13 @@ export class NewsService {
     }
 
     getAllNews(): Observable<News[]> {
-        return this.http.get(routes.allNews())
+        let options = new RequestOptions();
+        if (this.auth.isAuthenticated()) {
+            options = new RequestOptions({
+                headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+            });
+        }
+        return this.http.get(routes.allNews(), options)
             .pipe(
             map((res: Response) => res.json()),
             catchError(() => of('Error, no se encontraron noticias.'))

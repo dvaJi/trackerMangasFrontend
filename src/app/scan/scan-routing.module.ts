@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route } from '../core/route.service';
-import { extract } from '../core/i18n.service';
+import { Route, extract } from '@app/core';
 import { ScanListComponent } from './list/scan-list.component';
 import { ScanDetailComponent } from './detail/scan-detail.component';
 import { ScanFormComponent } from './form/scan-form.component';

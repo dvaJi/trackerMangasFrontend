@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route } from '../core/route.service';
-import { extract } from '../core/i18n.service';
+import { Route, extract } from '@app/core';
 import { MagazineListComponent } from './list/magazine-list.component';
 import { MagazineDetailComponent } from './detail/magazine-detail.component';
 import { MagazineFormComponent } from './form/magazine-form.component';

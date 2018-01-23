@@ -1,4 +1,4 @@
-import Cover from '../../src/app/models/cover';
+import { Cover } from '@app/models';
 
 export class CoverMock {
 

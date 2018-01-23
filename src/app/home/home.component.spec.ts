@@ -3,11 +3,10 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { HomeComponent } from './home.component';
-import { PollsService } from './../services/polls.service';
-import { NewsService } from './../services/news.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { PollsService, NewsService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('HomeComponent', () => {
   /*let component: HomeComponent;
