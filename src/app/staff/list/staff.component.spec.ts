@@ -5,7 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { SharedModule } from '../../shared/shared.module';
 import { StaffComponent } from './staff.component';
-import { StaffService } from './../../services/staff.service';
+import { StaffService } from '@app/services';
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 
 describe('StaffComponent', () => {

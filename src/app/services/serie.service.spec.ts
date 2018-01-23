@@ -2,9 +2,9 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { SerieService } from './serie.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import Serie from '../models/serie';
+import { SerieService } from '@app/services';
+import { AuthenticationService } from '@app/core';
+import { Serie } from '@app/models';
 import { SerieMock } from '../../../testing/mock/serie-mock';
 
 describe('SerieService', () => {

@@ -1,6 +1,6 @@
-import Scan from './scan';
+import { Scan } from '@app/models';
 
-export default class Release {
+export class Release {
 
     id: number;
     chapter: number;

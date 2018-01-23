@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route } from '../core/route.service';
-import { extract } from '../core/i18n.service';
+import { Route, extract } from '@app/core';
 import { StaffComponent } from './list/staff.component';
 import { StaffDetailComponent } from './detail/staff-detail.component';
 import { StaffFormComponent } from './form/staff-form.component';

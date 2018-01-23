@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { ScanService } from './scan.service';
-import Scan from './../models/scan';
+import { ScanService } from '@app/services';
+import { Scan } from '@app/models';
 
 describe('ScanService', () => {
   let scanService: ScanService;

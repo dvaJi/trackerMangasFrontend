@@ -1,4 +1,4 @@
-export default class Magazine {
+export class Magazine {
 
     id: number;
     name: string;

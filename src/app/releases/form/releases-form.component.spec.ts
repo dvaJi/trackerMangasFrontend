@@ -8,11 +8,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { ReleasesFormComponent } from './releases-form.component';
-import { ReleaseService } from './../../services/release.service';
-import { SerieService } from './../../services/serie.service';
-import { ScanService } from './../../services/scan.service';
+import { ReleaseService, ScanService, SerieService } from '@app/services';
 
 describe('ReleasesFormComponent', () => {
   /*let component: ReleasesFormComponent;

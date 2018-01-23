@@ -1,4 +1,4 @@
-import SerieRanking from '../../src/app/models/serieRanking';
+import { SerieRanking } from '@app/models';
 
 export class SerieRankingMock {
 

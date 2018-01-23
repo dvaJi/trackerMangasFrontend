@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { environment } from '../../../environments/environment';
-import { Logger } from '../../core/logger.service';
-import { I18nService } from '../../core/i18n.service';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { environment } from '@env/environment';
+import { AuthenticationService, I18nService, Logger } from '@app/core';
 
 const log = new Logger('Activate');
 

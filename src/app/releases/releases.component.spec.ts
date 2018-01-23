@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { ReleasesComponent } from './releases.component';
-import { ReleaseService } from './../services/release.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { ReleaseService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('ReleasesComponent', () => {
   let component: ReleasesComponent;

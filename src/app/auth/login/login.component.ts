@@ -3,11 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { environment } from '../../../environments/environment';
-import { Logger } from '../../core/logger.service';
-import { I18nService } from '../../core/i18n.service';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { Alert } from '../../models/alert';
+import { environment } from '@env/environment';
+import { AuthenticationService, I18nService, Logger } from '@app/core';
+import { Alert } from '@app/models';
 
 const log = new Logger('Login');
 

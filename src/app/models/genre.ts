@@ -1,4 +1,4 @@
-export default class Genre {
+export class Genre {
 
     id: number;
     name: string;

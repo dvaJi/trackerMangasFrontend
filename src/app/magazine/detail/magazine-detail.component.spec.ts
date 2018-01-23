@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from './../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { MagazineDetailComponent } from './magazine-detail.component';
-import { MagazineService } from './../../services/magazine.service';
-import { AuthenticationService } from './../../core/authentication/authentication.service';
+import { MagazineService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('MagazineDetailComponent', () => {
   let component: MagazineDetailComponent;

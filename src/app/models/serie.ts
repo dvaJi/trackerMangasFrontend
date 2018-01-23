@@ -1,11 +1,6 @@
-import Magazine from './magazine';
-import Release from './release';
-import Genre from './genre';
-import Cover from './cover';
-import Staff from './staff';
-import SerieRanking from './serieRanking';
+import { Magazine, Release, Genre, Cover, Staff, SerieRanking } from '@app/models';
 
-export default class Serie {
+export class Serie {
 
     id: number;
     name: string;

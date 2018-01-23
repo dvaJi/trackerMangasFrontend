@@ -1,4 +1,4 @@
-import Serie from './../models/serie';
+import { Serie } from '@app/models';
 
 export interface SerieState extends Serie {
     loading: boolean;

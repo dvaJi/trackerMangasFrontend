@@ -4,9 +4,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
-import { CoreModule } from '../core/core.module';
+import { CoreModule } from '@app/core';
 import { TagInputModule } from 'ngx-chips';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { AdminCPRoutingModule } from './admincp-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PendingsComponent } from './pendings/pendings.component';

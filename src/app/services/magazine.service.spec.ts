@@ -2,9 +2,9 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import { MagazineService } from './magazine.service';
-import Magazine from './../models/magazine';
+import { AuthenticationService } from '@app/core';
+import { MagazineService } from '@app/services';
+import { Magazine } from '@app/models';
 import { MagazineMock } from '../../../testing/mock/magazine-mock';
 
 describe('MagazineService', () => {

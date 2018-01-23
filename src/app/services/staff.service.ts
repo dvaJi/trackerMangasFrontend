@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import Staff from './../models/staff';
+import { Staff } from '@app/models';
 
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
   staffs: () => `/staffs`,
@@ -20,7 +20,7 @@ const routes = {
 export class StaffContext {
   id?: number;
   q?: string;
-  limit?= 10;
+  limit ?= 10;
 }
 
 export interface StatusPendingStaffContext {
@@ -41,7 +41,13 @@ export class StaffService {
    * @author dvaJi
    */
   getStaffs(): Observable<Staff> {
-    return this.http.get(routes.staffs()).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.staffs(), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('No hay staffs.'))
     );
@@ -85,7 +91,7 @@ export class StaffService {
    * @author dvaJi
    */
   getPendingStaff(context: StaffContext): Observable<Staff[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -111,7 +117,7 @@ export class StaffService {
    * @author dvaJi
    */
   updatePendingStaff(context: StatusPendingStaffContext): Observable<Staff[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -135,7 +141,7 @@ export class StaffService {
    * @author dvaJi
    */
   setStaff(context: Staff): Observable<Staff> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({

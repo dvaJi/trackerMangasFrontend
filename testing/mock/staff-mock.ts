@@ -1,4 +1,4 @@
-import Staff from '../../src/app/models/staff';
+import { Staff } from '@app/models';
 import { CoverMock } from './cover-mock';
 
 export class StaffMock {

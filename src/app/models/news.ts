@@ -1,4 +1,4 @@
-export default class News {
+export class News {
 
     id: number;
     title: string;

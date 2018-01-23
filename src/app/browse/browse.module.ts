@@ -5,11 +5,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '@app/core';
+import { SharedModule } from '@app/shared';
 import { BrowseRoutingModule } from './browse-routing.module';
 import { BrowseComponent } from './browse.component';
-import { SerieService } from './../services/serie.service';
+import { SerieService } from '@app/services';
 
 import * as BrowseReducer from './browse.reducer';
 import { BrowseEffects } from './browse.effects';

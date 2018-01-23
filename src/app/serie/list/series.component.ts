@@ -1,8 +1,7 @@
 import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
-import Serie from '../../models/serie';
-
-import { SerieService } from './../../services/serie.service';
+import { Serie } from '@app/models';
+import { SerieService } from '@app/services';
 
 @Component({
   selector: 'app-series',

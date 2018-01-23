@@ -1,4 +1,4 @@
-import Genre from '../../src/app/models/genre';
+import { Genre } from '@app/models';
 
 export class GenreMock {
 

@@ -1,4 +1,4 @@
-import Scan from '../../src/app/models/scan';
+import { Scan } from '@app/models';
 import { CoverMock } from './cover-mock';
 
 export class ScanMock {

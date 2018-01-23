@@ -1,8 +1,8 @@
 import { finalize } from 'rxjs/operators/finalize';
 import { Component, OnInit } from '@angular/core';
 
-import Magazine from './../../models/magazine';
-import { MagazineService } from './../../services/magazine.service';
+import { Magazine } from '@app/models';
+import { MagazineService } from '@app/services';
 
 @Component({
   selector: 'app-magazine-list',

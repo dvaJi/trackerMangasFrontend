@@ -4,10 +4,10 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { SharedModule } from './../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { SeriesDetailComponent } from './series-detail.component';
-import { SerieService } from './../../services/serie.service';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { SerieService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('SeriesDetailComponent', () => {
   let component: SeriesDetailComponent;

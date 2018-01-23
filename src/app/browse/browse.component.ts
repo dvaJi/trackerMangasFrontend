@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BrowseState, SerieState } from './browse.state';
 import { Store } from '@ngrx/store';
-import Serie from './../models/serie';
+import { Serie } from '@app/models';
 
 import * as BrowseAction from './browse.action';
 

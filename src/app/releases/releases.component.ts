@@ -1,9 +1,8 @@
 import { finalize } from 'rxjs/operators/finalize';
 
 import { Component, OnInit } from '@angular/core';
-import Release from './../models/release';
-
-import { ReleaseService } from './../services/release.service';
+import { Release } from '@app/models';
+import { ReleaseService } from '@app/services';
 
 @Component({
   selector: 'app-releases',

@@ -1,9 +1,8 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
-import Release from './../models/release';
-
-import { ReleaseService } from './release.service';
+import { Release } from '@app/models';
+import { ReleaseService } from '@app/services';
 
 describe('ReleaseService', () => {
   let releaseService: ReleaseService;

@@ -1,4 +1,4 @@
-export default class Cover {
+export class Cover {
 
   original: {
     id: number;

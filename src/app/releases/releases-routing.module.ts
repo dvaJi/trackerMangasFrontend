@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { Route } from '../core/route.service';
-import { extract } from '../core/i18n.service';
+import { Route, extract } from '@app/core';
 import { ReleasesComponent } from './releases.component';
 import { ReleasesFormComponent } from './form/releases-form.component';
 import { AuthenticationGuard } from '../core/authentication/authentication.guard';

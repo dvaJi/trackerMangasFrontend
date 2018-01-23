@@ -7,9 +7,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { StaffFormComponent } from './staff-form.component';
-import { StaffService } from './../../services/staff.service';
+import { StaffService } from '@app/services';
 
 describe('StaffFormComponent', () => {
   let component: StaffFormComponent;

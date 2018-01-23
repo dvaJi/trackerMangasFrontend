@@ -1,7 +1,7 @@
 # trackermangas
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
-version 3.1.1
+version 3.2.0
 
 # Getting started
 

@@ -5,14 +5,10 @@ import { MockBackend } from '@angular/http/testing';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { SharedModule } from './../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { PendingsComponent } from './pendings.component';
-import { ScanService } from './../../services/scan.service';
-import { MagazineService } from './../../services/magazine.service';
-import { ReleaseService } from './../../services/release.service';
-import { SerieService } from './../../services/serie.service';
-import { StaffService } from './../../services/staff.service';
-import { AuthenticationService } from './../../core/authentication/authentication.service';
+import { ScanService, MagazineService, ReleaseService, SerieService, StaffService } from '@app/services';
+import { AuthenticationService } from '@app/core';
 
 describe('PendingsComponent', () => {
   let component: PendingsComponent;

@@ -1,11 +1,10 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import Release from './../models/release';
-import Scan from './../models/scan';
+import { Release, Scan } from '@app/models';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
-import { AuthenticationService } from '../core/authentication/authentication.service';
+import { AuthenticationService } from '@app/core';
 
 const routes = {
   release: () => `/release/list`,
@@ -32,14 +31,20 @@ export class ReleaseService {
   constructor(private http: Http, private auth: AuthenticationService) { }
 
   getReleases(): Observable<Release> {
-    return this.http.get(routes.release()).pipe(
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http.get(routes.release(), options).pipe(
       map((res: Response) => res.json()),
       catchError(() => of('Error, no hay releases.'))
     );
   }
 
   getPendingReleases(context: ReleaseContext): Observable<Release[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -56,7 +61,7 @@ export class ReleaseService {
   }
 
   updatePendingReleases(context: StatusPendingReleaseContext): Observable<Release[]> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({
@@ -73,7 +78,7 @@ export class ReleaseService {
   }
 
   setRelease(context: Release): Observable<Release> {
-    if (this.auth.credentials === null) {
+    if (!this.auth.isAuthenticated()) {
       return Observable.throw(new Error('Error, no logeado'));
     }
     const options = new RequestOptions({

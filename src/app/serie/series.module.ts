@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { CoreModule } from '../core/core.module';
+import { CoreModule } from '@app/core';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { SeriesRoutingModule } from './series-routing.module';
 import { SeriesComponent } from './list/series.component';
 import { SeriesDetailComponent } from './detail/series-detail.component';
 import { SerieFormComponent } from './form/serie-form.component';
-import { SerieService } from './../services/serie.service';
+import { SerieService } from '@app/services';
 
 @NgModule({
   imports: [

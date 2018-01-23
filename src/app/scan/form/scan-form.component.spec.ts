@@ -7,9 +7,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@app/shared';
 import { ScanFormComponent } from './scan-form.component';
-import { ScanService } from './../../services/scan.service';
+import { ScanService } from '@app/services';
 
 describe('ScanFormComponent', () => {
   let component: ScanFormComponent;

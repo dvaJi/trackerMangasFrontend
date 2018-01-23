@@ -2,9 +2,9 @@ import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 
-import { PollsService } from './polls.service';
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import Poll from './../models/poll';
+import { PollsService } from '@app/services';
+import { AuthenticationService } from '@app/core';
+import { Poll } from '@app/models';
 
 describe('PollsService', () => {
   let quoteService: PollsService;

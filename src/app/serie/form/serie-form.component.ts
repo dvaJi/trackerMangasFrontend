@@ -4,18 +4,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable';
 
+import { Logger } from '@app/core';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Logger } from '../../core/logger.service';
-import Staff from './../../models/staff';
-import Magazine from './../../models/magazine';
-import Genre from './../../models/genre';
-import Serie from './../../models/serie';
-import Demographic from './../../models/demographic';
-
-import { SerieService } from './../../services/serie.service';
-import { StaffService } from './../../services/staff.service';
-import { MagazineService } from './../../services/magazine.service';
+import { Staff, Magazine, Genre, Serie, Demographic } from '@app/models';
+import { SerieService, StaffService, MagazineService } from '@app/services';
 
 const log = new Logger('Serie Add');
 

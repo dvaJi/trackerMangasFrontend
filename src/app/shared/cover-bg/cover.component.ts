@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import Serie from '../../models/serie';
+import { Serie } from '@app/models';
 
 @Component({
   selector: 'app-cover',

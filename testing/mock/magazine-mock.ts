@@ -1,4 +1,4 @@
-import Magazine from '../../src/app/models/magazine';
+import { Magazine } from '@app/models';
 
 export class MagazineMock {
 

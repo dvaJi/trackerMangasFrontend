@@ -3,12 +3,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Logger } from '../../core/logger.service';
+import { Logger } from '@app/core';
 
-import Magazine from './../../models/magazine';
-import Publisher from '../../models/publisher';
-
-import { MagazineService } from './../../services/magazine.service';
+import { Magazine, Publisher } from '@app/models';
+import { MagazineService } from '@app/services';
 
 const log = new Logger('Magazine Add');
 

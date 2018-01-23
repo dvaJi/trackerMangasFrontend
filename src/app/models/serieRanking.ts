@@ -1,4 +1,4 @@
-export default class SerieRanking {
+export class SerieRanking {
 
     id: number;
     id_series: number;

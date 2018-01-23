@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import Staff from './../../models/staff';
-import { StaffService } from './../../services/staff.service';
+import { Staff } from '@app/models';
+import { StaffService } from '@app/services';
 import { finalize } from 'rxjs/operators/finalize';
 
 @Component({

@@ -5,7 +5,7 @@ import { ReleaseMock } from './release-mock';
 import { MagazineMock } from './magazine-mock';
 import { SerieRankingMock } from './serie-ranking-mock';
 
-import Serie from '../../src/app/models/serie';
+import { Serie } from '@app/models';
 
 export class SerieMock {
     static generateMockSerie(): Serie {
