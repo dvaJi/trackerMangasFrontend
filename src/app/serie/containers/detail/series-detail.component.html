@@ -1,0 +1,43 @@
+<app-serie-portrait [serie]="serie$ | async"></app-serie-portrait>
+<nav class="cover-nav navbar navbar-light">
+  <div class="container">
+    <div class="nav-options">
+      <button type="button" (click)="changeTab('info')" class="btn btn-link" [ngClass]="{'active': serieTab === 'info'}">Info</button>
+      <button type="button" (click)="changeTab('chapters')" class="btn btn-link" [ngClass]="{'active': serieTab === 'chapters'}">Capítulos</button>
+      <button type="button" (click)="changeTab('history')" class="btn btn-link" [ngClass]="{'active': serieTab === 'history'}">Historial</button>
+      <button type="button" (click)="changeTab('reviews')" class="btn btn-link" [ngClass]="{'active': serieTab === 'reviews'}">Reviews</button>
+    </div>
+  </div>
+</nav>
+<div class="container" *ngIf="serie$ | async as serie">
+  <section role="data" class="row series">
+    <div class="col-md-3 serie-info">
+      <div class="cover-container box-shadow">
+        <div class="cover">
+          <figure>
+            <img [src]="serie.cover.medium.path_full" alt="{{ serie.name }}" itemprop="image">
+          </figure>
+        </div>
+      </div>
+      <!--<div class="library">
+        <label class="d-block" translate>Biblioteca</label>
+        <div class="btn-group-vertical col-md-12" role="group" aria-label="Biblioteca">
+          <button type="button" class="btn btn-secondary">Completado</button>
+          <button type="button" class="btn btn-secondary active">Quiero leer</button>
+          <button type="button" class="btn btn-secondary">Estoy leyendo</button>
+        </div>
+      </div>-->
+      <h6 translate>Géneros</h6>
+      <ul class="series-genres list-inline">
+        <li class="list-inline-item" *ngFor="let genre of serie.genres">
+          <a href="#" class="badge badge-secondary">{{genre.name}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9">
+      <app-serie-info *ngIf="serieTab === 'info'" [serie]="serie$ | async"></app-serie-info>
+      <app-serie-chapters *ngIf="serieTab === 'chapters'" [serie]="serie$ | async"></app-serie-chapters>
+      <app-serie-history *ngIf="serieTab === 'history'" [changelogs]="serieChangelog$ | async"></app-serie-history>
+    </div>
+  </section>
+</div>

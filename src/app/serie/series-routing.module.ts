@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
 import { SeriesComponent } from './list/series.component';
-import { SeriesDetailComponent } from './detail/series-detail.component';
-import { SerieFormComponent } from './form/serie-form.component';
+import { SeriesDetailComponent } from './containers/detail/series-detail.component';
+import { SerieFormComponent } from './containers/form/serie-form.component';
 import { AuthenticationGuard } from '../core/authentication/authentication.guard';
 
 const routes: Routes = Route.withShell([
@@ -13,7 +13,14 @@ const routes: Routes = Route.withShell([
     path: 'serie/add',
     pathMatch: 'full',
     component: SerieFormComponent,
-    data: { title: extract('Add Serie')},
+    data: { title: extract('Add Serie') },
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'serie/edit/:id',
+    pathMatch: 'full',
+    component: SerieFormComponent,
+    data: { title: extract('Edit Serie') },
     canActivate: [AuthenticationGuard]
   },
   { path: 'serie/:id/:stub', component: SeriesDetailComponent, data: { title: extract('Series') } }
@@ -24,4 +31,4 @@ const routes: Routes = Route.withShell([
   exports: [RouterModule],
   providers: []
 })
-export class SeriesRoutingModule { }
+export class SeriesRoutingModule {}

@@ -3,16 +3,21 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { BrowseRoutingModule } from './browse-routing.module';
-import { BrowseComponent } from './browse.component';
+import { BrowseComponent } from './containers/browse/browse.component';
+import { BrowseComponentsModule } from './components';
+
 import { SerieService } from '@app/services';
 
-import * as BrowseReducer from './browse.reducer';
-import { BrowseEffects } from './browse.effects';
+import { reducers } from './reducers';
+import { HighRatedSeriesEffects } from './effects/highRatedSeries';
+import { MostPopularSeriesEffects } from './effects/mostPopularSeries';
+import { RecentlyAddedEffects } from './effects/recentlyAdded';
+import { TrendingThisMonthEffects } from './effects/trendingThisMonth';
+import { TrendingThisWeekEffects } from './effects/trendingThisWeek';
 
 @NgModule({
   imports: [
@@ -21,17 +26,17 @@ import { BrowseEffects } from './browse.effects';
     CoreModule,
     SharedModule,
     BrowseRoutingModule,
-    StoreModule.forRoot({series: BrowseReducer.BrowseReducer}),
-    StoreDevtoolsModule.instrument({
-      maxAge: 10
-    }),
-    EffectsModule.forRoot([BrowseEffects])
+    BrowseComponentsModule,
+    StoreModule.forFeature('browse', reducers),
+    EffectsModule.forFeature([
+      HighRatedSeriesEffects,
+      MostPopularSeriesEffects,
+      RecentlyAddedEffects,
+      TrendingThisMonthEffects,
+      TrendingThisWeekEffects
+    ])
   ],
-  declarations: [
-    BrowseComponent
-  ],
-  providers: [
-    SerieService
-  ]
+  declarations: [BrowseComponent],
+  providers: [SerieService]
 })
-export class BrowseModule { }
+export class BrowseModule {}

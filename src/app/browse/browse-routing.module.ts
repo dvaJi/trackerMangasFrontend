@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { BrowseComponent } from './browse.component';
+import { BrowseComponent } from './containers/browse/browse.component';
 
 const routes: Routes = Route.withShell([
   { path: 'browse', component: BrowseComponent, data: { title: extract('Browse') } }
@@ -13,4 +13,4 @@ const routes: Routes = Route.withShell([
   exports: [RouterModule],
   providers: []
 })
-export class BrowseRoutingModule { }
+export class BrowseRoutingModule {}

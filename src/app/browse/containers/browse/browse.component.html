@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+
+    <div class="explore-page col-sm-9 no-padding-left">
+      <app-browse-search></app-browse-search>
+
+      <app-serie-card-list [seriesList]="trendingThisWeek$" [title]="'Populares de la semana'" [url]="'/explore/manga/trending'">
+      </app-serie-card-list>
+
+      <app-serie-card-list [seriesList]="highRatedSeries$" [title]="'Mejor votados'" [url]="'/explore/manga/trending'">
+      </app-serie-card-list>
+
+      <app-serie-card-list [seriesList]="mostPopularseries$" [title]="'Más Populares'" [url]="'/explore/manga/trending'">
+      </app-serie-card-list>
+
+      <app-serie-card-list [seriesList]="recentlyAdded$" [title]="'Agregados Recientemente'" [url]="'/explore/manga/trending'">
+      </app-serie-card-list>
+
+      <app-serie-card-list [seriesList]="trendingThisMonth$" [title]="'Nuevos del Mes'" [url]="'/explore/manga/trending'">
+      </app-serie-card-list>
+
+    </div>
+
+    <div class="explore-sidebar col-sm-3">
+      <div class="card is-sticky">
+        <div class="favorite-categories">
+          <h5 class="text-uppercase" translate>Mis categorías favoritas</h5>
+          <ul class="list-unstyled categories-list">
+            Favoriting categories will improve your recommendations.
+          </ul>
+        </div>
+
+        <!--<div class="categories">
+          <h5 class="text-uppercase" translate>Categorías</h5>
+          <div>
+            <ul class="list-unstyled categories-list">
+              <li>
+                <a href="/explore/manga/category/comedy">Comedy</a>
+              </li>
+              <li>
+                <a href="/explore/manga/category/fantasy">Fantasy</a>
+              </li>
+              <li>
+                <a href="/explore/manga/category/friendship">Friendship</a>
+              </li>
+            </ul>
+
+            <div class="categories-more">
+              <a href="#">More categories...</a>
+            </div>
+          </div>
+        </div>-->
+      </div>
+    </div>
+
+  </div>
+</div>
