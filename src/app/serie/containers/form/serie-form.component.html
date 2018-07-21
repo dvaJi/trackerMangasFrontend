@@ -1,0 +1,30 @@
+<div class="container">
+  <h3 translate>Añadir serie</h3>
+  <section role="data" class="row series">
+    <div class="col-md-9">
+      <ngb-alert *ngIf="formAlert.active" [type]="formAlert.type" (close)="closeAlert(alert)">{{ formAlert.msg }}</ngb-alert>
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0" translate>Sinopsis</h6>
+        <div class="media text-muted pt-3">
+          <app-series-form
+            class="w-100"
+            (submitted)="onSubmit($event)"
+            [getStaff]="getStaff"
+            [getMagazines]="getMagazines"
+            [genres]="genres$ | async"
+            [serie]="serie$ | async"
+            [demographics]="demographics$ | async">
+          </app-series-form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading" translate>¡Importante!</h4>
+        <p translate>Para obener información acerca de alguna serie puedes usar alguna de estas fuentes: MAL, MU.</p>
+        <hr/>
+        <p class="mb-0" translate>Si no encuentras algúna autor, revista, editorial, etc. debes agregarlos en su respectivo formulario.</p>
+      </div>
+    </div>
+  </section>
+</div>

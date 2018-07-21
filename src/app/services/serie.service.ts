@@ -1,17 +1,18 @@
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { map, catchError, flatMap } from 'rxjs/operators';
-import { Serie, Genre, Staff, Magazine, Demographic } from '@app/models';
+import { Serie, Genre, Staff, Magazine, Demographic, SerieChangelog } from '@app/models';
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, RequestOptionsArgs } from '@angular/http';
 import { AuthenticationService } from '@app/core';
 
 const routes = {
   getSerie: (c: SerieContext) => `/serie/page/${c.id}`,
-  setSerie: () => `/serie`,
+  setSerie: () => `/serie/add_revision`,
   series: (c: SerieContext) => `/serie/list?type=${c.type}&order=${c.order}&time=${c.time}&limit=${c.limit}`,
   search: (c: SerieContext) => `/serie/search?q=${c.q}&limit=${c.limit}`,
-  genres: () => `/genre/list`,
+  history: (c: SerieContext) => `/serie/history?id=${c.id}`,
+  genres: (c: SerieContext) => `/genre/list?id_serie=${c.id}`,
   demographic: () => `/demographic/list`,
   getPendingSerie: (c: SerieContext) => `/serie/pending?id=${c.id}`,
   updatePendingSerie: (c: StatusPendingSerieContext) => {
@@ -36,8 +37,7 @@ export interface StatusPendingSerieContext {
 
 @Injectable()
 export class SerieService {
-
-  constructor(private http: Http, private auth: AuthenticationService) { }
+  constructor(private http: Http, private auth: AuthenticationService) {}
 
   /**
    * Obtiene una Serie por su ID
@@ -53,11 +53,9 @@ export class SerieService {
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
     }
-    return this.http.get(routes.getSerie(context), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No se encontró la serie.'))
-      );
+    return this.http
+      .get(routes.getSerie(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No se encontró la serie.')));
   }
 
   /**
@@ -75,14 +73,12 @@ export class SerieService {
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'
+        Accept: 'application/json'
       })
     });
-    return this.http.post(routes.setSerie(), context, options)
-      .pipe(
-      map((res: Response) => res.json()),
-      flatMap((data: any) => of(data))
-      );
+    return this.http
+      .post(routes.setSerie(), context, options)
+      .pipe(map((res: Response) => res.json()), flatMap((data: any) => of(data)));
   }
 
   /**
@@ -99,11 +95,9 @@ export class SerieService {
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
     }
-    return this.http.get(routes.series(context), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No hay series.'))
-      );
+    return this.http
+      .get(routes.series(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No hay series.')));
   }
 
   /**
@@ -122,14 +116,12 @@ export class SerieService {
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'
+        Accept: 'application/json'
       })
     });
-    return this.http.get(routes.getPendingSerie(context), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No hay series pendientes.'))
-      );
+    return this.http
+      .get(routes.getPendingSerie(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No hay series pendientes.')));
   }
 
   /**
@@ -149,14 +141,12 @@ export class SerieService {
       headers: new Headers({
         Authorization: `Bearer ${this.auth.credentials.token}`,
         'Content-Type': false,
-        'Accept': 'application/json'
+        Accept: 'application/json'
       })
     });
-    return this.http.get(routes.updatePendingSerie(context), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      flatMap((data: any) => of(data))
-      );
+    return this.http
+      .get(routes.updatePendingSerie(context), options)
+      .pipe(map((res: Response) => res.json()), flatMap((data: any) => of(data)));
   }
 
   /**
@@ -174,11 +164,27 @@ export class SerieService {
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
     }
-    return this.http.get(routes.search(context), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No se encontraron series para ' + context.q))
-      );
+    return this.http
+      .get(routes.search(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No se encontraron series para ' + context.q)));
+  }
+
+  /**
+   * Historial/Registro de cambios de una serie
+   * @param {SerieContext} context para obtener el id
+   * @returns {Observable<SerieChangelog[]>} los cuales contienen los detalles tambien.
+   * @memberof SerieService
+   */
+  getHistory(context: SerieContext): Observable<SerieChangelog[]> {
+    let options = new RequestOptions();
+    if (this.auth.isAuthenticated()) {
+      options = new RequestOptions({
+        headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
+      });
+    }
+    return this.http
+      .get(routes.history(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No se encontraron registros para ' + context.q)));
   }
 
   /**
@@ -187,18 +193,16 @@ export class SerieService {
    * @memberof SerieService
    * @author dvaJi
    */
-  getGenres(): Observable<Genre[]> {
+  getGenres(context: SerieContext): Observable<Genre[]> {
     let options = new RequestOptions();
     if (this.auth.isAuthenticated()) {
       options = new RequestOptions({
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
     }
-    return this.http.get(routes.genres(), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No hay géneros.'))
-      );
+    return this.http
+      .get(routes.genres(context), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No hay géneros.')));
   }
 
   /**
@@ -214,11 +218,8 @@ export class SerieService {
         headers: new Headers({ Authorization: `Bearer ${this.auth.credentials.token}` })
       });
     }
-    return this.http.get(routes.demographic(), options)
-      .pipe(
-      map((res: Response) => res.json()),
-      catchError(() => of('No hay demografías.'))
-      );
+    return this.http
+      .get(routes.demographic(), options)
+      .pipe(map((res: Response) => res.json()), catchError(() => of('No hay demografías.')));
   }
-
 }

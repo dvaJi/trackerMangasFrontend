@@ -11,3 +11,5 @@ export * from './scan';
 export * from './serie';
 export * from './serieRanking';
 export * from './staff';
+export * from './user';
+export * from './serie-changelog';
