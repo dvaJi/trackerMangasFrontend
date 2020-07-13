@@ -68,7 +68,7 @@
     "prettier-eslint": "^8.8.1",
     "protractor": "~5.2.2",
     "puppeteer": "^1.0.0",
-    "standard-version": "^4.3.0",
+    "standard-version": "^8.0.1",
     "stylelint": "~8.4.0",
     "stylelint-config-prettier": "^2.0.0",
     "stylelint-config-recommended-scss": "~3.0.0",
